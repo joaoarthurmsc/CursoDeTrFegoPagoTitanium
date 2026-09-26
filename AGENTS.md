@@ -1,139 +1,50 @@
-# Titanium
+# figma-make-app
 
-Private educational platform for the Curso de Tráfego Pago Titanium.
+React + Vite + Tailwind CSS project running inside Figma Make.
 
-## Product
+## Development Server
 
-Titanium is a progressive learning environment focused on:
+A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
 
-- Google Ads
-- Paid acquisition
-- Performance
-- Measurement
-- Diagnosis
-- Business economics
-- Strategy
+- Preview URL: The user can access the running app through the preview panel
+- Hot reload: Changes to source files are reflected immediately
 
-The application is currently intended for two students.
+## Project Structure
 
-It is not a SaaS product and should not be redesigned as one.
+This is the canonical project structure. Start with task-relevant files below. Only follow imports or inspect other files when required, when a documented path is missing, or when the repository contradicts this guide.
 
-## Stack
+- `src/main.tsx` - React entrypoint; imports `src/index.css` and mounts `src/App.tsx` into the `#root` element
+- `src/App.tsx` - Primary application component and the usual starting point for UI work
+- `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
+- `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
+- `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
+- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
+- `.mise.toml` - Toolchain versions for Node.js and pnpm
 
-- React 19
-- TypeScript
-- Vite 8
-- Tailwind CSS v4
-- localStorage persistence
+## Dependencies
 
-There is currently:
+- Runtime: React 19 and React DOM 19
+- Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
+- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
+- Formatting: oxfmt
 
-- no backend
-- no authentication
-- no paid API
-- no AI API
+## Styling
 
-Do not introduce these unless explicitly requested.
+This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin configured in `vite.config.ts`. `src/index.css` imports Tailwind with `@import 'tailwindcss';`. Use Tailwind utility classes directly in JSX and put global CSS or Tailwind v4 theme customization in `src/index.css`. This scaffold does not need a Tailwind config file or PostCSS config.
 
-## Architecture
+`src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
 
-Primary directories:
+## Code quality
 
-- `src/app` — application bootstrap and routing
-- `src/components` — reusable UI and learning components
-- `src/pages` — route-level pages
-- `src/data` — course and lesson content
-- `src/storage` — learning persistence
-- `src/types` — shared TypeScript contracts
+- Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
+- Ensure JSX tags are closed and braces are balanced.
+- Export components as default exports.
 
-## Core architectural rule
+## Viewport-First Learning
 
-Course content must be separated from presentation.
-
-Future lessons should primarily be represented as data consumed by the Lesson Journey Engine.
-
-Do not create a new React page for every lesson.
-
-Preferred model:
-
-Lesson data
-+
-Lesson Journey Engine
-=
-Rendered lesson
-
-## Learning model
-
-A lesson progresses through pedagogical stages such as:
-
-- context
-- learn
-- think
-- decide
-- visual
-- practice
-- audit
-- mindmap
-- review
-- exam
-
-Students cannot skip future stages during the first journey.
-
-Previously unlocked stages may be revisited.
-
-After passing a lesson, the full journey becomes available for review.
-
-## Mastery
-
-Normal lessons require a minimum exam score of:
-
-9.0 / 10
-
-Finishing lesson content does not complete the lesson.
-
-Content completed + exam below 9.0 = Review Required.
-
-A lesson is completed only after demonstrated mastery.
-
-## Persistence
-
-Use `learningRepository` as the persistence boundary.
-
-UI components should not access `localStorage` directly.
-
-Preserve compatibility with existing stored progress unless a migration is deliberately implemented.
-
-## Visual direction
-
-Preserve the approved Titanium visual identity:
-
-- premium dark
-- black / graphite
-- white / silver
-- restrained gold / bronze
-- cinematic
-- calm
-- editorial
-- high readability
-
-Avoid:
-
-- neon
-- excessive glassmorphism
-- generic SaaS dashboards
-- excessive cards
-- decorative AI-looking imagery
-- unnecessary visual redesigns
-
-## Navigation
-
-There is no sidebar.
-
-Navigation should remain contextual and minimal.
-
-## Development
-
-Install:
-
-```bash
-pnpm install
+- Prefer one lesson stage per useful viewport whenever legibility and depth are preserved.
+- Scroll is an intentional exception for long explanations, cases, large tables, guided screenshots, mind maps, reviews, and exams.
+- Never shrink typography or compress spacing aggressively just to avoid scroll.
+- On desktop, keep stage progress and previous/continue navigation stable while only the central learning area scrolls when necessary.
+- On small or short screens, allow natural document scroll and keep navigation accessible.
+- Changing stages must reset the stage reading position to the top.

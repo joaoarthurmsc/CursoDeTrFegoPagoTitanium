@@ -418,11 +418,11 @@ export default function LessonStage({
       </p>
       <HomeHeading
         level={2}
-        className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
+        className="lesson-stage-title mt-3 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
       >
         {stage.title}
       </HomeHeading>
-      <div className="mt-8">
+      <div className="lesson-stage-content mt-6">
         {stage.type === "discovery" ? (
           <DiscoveryStage stage={stage} />
         ) : stage.type === "think" ? (

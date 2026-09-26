@@ -40,7 +40,7 @@ export default function JourneyProgress({
 
   return (
     <div
-      className="flex items-center gap-2"
+      className="lesson-stage-markers flex items-center gap-2 overflow-x-auto pb-1"
       aria-label={`Etapa ${currentIndex + 1} de ${lesson.stages.length}`}
     >
       {lesson.stages.map((stage, index) => {

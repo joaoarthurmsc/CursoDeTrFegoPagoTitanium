@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import type {
   ExamAttempt,
   Lesson,
@@ -75,6 +76,12 @@ export default function LessonJourney({
   const stage = lesson.stages[journey.currentStageIndex]
   const isExam = stage.type === "exam" && Boolean(lesson.exam)
   const canContinue = canCompleteStage(stage, journey)
+  const stageViewportRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    stageViewportRef.current?.scrollTo({ top: 0, behavior: "instant" })
+    window.scrollTo({ top: 0, behavior: "instant" })
+  }, [journey.currentStageIndex])
 
   const reviewStage = (stageId: string) => {
     const index = lesson.stages.findIndex((item) => item.id === stageId)
@@ -82,9 +89,9 @@ export default function LessonJourney({
   }
 
   return (
-    <main className="mx-auto max-w-lesson px-5 py-10 md:px-8 md:py-14">
-      <div className="mb-8">
-        <div className="mb-4 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-label">
+    <main className="lesson-journey mx-auto w-full max-w-lesson px-5 md:px-8">
+      <header className="lesson-journey-progress border-b border-line py-4 md:py-5">
+        <div className="mb-3 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-label">
           <span className="text-silver">Aula {lesson.number}</span>
           <span className="text-muted">
             Etapa {journey.currentStageIndex + 1} de {lesson.stages.length}
@@ -96,35 +103,41 @@ export default function LessonJourney({
           currentIndex={journey.currentStageIndex}
           onSelect={onStageSelect}
         />
-      </div>
+      </header>
 
-      <div className="min-h-stage border-b border-line pb-12 pt-8 md:pt-12">
-        <LessonStageContent
-          lessonId={lesson.id}
-          stage={stage}
-          journey={journey}
-          onOpenResponse={onOpenResponse}
-          onDecision={onDecision}
-          onSelfAssessment={onSelfAssessment}
-          onChecklist={onChecklist}
-          onAudit={onAudit}
-          onJournal={onJournal}
-        />
-        {isExam && (
-          <div className="mt-10">
-            <ExamEngine
-              exam={lesson.exam!}
-              attempts={journey.examAttempts}
-              onComplete={onExamComplete}
-              onReviewStage={reviewStage}
-              onNext={() => onNavigate("/aulas/02")}
-            />
-          </div>
-        )}
+      <div
+        ref={stageViewportRef}
+        className="lesson-stage-viewport"
+        data-stage-type={stage.type}
+      >
+        <div className="lesson-stage-inner">
+          <LessonStageContent
+            lessonId={lesson.id}
+            stage={stage}
+            journey={journey}
+            onOpenResponse={onOpenResponse}
+            onDecision={onDecision}
+            onSelfAssessment={onSelfAssessment}
+            onChecklist={onChecklist}
+            onAudit={onAudit}
+            onJournal={onJournal}
+          />
+          {isExam && (
+            <div className="mt-8">
+              <ExamEngine
+                exam={lesson.exam!}
+                attempts={journey.examAttempts}
+                onComplete={onExamComplete}
+                onReviewStage={reviewStage}
+                onNext={() => onNavigate("/aulas/02")}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {!isExam && (
-        <div className="flex items-center justify-between gap-4 py-8">
+        <footer className="lesson-journey-nav flex items-center justify-between gap-4 border-t border-line py-4 md:py-5">
           <ActionButton
             variant="secondary"
             disabled={journey.currentStageIndex === 0}
@@ -134,9 +147,9 @@ export default function LessonJourney({
           >
             <ArrowIcon className="size-4 rotate-180" /> Voltar
           </ActionButton>
-          <div className="text-right">
+          <div className="flex items-center gap-4 text-right">
             {!canContinue && (
-              <p className="mb-2 text-xs text-muted">
+              <p className="hidden text-xs text-muted sm:block">
                 Conclua a interação para avançar.
               </p>
             )}
@@ -144,7 +157,7 @@ export default function LessonJourney({
               Continuar <ArrowIcon className="size-4" />
             </ActionButton>
           </div>
-        </div>
+        </footer>
       )}
     </main>
   )

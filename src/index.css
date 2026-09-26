@@ -176,6 +176,109 @@ button {
   }
 }
 
+
+/* Titanium Viewport-First Learning
+   One stage should fit inside the useful viewport whenever the content allows.
+   Long explanations keep scroll, but the progress header and navigation remain
+   stable on desktop so scrolling is reserved for the learning content itself. */
+.lesson-journey {
+  min-height: calc(100svh - var(--spacing-home-header));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.lesson-stage-viewport {
+  min-height: 0;
+  display: grid;
+  align-items: center;
+  border-bottom: 0;
+  overscroll-behavior: contain;
+}
+
+.lesson-stage-inner {
+  width: 100%;
+  padding-block: clamp(1.5rem, 3.5vh, 3rem);
+}
+
+.lesson-stage-markers {
+  scrollbar-width: none;
+}
+
+.lesson-stage-markers::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 48rem) and (min-height: 42rem) {
+  .lesson-journey {
+    height: calc(100svh - var(--spacing-home-header));
+    min-height: 0;
+  }
+
+  .lesson-stage-viewport {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .lesson-journey-progress,
+  .lesson-journey-nav {
+    background: var(--color-black);
+  }
+}
+
+@media (min-width: 48rem) and (max-height: 50rem) {
+  .lesson-journey-progress {
+    padding-block: 0.75rem;
+  }
+
+  .lesson-journey-nav {
+    padding-block: 0.75rem;
+  }
+
+  .lesson-stage-inner {
+    padding-block: 1.25rem;
+  }
+
+  .lesson-stage-title {
+    margin-top: 0.5rem;
+    font-size: clamp(1.8rem, 4vh, 2.5rem);
+  }
+
+  .lesson-stage-content {
+    margin-top: 1.1rem;
+  }
+}
+
+@media (max-width: 47.999rem), (max-height: 41.999rem) {
+  .lesson-journey {
+    display: block;
+    min-height: calc(100svh - var(--spacing-home-header));
+  }
+
+  .lesson-stage-viewport {
+    display: block;
+    overflow: visible;
+  }
+
+  .lesson-stage-inner {
+    padding-block: 1.75rem 2.25rem;
+  }
+
+  .lesson-journey-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    background:
+      linear-gradient(
+        0deg,
+        var(--color-black) 72%,
+        color-mix(in srgb, var(--color-black) 94%, transparent) 100%
+      );
+    backdrop-filter: blur(0.5rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
