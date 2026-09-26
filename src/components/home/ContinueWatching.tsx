@@ -6,8 +6,6 @@ import {
   ProgressBar,
 } from "../titanium/HomePrimitives"
 
-const HERO_IMAGE = "/modules/01.jpg"
-
 export default function ContinueWatching({
   activity,
   onNavigate,
@@ -15,6 +13,9 @@ export default function ContinueWatching({
   activity: ContinueActivity
   onNavigate: (path: string) => void
 }) {
+  const imageModule =
+    activity.moduleId === "00" ? "01" : activity.moduleNumber
+
   return (
     <section aria-labelledby="continue-title">
       <p className="mb-4 font-mono text-xs font-semibold uppercase tracking-label text-silver">
@@ -22,8 +23,8 @@ export default function ContinueWatching({
       </p>
       <div className="continue-hero relative min-h-hero overflow-hidden border border-line bg-graphite">
         <img
-          src={HERO_IMAGE}
-          alt="Montanha em meio às nuvens, representando a fundação da jornada"
+          src={`/modules/${imageModule}.jpg`}
+          alt={`Imagem editorial do módulo ${imageModule}`}
           className="absolute inset-0 size-full object-cover grayscale"
         />
         <div className="continue-hero-overlay absolute inset-0" />

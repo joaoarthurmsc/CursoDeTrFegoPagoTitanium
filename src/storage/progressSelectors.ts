@@ -274,13 +274,16 @@ export function getHomeModules(
     if (
       module.id === "01" &&
       getModuleLearningSummary(module.id, state).completed
-    )
+    ) {
       catalogStatus = "completed"
-    else if (module.id === current.moduleId) catalogStatus = "studying"
-    else if (current.moduleId === "00" && module.id === "01")
+    } else if (module.id === current.moduleId) {
+      catalogStatus =
+        current.id === "m02-intro" && module.id === "02"
+          ? "not-started"
+          : "studying"
+    } else if (current.moduleId === "00" && module.id === "01") {
       catalogStatus = "not-started"
-    else if (current.moduleId !== "00" && module.id === "02")
-      catalogStatus = "not-started"
+    }
 
     return {
       ...module,

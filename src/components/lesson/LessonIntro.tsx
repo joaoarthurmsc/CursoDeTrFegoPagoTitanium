@@ -32,7 +32,7 @@ export default function LessonIntro({
   return (
     <main className="mx-auto max-w-reading px-5 py-12 md:px-8 md:py-20">
       <div className="flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-label">
-        <span className="text-gold">Módulo 01</span>
+        <span className="text-gold">Módulo {lesson.moduleId}</span>
         <span className="h-px w-6 bg-line" />
         <span className="text-silver">Aula {lesson.number}</span>
         {lesson.demo && (
@@ -42,12 +42,14 @@ export default function LessonIntro({
           </>
         )}
       </div>
+
       <HomeHeading
         level={1}
         className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl"
       >
         {lesson.title}
       </HomeHeading>
+
       <p className="mt-5 font-mono text-xs text-muted">
         Tempo estimado de domínio · {lesson.masteryTime}
       </p>
@@ -63,6 +65,7 @@ export default function LessonIntro({
           </p>
         </div>
       )}
+
       {!completed && journey.contentCompletedAt && (
         <div className="mt-8 border-l-2 border-silver bg-graphite p-5">
           <p className="font-mono text-xs uppercase tracking-label text-silver">
@@ -107,6 +110,7 @@ export default function LessonIntro({
             : "Iniciar aula"}
         <ArrowIcon />
       </ActionButton>
+
       {completed && <LessonMaterials materials={lesson.materials} />}
     </main>
   )
