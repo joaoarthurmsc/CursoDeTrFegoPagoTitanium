@@ -6,12 +6,15 @@ import {
   Status,
 } from "../components/titanium/PageUI"
 import { moduleOneLessons } from "../data/course"
+import { isImmersionCompleted } from "../storage/progressSelectors"
 
 interface ActivitiesPageProps {
   type: "aulas" | "labs" | "provas"
 }
 
 export default function ActivitiesPage({ type }: ActivitiesPageProps) {
+  const immersionCompleted = isImmersionCompleted()
+
   if (type === "aulas") {
     return (
       <>
@@ -21,20 +24,35 @@ export default function ActivitiesPage({ type }: ActivitiesPageProps) {
           description="Acesse as lições liberadas e retome sua formação."
         />
         <div className="border-t border-line">
-          {moduleOneLessons.slice(0, 5).map((lesson, index) => (
-            <AppLink
-              key={lesson}
-              to={`/aulas/0${index + 1}`}
-              className="flex w-full items-center gap-4 border-b border-line py-5 hover:bg-graphite md:px-4"
-            >
-              <span className="font-mono text-xs text-gold">
-                0{index + 1}
-              </span>
-              <span className="flex-1">{lesson}</span>
-              <Status text={index === 0 ? "disponível" : "futura"} />
-              <AppIcon name="arrow" size="sm" />
-            </AppLink>
-          ))}
+          {moduleOneLessons.slice(0, 5).map((lesson, index) => {
+            const available = immersionCompleted && index === 0
+
+            return (
+              <AppLink
+                key={lesson}
+                to={available ? `/aulas/0${index + 1}` : "/aulas"}
+                className={`flex w-full items-center gap-4 border-b border-line py-5 md:px-4 ${
+                  available ? "hover:bg-graphite" : "text-muted"
+                }`}
+              >
+                <span className="font-mono text-xs text-gold">
+                  0{index + 1}
+                </span>
+                <span className="flex-1">{lesson}</span>
+                <Status
+                  locked={!available}
+                  text={
+                    !immersionCompleted
+                      ? "bloqueado"
+                      : index === 0
+                        ? "disponível"
+                        : "futura"
+                  }
+                />
+                <AppIcon name="arrow" size="sm" />
+              </AppLink>
+            )
+          })}
         </div>
       </>
     )

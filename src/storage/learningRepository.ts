@@ -6,8 +6,13 @@ import type {
   LessonJourneyState,
 } from "../types/learning"
 import type { Decision, LearningState } from "../types/progress"
+import { studentRepository } from "./studentRepository"
 
-const STORAGE_KEY = "titanium-learning-state-v1"
+const LEGACY_STORAGE_KEY = "titanium-learning-state-v1"
+
+function storageKey(studentId: string) {
+  return `titanium-learning-state-v1:${studentId}`
+}
 
 const initialState: LearningState = {
   completedLessons: [],
@@ -23,6 +28,7 @@ export function createLessonJourneyState(): LessonJourneyState {
   return {
     currentStageIndex: 0,
     maxUnlockedStageIndex: 0,
+    activeTimeSeconds: 0,
     completedStageIds: [],
     openResponses: {},
     decisions: {},
@@ -43,6 +49,7 @@ function normalizeJourney(
   return {
     ...initial,
     ...journey,
+    activeTimeSeconds: journey?.activeTimeSeconds ?? 0,
     completedStageIds: journey?.completedStageIds ?? [],
     openResponses: { ...initial.openResponses, ...journey?.openResponses },
     decisions: { ...initial.decisions, ...journey?.decisions },
@@ -73,14 +80,31 @@ function normalizeJourney(
 export const learningRepository = {
   load(): LearningState {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY)
+      const studentId = studentRepository.getActiveStudentId()
+      if (!studentId) return initialState
+
+      const key = storageKey(studentId)
+      let stored = localStorage.getItem(key)
+
+      // The original Titanium build stored João/Arthur progress in one global
+      // key. On Arthur's first access, copy it into his isolated profile.
+      if (!stored && studentId === "arthur") {
+        const legacy = localStorage.getItem(LEGACY_STORAGE_KEY)
+        if (legacy) {
+          localStorage.setItem(key, legacy)
+          stored = legacy
+        }
+      }
+
       return stored ? { ...initialState, ...JSON.parse(stored) } : initialState
     } catch {
       return initialState
     }
   },
   save(state: LearningState) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    const studentId = studentRepository.getActiveStudentId()
+    if (!studentId) return
+    localStorage.setItem(storageKey(studentId), JSON.stringify(state))
   },
   addDecision(decision: Decision) {
     const state = this.load()
@@ -109,6 +133,15 @@ export const learningRepository = {
     return this.updateLessonJourney(lessonId, (journey) => ({
       ...journey,
       startedAt: journey.startedAt ?? new Date().toISOString(),
+    }))
+  },
+  addLessonActiveTime(lessonId: string, seconds: number): LessonJourneyState {
+    return this.updateLessonJourney(lessonId, (journey) => ({
+      ...journey,
+      activeTimeSeconds: Math.max(
+        0,
+        (journey.activeTimeSeconds ?? 0) + Math.max(0, seconds),
+      ),
     }))
   },
   goToLessonStage(lessonId: string, stageIndex: number): LessonJourneyState {

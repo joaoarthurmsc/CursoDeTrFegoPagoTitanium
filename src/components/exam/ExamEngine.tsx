@@ -51,6 +51,7 @@ export default function ExamEngine({
       correct,
       total: exam.questions.length,
       errors,
+      answers,
     }
     onComplete(attempt)
     setShowResults(true)

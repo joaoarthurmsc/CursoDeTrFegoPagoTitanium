@@ -3,6 +3,7 @@ import LessonIntro from "../components/lesson/LessonIntro"
 import LessonJourney from "../components/lesson/LessonJourney"
 import { lessonOneDemo } from "../data/lessonDemo"
 import { learningRepository } from "../storage/learningRepository"
+import { useLessonActiveTime } from "../hooks/useLessonActiveTime"
 import type { LessonJourneyState } from "../types/learning"
 import { HomeHeading } from "../components/titanium/HomePrimitives"
 import ImmersionPage from "./ImmersionPage"
@@ -53,6 +54,8 @@ function StandardLessonPage({
   onNavigate: (path: string) => void
 }) {
   const lesson = lessonOneDemo
+  useLessonActiveTime(lesson.id)
+
   const [journey, setJourney] = useState<LessonJourneyState>(() =>
     learningRepository.getLessonJourney(lesson.id),
   )

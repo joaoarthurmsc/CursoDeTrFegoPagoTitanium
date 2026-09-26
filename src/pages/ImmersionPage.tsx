@@ -2,6 +2,7 @@ import { useState } from "react"
 import ImmersionJourney from "../components/lesson/ImmersionJourney"
 import { immersionLesson } from "../data/immersionLesson"
 import { learningRepository } from "../storage/learningRepository"
+import { useLessonActiveTime } from "../hooks/useLessonActiveTime"
 import type { DiagnosticResult, LessonJourneyState } from "../types/learning"
 
 export default function ImmersionPage({
@@ -9,6 +10,8 @@ export default function ImmersionPage({
 }: {
   onNavigate: (path: string) => void
 }) {
+  useLessonActiveTime(immersionLesson.id)
+
   const [journey, setJourney] = useState<LessonJourneyState>(() => {
     const current = learningRepository.getLessonJourney(immersionLesson.id)
     return current.startedAt

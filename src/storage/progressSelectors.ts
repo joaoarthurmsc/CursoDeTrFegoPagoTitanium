@@ -5,8 +5,17 @@ import { TITANIUM_MASTERY_SCORE } from "../data/pedagogy"
 import type { LearningState } from "../types/progress"
 import { learningRepository } from "./learningRepository"
 
-export type CatalogStatus = "not-started" | "studying" | "completed" | "locked"
-export type LessonStatus = "not-started" | "studying" | "review-needed" | "completed"
+export type CatalogStatus =
+  | "not-started"
+  | "studying"
+  | "completed"
+  | "locked"
+
+export type LessonStatus =
+  | "not-started"
+  | "studying"
+  | "review-needed"
+  | "completed"
 
 export type ContinueActivity = {
   id: string
@@ -20,7 +29,7 @@ export type ContinueActivity = {
   progress: number
 }
 
-export type HomeModule = typeof modules[number] & {
+export type HomeModule = (typeof modules)[number] & {
   image: string
   imageAlt: string
   progress: number
@@ -91,6 +100,13 @@ const moduleImages = [
   },
 ]
 
+export function isImmersionCompleted(
+  state = learningRepository.load(),
+) {
+  const journey = state.lessonJourneys[immersionLesson.id]
+  return Boolean(journey?.completedAt && state.initialDiagnostic)
+}
+
 function getJourneyProgress(
   state: LearningState,
   lessonId: string,
@@ -98,9 +114,15 @@ function getJourneyProgress(
 ) {
   const journey = state.lessonJourneys[lessonId]
   if (!journey) return 0
-  if (journey.completedAt && (journey.bestScore ?? 0) >= TITANIUM_MASTERY_SCORE)
+  if (
+    journey.completedAt &&
+    (journey.bestScore ?? 0) >= TITANIUM_MASTERY_SCORE
+  ) {
     return 100
-  return Math.round((journey.completedStageIds.length / totalStages) * 100)
+  }
+  return Math.round(
+    (journey.completedStageIds.length / totalStages) * 100,
+  )
 }
 
 export function getModuleLearningSummary(
@@ -118,11 +140,13 @@ export function getModuleLearningSummary(
           if (
             journey?.completedAt &&
             (bestScore ?? 0) >= TITANIUM_MASTERY_SCORE
-          )
+          ) {
             status = "completed"
-          else if ((journey?.examAttempts.length ?? 0) > 0)
+          } else if ((journey?.examAttempts.length ?? 0) > 0) {
             status = "review-needed"
-          else if (journey?.startedAt) status = "studying"
+          } else if (journey?.startedAt) {
+            status = "studying"
+          }
 
           return {
             id,
@@ -132,11 +156,17 @@ export function getModuleLearningSummary(
                 ? `Aula prática — ${title}`
                 : title,
             masteryTime:
-              index === 0 ? lessonOneDemo.masteryTime : "Em preparação",
+              index === 0
+                ? lessonOneDemo.masteryTime
+                : "Em preparação",
             status,
             progress:
               index === 0
-                ? getJourneyProgress(state, id, lessonOneDemo.stages.length)
+                ? getJourneyProgress(
+                    state,
+                    id,
+                    lessonOneDemo.stages.length,
+                  )
                 : journey?.completedAt
                   ? 100
                   : 0,
@@ -155,7 +185,8 @@ export function getModuleLearningSummary(
   const finalExamUnlocked =
     lessons.length > 0 && completedLessons === lessons.length
   const completed =
-    finalExamUnlocked && (finalExamBestScore ?? 0) >= TITANIUM_MASTERY_SCORE
+    finalExamUnlocked &&
+    (finalExamBestScore ?? 0) >= TITANIUM_MASTERY_SCORE
   const lessonProgress = lessons.reduce(
     (total, lesson) => total + lesson.progress / 100,
     0,
@@ -165,7 +196,9 @@ export function getModuleLearningSummary(
   const totalActivities = lessons.length + 1
   const progress = completed
     ? 100
-    : Math.round(((lessonProgress + finalExamProgress) / totalActivities) * 100)
+    : Math.round(
+        ((lessonProgress + finalExamProgress) / totalActivities) * 100,
+      )
 
   return {
     progress,
@@ -178,18 +211,25 @@ export function getModuleLearningSummary(
   }
 }
 
-function getModuleProgress(state: LearningState, moduleId: string) {
-  if (moduleId === "01")
+function getModuleProgress(
+  state: LearningState,
+  moduleId: string,
+) {
+  if (moduleId === "01") {
     return getModuleLearningSummary(moduleId, state).progress
+  }
   const stored = state.moduleProgress[moduleId]
-  return typeof stored === "number" ? Math.max(0, Math.min(100, stored)) : 0
+  return typeof stored === "number"
+    ? Math.max(0, Math.min(100, stored))
+    : 0
 }
 
 export function getContinueActivity(
   state = learningRepository.load(),
 ): ContinueActivity {
   const immersion = state.lessonJourneys[immersionLesson.id]
-  if (!immersion?.completedAt) {
+
+  if (!isImmersionCompleted(state)) {
     const stageIndex = Math.min(
       immersion?.currentStageIndex ?? 0,
       immersionLesson.stages.length - 1,
@@ -200,6 +240,7 @@ export function getContinueActivity(
         immersionLesson.stages.length) *
         100,
     )
+
     return {
       id: "a00",
       moduleId: "00",
@@ -245,15 +286,25 @@ export function getContinueActivity(
 
   const active =
     summary.lessons.find((lesson) => lesson.status === "studying") ??
-    summary.lessons.find((lesson) => lesson.status === "review-needed") ??
-    summary.lessons.find((lesson) => lesson.status === "not-started") ??
+    summary.lessons.find(
+      (lesson) => lesson.status === "review-needed",
+    ) ??
+    summary.lessons.find(
+      (lesson) => lesson.status === "not-started",
+    ) ??
     summary.lessons[summary.lessons.length - 1]
 
   return {
     id: `m01-l${active.id}`,
     moduleId: "01",
-    type: active.number === "06" ? "lab" as const : "lesson" as const,
-    label: active.number === "06" ? "AULA PRÁTICA 06" : `AULA ${active.number}`,
+    type:
+      active.number === "06"
+        ? ("lab" as const)
+        : ("lesson" as const),
+    label:
+      active.number === "06"
+        ? "AULA PRÁTICA 06"
+        : `AULA ${active.number}`,
     title: active.title,
     path: `/aulas/${active.id}`,
     moduleNumber: "01",
@@ -265,23 +316,32 @@ export function getContinueActivity(
 export function getHomeModules(
   state = learningRepository.load(),
 ): HomeModule[] {
+  const immersionCompleted = isImmersionCompleted(state)
   const current = getContinueActivity(state)
+  const moduleOneSummary = getModuleLearningSummary("01", state)
+  const moduleOneHasActivity = moduleOneSummary.lessons.some(
+    (lesson) =>
+      lesson.status === "studying" ||
+      lesson.status === "review-needed" ||
+      lesson.status === "completed",
+  )
 
   return modules.map((module, index) => {
     const progress = getModuleProgress(state, module.id)
     let catalogStatus: CatalogStatus = "locked"
 
-    if (
-      module.id === "01" &&
-      getModuleLearningSummary(module.id, state).completed
-    ) {
+    if (module.id === "01" && !immersionCompleted) {
+      catalogStatus = "locked"
+    } else if (module.id === "01" && moduleOneSummary.completed) {
       catalogStatus = "completed"
-    } else if (module.id === current.moduleId) {
-      catalogStatus =
-        current.id === "m02-intro" && module.id === "02"
-          ? "not-started"
-          : "studying"
-    } else if (current.moduleId === "00" && module.id === "01") {
+    } else if (module.id === "01" && immersionCompleted) {
+      catalogStatus = moduleOneHasActivity
+        ? "studying"
+        : "not-started"
+    } else if (
+      module.id === "02" &&
+      current.id === "m02-intro"
+    ) {
       catalogStatus = "not-started"
     }
 
@@ -291,7 +351,10 @@ export function getHomeModules(
       progress,
       catalogStatus,
       currentActivity:
-        module.id === current.moduleId ? current.title : undefined,
+        module.id === current.moduleId &&
+        catalogStatus !== "locked"
+          ? current.title
+          : undefined,
     }
   })
 }

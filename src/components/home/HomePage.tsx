@@ -3,6 +3,7 @@ import {
   getContinueActivity,
   getHomeModules,
 } from "../../storage/progressSelectors"
+import { studentRepository } from "../../storage/studentRepository"
 import HomeHeader from "../layout/HomeHeader"
 import { HomeHeading } from "../titanium/HomePrimitives"
 import ContinueWatching from "./ContinueWatching"
@@ -22,6 +23,7 @@ export default function HomePage({
 }) {
   const activity = useMemo(() => getContinueActivity(), [])
   const modules = useMemo(() => getHomeModules(), [])
+  const student = studentRepository.getActiveStudent()
 
   return (
     <div className="min-h-screen overflow-hidden bg-black text-paper">
@@ -31,7 +33,7 @@ export default function HomePage({
           level={1}
           className="mb-10 font-display text-4xl font-semibold tracking-tight md:mb-14 md:text-6xl"
         >
-          {getGreeting()}, João.
+          {getGreeting()}, {student?.name}.
         </HomeHeading>
         <ContinueWatching activity={activity} onNavigate={onNavigate} />
         <ModuleCatalog modules={modules} onNavigate={onNavigate} />

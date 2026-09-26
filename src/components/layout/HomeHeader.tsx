@@ -1,10 +1,14 @@
+import { studentRepository } from "../../storage/studentRepository"
 import { HomeLink } from "../titanium/HomePrimitives"
+import UserMenu from "./UserMenu"
 
 export default function HomeHeader({
   onNavigate,
 }: {
   onNavigate: (path: string) => void
 }) {
+  const student = studentRepository.getActiveStudent()
+
   return (
     <header className="border-b border-line/70">
       <div className="mx-auto flex h-home-header max-w-home items-center justify-between px-5 md:px-10 xl:px-14">
@@ -20,16 +24,15 @@ export default function HomeHeader({
             TITANIUM
           </span>
         </HomeLink>
+
         <div className="flex items-center gap-3">
-          <div className="text-right">
-            <p className="text-sm font-medium text-paper">João</p>
+          <div className="hidden text-right sm:block">
+            <p className="text-sm font-medium text-paper">{student?.name}</p>
             <p className="font-mono text-user-meta uppercase tracking-wide text-muted">
               N0 · Iniciante
             </p>
           </div>
-          <div className="grid size-9 place-items-center rounded-full border border-line bg-charcoal text-xs font-semibold text-silver">
-            JS
-          </div>
+          <UserMenu onNavigate={onNavigate} />
         </div>
       </div>
     </header>

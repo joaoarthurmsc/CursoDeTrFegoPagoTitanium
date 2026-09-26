@@ -16,7 +16,7 @@ export const modules: CourseModule[] = [
     title: "Fundamentos de Tráfego e Aquisição",
     lessons: 6,
     progress: 0,
-    state: "disponível",
+    state: "bloqueado",
   },
   {
     id: "02",

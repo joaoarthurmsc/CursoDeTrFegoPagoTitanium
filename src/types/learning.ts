@@ -166,11 +166,13 @@ export type ExamAttempt = {
   correct: number
   total: number
   errors: ExamError[]
+  answers?: Record<string, string>
 }
 
 export type LessonJourneyState = {
   startedAt?: string
   contentCompletedAt?: string
+  activeTimeSeconds: number
   currentStageIndex: number
   maxUnlockedStageIndex: number
   completedStageIds: string[]

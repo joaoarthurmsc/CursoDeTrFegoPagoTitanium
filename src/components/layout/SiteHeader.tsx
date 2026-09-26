@@ -1,4 +1,6 @@
+import { studentRepository } from "../../storage/studentRepository"
 import { ArrowIcon, HomeLink } from "../titanium/HomePrimitives"
+import UserMenu from "./UserMenu"
 
 export default function SiteHeader({
   backTo,
@@ -9,6 +11,8 @@ export default function SiteHeader({
   backLabel?: string
   onNavigate: (path: string) => void
 }) {
+  const student = studentRepository.getActiveStudent()
+
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-black/95 backdrop-blur">
       <div className="mx-auto grid h-home-header max-w-home grid-cols-[1fr_auto_1fr] items-center px-5 md:px-10 xl:px-14">
@@ -26,6 +30,7 @@ export default function SiteHeader({
             </span>
           </HomeLink>
         </div>
+
         <HomeLink
           to={backTo}
           onNavigate={onNavigate}
@@ -34,16 +39,15 @@ export default function SiteHeader({
           <ArrowIcon className="size-4 rotate-180" />
           {backLabel}
         </HomeLink>
+
         <div className="flex items-center justify-end gap-3">
           <div className="hidden text-right sm:block">
-            <p className="text-sm font-medium text-paper">João</p>
+            <p className="text-sm font-medium text-paper">{student?.name}</p>
             <p className="font-mono text-user-meta uppercase tracking-wide text-muted">
               N0 · Iniciante
             </p>
           </div>
-          <div className="grid size-9 place-items-center rounded-full border border-line bg-charcoal text-xs font-semibold text-silver">
-            JS
-          </div>
+          <UserMenu onNavigate={onNavigate} />
         </div>
       </div>
     </header>
