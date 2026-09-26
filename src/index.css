@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-black: #090b0d;
+  --color-graphite: #15191d;
+  --color-charcoal: #20262b;
+  --color-silver: #c8c5be;
+  --color-paper: #f5f3ef;
+  --color-gold: #c8a467;
+  --color-muted: #85898b;
+  --color-line: #2b3136;
+
+  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Manrope", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", monospace;
+
+  --tracking-brand: 0.22em;
+  --tracking-label: 0.12em;
+
+  --spacing-content: 88rem;
+  --spacing-reading: 52rem;
+  --spacing-glossary: 19rem;
+  --spacing-placeholder: 34rem;
+  --spacing-home-header: 5rem;
+  --spacing-home: 100rem;
+  --spacing-hero: 32rem;
+  --spacing-continue: 44rem;
+  --spacing-progress: 28rem;
+  --spacing-module-card: 19rem;
+  --spacing-module-mark: 0.1875rem;
+  --spacing-control: 2.75rem;
+  --spacing-module-hero: 34rem;
+  --spacing-module-copy: 52rem;
+  --spacing-lesson: 58rem;
+  --spacing-stage: 30rem;
+  --spacing-mindmap: 22rem;
+  --spacing-screen-safe: calc(100vw - 2.5rem);
+
+  --text-status: 0.625rem;
+  --text-user-meta: 0.625rem;
+  --text-progress-meta: 0.625rem;
+  --text-score: 5rem;
+
+  --aspect-ratio-module: 3 / 4;
+}
+
+:root {
+  color: var(--color-paper);
+  background: var(--color-black);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  background: var(--color-black);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 20rem;
+  margin: 0;
+  background: var(--color-black);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: var(--color-black);
+  background: var(--color-gold);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-graphite);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-charcoal);
+}
+
+.continue-hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-black) 98%, transparent) 0%,
+      color-mix(in srgb, var(--color-black) 88%, transparent) 43%,
+      color-mix(in srgb, var(--color-black) 20%, transparent) 78%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-black) 76%, transparent) 0%,
+      transparent 60%
+    );
+}
+
+.module-cover-overlay {
+  background: linear-gradient(
+    0deg,
+    color-mix(in srgb, var(--color-black) 98%, transparent) 0%,
+    color-mix(in srgb, var(--color-black) 62%, transparent) 38%,
+    color-mix(in srgb, var(--color-black) 8%, transparent) 72%
+  );
+}
+
+.module-hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-black) 96%, transparent) 0%,
+      color-mix(in srgb, var(--color-black) 74%, transparent) 52%,
+      color-mix(in srgb, var(--color-black) 32%, transparent) 100%
+    ),
+    linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-black) 94%, transparent) 0%,
+      transparent 68%
+    );
+}
+
+.catalog-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-charcoal) transparent;
+  scroll-snap-type: x proximity;
+}
+
+.module-cover {
+  aspect-ratio: var(--aspect-ratio-module);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 40rem) {
+  .continue-hero-overlay {
+    background:
+      linear-gradient(
+        0deg,
+        color-mix(in srgb, var(--color-black) 98%, transparent) 0%,
+        color-mix(in srgb, var(--color-black) 70%, transparent) 62%,
+        color-mix(in srgb, var(--color-black) 28%, transparent) 100%
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-black) 70%, transparent),
+        transparent
+      );
+  }
+
+  .module-hero-overlay {
+    background: linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--color-black) 98%, transparent) 0%,
+      color-mix(in srgb, var(--color-black) 62%, transparent) 70%,
+      color-mix(in srgb, var(--color-black) 36%, transparent) 100%
+    );
+  }
+
+  .module-details {
+    display: none;
+  }
+
+  .module-progress {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .module-cover,
+  .module-cover img,
+  .module-details {
+    transition-duration: 0.01ms;
+  }
+}
