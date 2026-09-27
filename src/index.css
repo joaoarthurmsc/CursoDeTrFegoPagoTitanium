@@ -55,7 +55,7 @@
 
 html {
   background: var(--color-black);
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -177,27 +177,41 @@ button {
 }
 
 
-/* Titanium Viewport-First Learning
-   One stage should fit inside the useful viewport whenever the content allows.
-   Long explanations keep scroll, but the progress header and navigation remain
-   stable on desktop so scrolling is reserved for the learning content itself. */
+/* Titanium Lesson Player V2
+   Semantic pagination first; scroll only when a frame genuinely needs it. */
 .lesson-journey {
-  min-height: calc(100svh - var(--spacing-home-header));
+  height: calc(100svh - var(--spacing-home-header));
+  min-height: 34rem;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.lesson-journey-progress,
+.lesson-journey-nav {
+  position: relative;
+  z-index: 10;
+  background: var(--color-black);
 }
 
 .lesson-stage-viewport {
   min-height: 0;
-  display: grid;
-  align-items: center;
-  border-bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .lesson-stage-inner {
   width: 100%;
-  padding-block: clamp(1.5rem, 3.5vh, 3rem);
+  min-height: 100%;
+  display: grid;
+  align-content: center;
+  padding-block: clamp(1.25rem, 3vh, 2.5rem);
+}
+
+.lesson-stage-inner > * {
+  min-width: 0;
 }
 
 .lesson-stage-markers {
@@ -208,71 +222,67 @@ button {
   display: none;
 }
 
-@media (min-width: 48rem) and (min-height: 42rem) {
-  .lesson-journey {
-    height: calc(100svh - var(--spacing-home-header));
-    min-height: 0;
-  }
-
-  .lesson-stage-viewport {
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-  }
-
+@media (min-width: 48rem) and (max-height: 54rem) {
   .lesson-journey-progress,
   .lesson-journey-nav {
-    background: var(--color-black);
-  }
-}
-
-@media (min-width: 48rem) and (max-height: 50rem) {
-  .lesson-journey-progress {
-    padding-block: 0.75rem;
-  }
-
-  .lesson-journey-nav {
-    padding-block: 0.75rem;
+    padding-block: 0.7rem;
   }
 
   .lesson-stage-inner {
-    padding-block: 1.25rem;
+    padding-block: 1rem;
   }
 
   .lesson-stage-title {
-    margin-top: 0.5rem;
-    font-size: clamp(1.8rem, 4vh, 2.5rem);
+    margin-top: 0.45rem;
+    font-size: clamp(1.7rem, 4vh, 2.35rem);
   }
 
   .lesson-stage-content {
-    margin-top: 1.1rem;
+    margin-top: 1rem;
+  }
+
+  .lesson-stage-content .space-y-5 {
+    gap: 0.8rem;
+  }
+
+  .lesson-stage-content p {
+    line-height: 1.55;
   }
 }
 
-@media (max-width: 47.999rem), (max-height: 41.999rem) {
-  .lesson-journey {
-    display: block;
-    min-height: calc(100svh - var(--spacing-home-header));
+@media (min-width: 48rem) and (min-height: 65rem) {
+  .lesson-stage-inner {
+    padding-block: 2.75rem;
   }
+}
 
-  .lesson-stage-viewport {
+@media (max-width: 47.999rem), (max-height: 37rem) {
+  .lesson-journey {
+    height: auto;
+    min-height: calc(100svh - var(--spacing-home-header));
     display: block;
     overflow: visible;
   }
 
+  .lesson-stage-viewport {
+    overflow: visible;
+  }
+
   .lesson-stage-inner {
-    padding-block: 1.75rem 2.25rem;
+    min-height: 0;
+    display: block;
+    padding-block: 1.5rem 2rem;
   }
 
   .lesson-journey-nav {
     position: sticky;
     bottom: 0;
-    z-index: 20;
     margin-inline: -1.25rem;
     padding-inline: 1.25rem;
     background:
       linear-gradient(
         0deg,
-        var(--color-black) 72%,
+        var(--color-black) 76%,
         color-mix(in srgb, var(--color-black) 94%, transparent) 100%
       );
     backdrop-filter: blur(0.5rem);

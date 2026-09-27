@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import type {
   DiagnosticResult,
   Lesson,
@@ -5,8 +6,13 @@ import type {
   LessonStage,
 } from "../../types/learning"
 import InitialDiagnostic from "../diagnostic/InitialDiagnostic"
+import FrameProgress from "../lesson-engine/FrameProgress"
 import JourneyProgress from "../lesson-engine/JourneyProgress"
 import LessonStageContent from "../lesson-engine/LessonStage"
+import {
+  getLessonFrames,
+  type LessonFrame,
+} from "../lesson-engine/stageFrames"
 import { ActionButton, ArrowIcon, CheckIcon } from "../titanium/HomePrimitives"
 import LessonMaterials from "./LessonMaterials"
 
@@ -23,6 +29,28 @@ function canAdvance(stage: LessonStage, journey: LessonJourneyState) {
     return Boolean(journey.openResponses[stage.id]?.trim())
   if (stage.type === "journal") return Boolean(journey.journalEntries[stage.id])
   return true
+}
+
+function framesForStage(stage: LessonStage, lesson: Lesson): LessonFrame[] {
+  const frames = getLessonFrames(stage)
+  if (stage.id !== "closing") return frames
+
+  return [
+    ...frames,
+    {
+      id: `${stage.id}:materials`,
+      label: "Materiais",
+      stage: {
+        id: stage.id,
+        type: "context",
+        eyebrow: "Recursos · Materiais",
+        title: "Leve a Aula 00 com você",
+        body: [
+          "Os materiais essenciais da Imersão ficam liberados para revisão. Use-os como referência, não como substituto da prática.",
+        ],
+      },
+    },
+  ]
 }
 
 export default function ImmersionJourney({
@@ -67,110 +95,215 @@ export default function ImmersionJourney({
   )
   const isDiagnostic = stage.type === "diagnostic"
   const isClosing = stage.id === "closing"
+  const frames = framesForStage(stage, lesson)
+  const [frameState, setFrameState] = useState({ stageId: stage.id, index: 0 })
+  const frameIndex =
+    frameState.stageId === stage.id
+      ? Math.min(frameState.index, Math.max(0, frames.length - 1))
+      : 0
+  const frame = frames[frameIndex]
+  const isLastFrame = frameIndex === frames.length - 1
   const advanceAllowed = canAdvance(stage, journey)
+  const stageViewportRef = useRef<HTMLDivElement>(null)
+
+  const selectStage = (index: number, targetFrame = 0) => {
+    const targetStage = lesson.stages[index]
+    if (!targetStage) return
+    setFrameState({ stageId: targetStage.id, index: targetFrame })
+    onStageSelect(index)
+  }
+
+  const resetReadingPosition = () => {
+    const active = document.activeElement
+    if (active instanceof HTMLElement) active.blur()
+    stageViewportRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" })
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+    stageViewportRef.current
+      ?.querySelector<HTMLElement>("[data-frame-root]")
+      ?.focus({ preventScroll: true })
+  }
+
+  useLayoutEffect(() => {
+    let second = 0
+    const first = requestAnimationFrame(() => {
+      second = requestAnimationFrame(resetReadingPosition)
+    })
+    return () => {
+      cancelAnimationFrame(first)
+      if (second) cancelAnimationFrame(second)
+    }
+  }, [stage.id, frameIndex])
+
+  useEffect(() => {
+    if (!import.meta.env.DEV || isDiagnostic) return
+    const viewport = stageViewportRef.current
+    if (!viewport) return
+
+    const report = () => {
+      const overflow = viewport.scrollHeight - viewport.clientHeight
+      if (overflow > 72) {
+        console.warn(
+          `[Titanium] Frame acima da altura recomendada: ${lesson.id}/${frame.id} (+${Math.round(overflow)}px). Considere dividir semanticamente o conteúdo.`,
+        )
+      }
+    }
+
+    const observer = new ResizeObserver(report)
+    observer.observe(viewport)
+    const timer = window.setTimeout(report, 80)
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(timer)
+    }
+  }, [frame.id, isDiagnostic, lesson.id])
+
+  const previousPage = () => {
+    if (frameIndex > 0) {
+      setFrameState({ stageId: stage.id, index: frameIndex - 1 })
+      return
+    }
+
+    if (journey.currentStageIndex === 0) return
+    const previousStageIndex = journey.currentStageIndex - 1
+    const previousStage = lesson.stages[previousStageIndex]
+    const previousFrames = framesForStage(previousStage, lesson)
+    selectStage(previousStageIndex, Math.max(0, previousFrames.length - 1))
+  }
+
+  const nextPage = () => {
+    if (!isLastFrame) {
+      setFrameState({ stageId: stage.id, index: frameIndex + 1 })
+      return
+    }
+
+    const nextStage = lesson.stages[journey.currentStageIndex + 1]
+    if (nextStage) setFrameState({ stageId: nextStage.id, index: 0 })
+    onContinue()
+  }
+
+  const isMaterialsFrame = isClosing && frame.id.endsWith(":materials")
 
   return (
-    <main className="mx-auto max-w-lesson px-5 py-10 md:px-8 md:py-14">
-      <div className="mb-8">
-        <div className="mb-4 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-label">
-          <span className="text-silver">Aula 00 · Imersão Titanium</span>
+    <main className="lesson-journey mx-auto w-full max-w-lesson px-5 md:px-8">
+      <header className="lesson-journey-progress border-b border-line py-4 md:py-5">
+        <div className="mb-3 flex items-start justify-between gap-4 font-mono text-xs uppercase tracking-label">
+          <div>
+            <span className="text-silver">Aula 00 · Imersão Titanium</span>
+            {!isDiagnostic && frames.length > 1 && (
+              <span className="ml-3 text-muted">
+                Página {frameIndex + 1} de {frames.length}
+              </span>
+            )}
+          </div>
           <span className="text-muted">
             Etapa {journey.currentStageIndex + 1} de {lesson.stages.length}
           </span>
         </div>
-        <JourneyProgress
-          lesson={lesson}
-          journey={journey}
-          currentIndex={journey.currentStageIndex}
-          onSelect={onStageSelect}
-        />
-      </div>
-
-      <div className="min-h-stage border-b border-line pb-12 pt-8 md:pt-12">
-        {journey.currentStageIndex === 0 && (
-          <div className="mb-10 border-y border-line py-5">
-            <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-muted">
-              <span>Abertura da formação</span>
-              <span>Domínio · {lesson.masteryTime}</span>
-              <span>Pré-requisito · nenhum</span>
-            </div>
-            <p className="mt-4 text-sm leading-6 text-silver">
-              <strong className="font-medium text-paper">Objetivo: </strong>
-              {lesson.objective}
-            </p>
+        <div className="flex items-center justify-between gap-6">
+          <div className="min-w-0 flex-1">
+            <JourneyProgress
+              lesson={lesson}
+              journey={journey}
+              currentIndex={journey.currentStageIndex}
+              onSelect={(index) => selectStage(index)}
+            />
           </div>
-        )}
-        {isDiagnostic && lesson.diagnostic ? (
-          <>
-            <p className="font-mono text-xs font-semibold uppercase tracking-label text-gold">
-              {stage.eyebrow}
-            </p>
-            <p className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
-              {stage.title}
-            </p>
-            <div className="mt-10">
-              <InitialDiagnostic
-                diagnostic={lesson.diagnostic}
+          {!isDiagnostic && (
+            <FrameProgress current={frameIndex} total={frames.length} />
+          )}
+        </div>
+      </header>
+
+      <div
+        ref={stageViewportRef}
+        className="lesson-stage-viewport"
+        data-lesson-stage-viewport
+        data-stage-type={stage.type}
+        data-frame-id={frame.id}
+      >
+        <div className="lesson-stage-inner">
+          {isDiagnostic && lesson.diagnostic ? (
+            <article data-frame-root tabIndex={-1} className="outline-none">
+              <p className="font-mono text-xs font-semibold uppercase tracking-label text-gold">
+                {stage.eyebrow}
+              </p>
+              <p className="lesson-stage-title mt-3 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
+                {stage.title}
+              </p>
+              <div className="lesson-stage-content mt-6">
+                <InitialDiagnostic
+                  diagnostic={lesson.diagnostic}
+                  journey={journey}
+                  result={diagnosticResult}
+                  onAnswer={onDiagnosticAnswer}
+                  onComplete={onDiagnosticComplete}
+                  onContinue={() => selectStage(diagnosticIndex + 1)}
+                />
+              </div>
+            </article>
+          ) : (
+            <>
+              <LessonStageContent
+                lessonId={lesson.id}
+                stage={frame.stage}
                 journey={journey}
-                result={diagnosticResult}
-                onAnswer={onDiagnosticAnswer}
-                onComplete={onDiagnosticComplete}
-                onContinue={() => onStageSelect(diagnosticIndex + 1)}
+                onOpenResponse={onOpenResponse}
+                onDecision={onDecision}
+                onSelfAssessment={onSelfAssessment}
+                onChecklist={() => undefined}
+                onAudit={() => undefined}
+                onJournal={onJournal}
               />
-            </div>
-          </>
-        ) : (
-          <LessonStageContent
-            lessonId={lesson.id}
-            stage={stage}
-            journey={journey}
-            onOpenResponse={onOpenResponse}
-            onDecision={onDecision}
-            onSelfAssessment={onSelfAssessment}
-            onChecklist={() => undefined}
-            onAudit={() => undefined}
-            onJournal={onJournal}
-          />
-        )}
+              {isMaterialsFrame && (
+                <div className="mt-6">
+                  <LessonMaterials materials={lesson.materials} />
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
 
-      {!isDiagnostic && !isClosing && (
-        <div className="flex items-center justify-between gap-4 py-8">
+      {!isDiagnostic && (
+        <footer className="lesson-journey-nav flex items-center justify-between gap-4 border-t border-line py-4 md:py-5">
           <ActionButton
             variant="secondary"
-            disabled={journey.currentStageIndex === 0}
-            onClick={() =>
-              onStageSelect(Math.max(0, journey.currentStageIndex - 1))
-            }
+            disabled={journey.currentStageIndex === 0 && frameIndex === 0}
+            onClick={previousPage}
           >
             <ArrowIcon className="size-4 rotate-180" /> Voltar
           </ActionButton>
-          <div className="text-right">
-            {!advanceAllowed && (
-              <p className="mb-2 text-xs text-muted">
-                Conclua a interação para avançar.
-              </p>
-            )}
-            <ActionButton disabled={!advanceAllowed} onClick={onContinue}>
-              {journey.currentStageIndex === 0
-                ? "COMEÇAR IMERSÃO"
-                : "Continuar"}
-              <ArrowIcon className="size-4" />
-            </ActionButton>
-          </div>
-        </div>
-      )}
 
-      {isClosing && (
-        <div className="py-8">
-          <div className="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-label text-gold">
-            <CheckIcon /> Diagnóstico inicial registrado
-          </div>
-          <ActionButton onClick={() => onNavigate("/modulos/01")}>
-            COMEÇAR MÓDULO 01 <ArrowIcon />
-          </ActionButton>
-          <LessonMaterials materials={lesson.materials} />
-        </div>
+          {isClosing && isLastFrame ? (
+            <div className="flex items-center gap-4">
+              <span className="hidden items-center gap-2 font-mono text-xs uppercase tracking-label text-gold sm:flex">
+                <CheckIcon /> Imersão concluída
+              </span>
+              <ActionButton onClick={() => onNavigate("/modulos/01")}>
+                COMEÇAR MÓDULO 01 <ArrowIcon />
+              </ActionButton>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 text-right">
+              {isLastFrame && !advanceAllowed && (
+                <p className="hidden text-xs text-muted sm:block">
+                  Conclua a interação para avançar.
+                </p>
+              )}
+              <ActionButton
+                disabled={isLastFrame && !advanceAllowed}
+                onClick={nextPage}
+              >
+                {journey.currentStageIndex === 0 && isLastFrame
+                  ? "COMEÇAR IMERSÃO"
+                  : isLastFrame
+                    ? "Continuar"
+                    : "Próxima página"}
+                <ArrowIcon className="size-4" />
+              </ActionButton>
+            </div>
+          )}
+        </footer>
       )}
     </main>
   )

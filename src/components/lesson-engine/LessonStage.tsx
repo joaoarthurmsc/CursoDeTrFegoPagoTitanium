@@ -412,7 +412,7 @@ export default function LessonStage({
   ) => void
 }) {
   return (
-    <article>
+    <article data-frame-root tabIndex={-1} className="outline-none">
       <p className="font-mono text-xs font-semibold uppercase tracking-label text-gold">
         {stage.eyebrow}
       </p>

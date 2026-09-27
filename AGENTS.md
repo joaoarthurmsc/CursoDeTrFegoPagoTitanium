@@ -48,3 +48,15 @@ This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin con
 - On desktop, keep stage progress and previous/continue navigation stable while only the central learning area scrolls when necessary.
 - On small or short screens, allow natural document scroll and keep navigation accessible.
 - Changing stages must reset the stage reading position to the top.
+
+## Titanium Lesson Player V2
+
+- A lesson stage is a pedagogical unit; a frame is a screen-sized presentation unit inside that stage.
+- Use semantic pagination: split content at meaningful boundaries (concept, example, comparison, decision, practice), never at arbitrary pixel or word counts.
+- Prefer one frame per useful viewport. If a frame genuinely needs more space, allow internal scroll instead of shrinking typography.
+- Long structured fields are automatically chunked into frames; interactive actions remain on their own final frame whenever possible.
+- Aula 00 and standard lessons must use the same viewport-first player behavior.
+- Every frame/stage change must reset both window and lesson viewport to the top after render and move focus to the new frame root.
+- On desktop, progress and previous/next navigation stay stable while only the central frame may scroll.
+- On short/mobile screens, natural document scroll is allowed.
+- Development mode should warn when a frame substantially exceeds the useful viewport so content can be re-authored before publication.

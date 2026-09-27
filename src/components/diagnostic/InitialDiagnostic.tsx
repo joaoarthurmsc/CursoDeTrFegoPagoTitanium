@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import type {
   Diagnostic,
   DiagnosticResult,
@@ -32,6 +32,25 @@ export default function InitialDiagnostic({
   )
   const [index, setIndex] = useState(firstUnanswered >= 0 ? firstUnanswered : 0)
 
+  useLayoutEffect(() => {
+    let second = 0
+    const first = requestAnimationFrame(() => {
+      second = requestAnimationFrame(() => {
+        const active = document.activeElement
+        if (active instanceof HTMLElement) active.blur()
+        document
+          .querySelector<HTMLElement>("[data-lesson-stage-viewport]")
+          ?.scrollTo({ top: 0, left: 0, behavior: "auto" })
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+      })
+    })
+
+    return () => {
+      cancelAnimationFrame(first)
+      if (second) cancelAnimationFrame(second)
+    }
+  }, [index, Boolean(result)])
+
   if (result) {
     return (
       <DiagnosticResults
@@ -48,21 +67,19 @@ export default function InitialDiagnostic({
 
   return (
     <div>
-      <div className="mb-8 border-l-2 border-gold bg-graphite p-5">
-        <p className="text-sm leading-7 text-silver">
-          Agora queremos registrar seu ponto de partida. Você encontrará
-          assuntos que ainda não estudou. Isso é esperado.
-        </p>
-        <p className="mt-4 font-semibold leading-6 text-paper">
-          Este diagnóstico não aprova, não reprova e não permite pular
-          conteúdos.
-        </p>
-      </div>
-      <div className="mb-8">
-        <div className="mb-2 flex justify-between font-mono text-xs text-muted">
+      {index === 0 && (
+        <div className="mb-5 border-l-2 border-gold bg-graphite px-4 py-3">
+          <p className="text-sm leading-6 text-silver">
+            Este diagnóstico registra seu ponto de partida. Não aprova, não
+            reprova e não permite pular conteúdos.
+          </p>
+        </div>
+      )}
+
+      <div className="mb-5">
+        <div className="mb-2 flex justify-between gap-4 font-mono text-xs text-muted">
           <span>
-            {question.competence} · Questão {index + 1} de{" "}
-            {diagnostic.questions.length}
+            {question.competence} · Questão {index + 1} de {diagnostic.questions.length}
           </span>
           <span>{diagnostic.pointsPerQuestion.toFixed(1)} ponto</span>
         </div>
@@ -70,12 +87,14 @@ export default function InitialDiagnostic({
           value={((index + 1) / diagnostic.questions.length) * 100}
         />
       </div>
+
       <DiagnosticQuestion
         question={question}
         selected={selected}
         onSelect={(optionId) => onAnswer(question.id, optionId)}
       />
-      <div className="mt-8 flex items-center justify-between gap-4">
+
+      <div className="mt-6 flex items-center justify-between gap-4">
         <ActionButton
           variant="secondary"
           disabled={index === 0}
