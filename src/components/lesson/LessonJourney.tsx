@@ -14,24 +14,12 @@ import { ActionButton, ArrowIcon } from "../titanium/HomePrimitives"
 
 function canCompleteStage(stage: LessonStage, journey: LessonJourneyState) {
   if (journey.completedStageIds.includes(stage.id)) return true
-  if (stage.type === "think")
-    return Boolean(
-      journey.openResponses[stage.id]?.trim() &&
-        (!stage.selfAssessment || journey.selfAssessments[stage.id]),
-    )
-  if (stage.type === "decide")
+  if (stage.options?.length) {
     return Boolean(journey.decisions[stage.id]?.confirmed)
-  if (stage.type === "practice")
+  }
+  if (stage.type === "practice") {
     return journey.checklists[stage.id]?.length === stage.checklist?.length
-  if (stage.type === "audit")
-    return Boolean(
-      stage.auditPrompts?.every((prompt) =>
-        journey.auditResponses[stage.id]?.[prompt]?.trim(),
-      ),
-    )
-  if (stage.type === "journal") return Boolean(journey.journalEntries[stage.id])
-  if (stage.type === "review" && stage.prompt)
-    return Boolean(journey.openResponses[stage.id]?.trim())
+  }
   return true
 }
 

@@ -1,12 +1,16 @@
-import type { Lesson } from "../types/learning"
+import type { Lesson, LessonStage } from "../types/learning"
 
 export const TITANIUM_MASTERY_SCORE = 9
 
 export const TITANIUM_LESSON_PRINCIPLES = {
   autonomousExperience:
-    "Uma Aula Titanium é uma experiência autossuficiente de aprendizagem e domínio que substitui uma aula tradicional gravada através de conteúdo profundo, explicações progressivas, recursos visuais, exemplos, interação, aplicação prática, diagnóstico, mapa mental, materiais de apoio e avaliação com correção orientada.",
+    "Uma Aula Titanium é uma experiência autossuficiente de aprendizagem e domínio que combina explicação progressiva, imagens, casos, interação fechada A-D, aplicação, diagnóstico, mapa mental, material de revisão e avaliação com feedback orientado.",
   masteryOverConsumption:
     "Nenhuma aula é considerada concluída por consumo. Ela é concluída por domínio demonstrado.",
+  closedQuestions:
+    "Toda pergunta de aprendizagem ou avaliação usa exatamente quatro alternativas, A-D. Não utilizamos respostas abertas como mecanismo de avaliação.",
+  visualReality:
+    "Sempre que a compreensão melhorar com evidência visual, a aula usa imagens explicativas ou capturas reais da interface. Capturas de Google Ads devem ser autênticas e atuais, nunca imagens geradas fingindo ser a interface real.",
 } as const
 
 export const REQUIRED_LESSON_CAPABILITIES = [
@@ -17,17 +21,48 @@ export const REQUIRED_LESSON_CAPABILITIES = [
   "exam",
 ] as const
 
-export function assertTitaniumLessonArchitecture(lesson: Lesson) {
-  const authoredStages = lesson.stages.flatMap((stage) => [
+function authoredStages(lesson: Lesson): LessonStage[] {
+  return lesson.stages.flatMap((stage) => [
     stage,
     ...(stage.frames ?? []),
   ])
-  const stageTypes = new Set(authoredStages.map((stage) => stage.type))
+}
+
+function isClosedQuestion(stage: LessonStage) {
+  return Boolean(stage.options?.length)
+}
+
+function hasForbiddenOpenInteraction(stage: LessonStage) {
+  return Boolean(
+    stage.modelAnswer ||
+      stage.selfAssessment ||
+      stage.auditPrompts?.length ||
+      stage.journalFields?.length ||
+      (stage.prompt && !stage.options?.length),
+  )
+}
+
+function hasExactlyFourOptions(options?: { id: string }[]) {
+  if (!options?.length) return true
+  return (
+    options.length === 4 &&
+    options.map((option) => option.id).join(",") === "a,b,c,d"
+  )
+}
+
+export function assertTitaniumLessonArchitecture(lesson: Lesson) {
+  const stages = authoredStages(lesson)
+  const stageTypes = new Set(stages.map((stage) => stage.type))
   const materialTypes = new Set(
     lesson.materials.map((material) => material.type),
   )
-  const hasDynamicTeaching = authoredStages.some((stage) =>
-    ["think", "decide", "practice", "audit", "guided"].includes(stage.type),
+  const hasDynamicTeaching = stages.some(
+    (stage) => isClosedQuestion(stage) || ["practice", "guided"].includes(stage.type),
+  )
+  const hasVisualAsset = stages.some(
+    (stage) =>
+      Boolean(stage.media) ||
+      Boolean(stage.guidedSteps?.some((step) => step.image)),
   )
   const diagnosticCompetencies =
     lesson.diagnostic?.questions.reduce<Record<string, number>>(
@@ -37,11 +72,29 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
       },
       {},
     )
+
+  const invalidStageQuestions = stages.filter(
+    (stage) =>
+      hasForbiddenOpenInteraction(stage) ||
+      !hasExactlyFourOptions(stage.options),
+  )
+  const invalidExamQuestions =
+    lesson.exam?.questions.filter(
+      (question) => !hasExactlyFourOptions(question.options),
+    ) ?? []
+  const invalidDiagnosticQuestions =
+    lesson.diagnostic?.questions.filter(
+      (question) => !hasExactlyFourOptions(question.options),
+    ) ?? []
+
   const missing = [
     !hasDynamicTeaching && "ensino dinâmico",
     !stageTypes.has("visual") && "etapa visual",
     !stageTypes.has("mindmap") && "Mapa Mental",
-    !stageTypes.has("review") && "Revisão",
+    !lesson.demo && !hasVisualAsset && "imagem real/explicativa na aula",
+    invalidStageQuestions.length > 0 && "interações abertas ou sem A-D",
+    invalidExamQuestions.length > 0 && "prova com questão sem quatro alternativas A-D",
+    invalidDiagnosticQuestions.length > 0 && "diagnóstico com questão sem quatro alternativas A-D",
     lesson.completionMode === "exam" &&
       !stageTypes.has("exam") &&
       "Prova da Aula",
@@ -59,9 +112,8 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
         (total) => total !== 2,
       ) &&
       "Diagnóstico com duas questões por competência",
-    !materialTypes.has("titanium-lesson") && "Titanium Lesson",
-    !materialTypes.has("titanium-notes") && "Titanium Notes",
-    !materialTypes.has("mindmap") && "material Mapa Mental",
+    !materialTypes.has("titanium-lesson") && "Guia + Notas da Aula",
+    !materialTypes.has("mindmap") && "material Mapa Mental em imagem",
     lesson.completionMode === "exam" &&
       lesson.exam?.passingScore !== TITANIUM_MASTERY_SCORE &&
       `nota mínima ${TITANIUM_MASTERY_SCORE}`,

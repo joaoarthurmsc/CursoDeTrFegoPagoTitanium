@@ -2,6 +2,22 @@ export type LessonStageType = "discovery" | "context" | "learn" | "concept" | "e
 
 export type LessonStageMode = "explain" | "focus" | "apply"
 
+export type LessonMediaKind =
+  | "interface-screenshot"
+  | "explanatory-image"
+  | "mindmap"
+  | "diagram"
+  | "photo"
+
+export type LessonMedia = {
+  src: string
+  alt: string
+  kind: LessonMediaKind
+  caption?: string
+  sourceLabel?: string
+  zoomable?: boolean
+}
+
 export type GlossaryEntry = {
   term: string
   original?: string
@@ -24,6 +40,7 @@ export type LessonStage = {
   mode?: LessonStageMode
   frameLabel?: string
   frames?: LessonStage[]
+  media?: LessonMedia
   body?: string[]
   glossary?: GlossaryEntry[]
   prompt?: string
@@ -70,7 +87,7 @@ export type LessonStage = {
   reviewSections?: Array<{ title: string; items: string[] }>
 }
 
-export type ExamQuestionKind = "objective" | "interpretation" | "decision" | "diagnosis" | "open"
+export type ExamQuestionKind = "objective" | "interpretation" | "decision" | "diagnosis"
 
 export type ExamOption = {
   id: string
@@ -130,7 +147,7 @@ export type DiagnosticResult = {
   competencies: Record<string, DiagnosticCompetenceResult>
 }
 
-export type LessonMaterialType = "titanium-lesson" | "titanium-notes" | "mindmap" | "cheat-sheet" | "checklist" | "workbook" | "template" | "calculator" | "case" | "table" | "flowchart"
+export type LessonMaterialType = "titanium-lesson" | "mindmap" | "cheat-sheet" | "checklist" | "workbook" | "template" | "calculator" | "case" | "table" | "flowchart"
 
 export type LessonMaterial = {
   id: string

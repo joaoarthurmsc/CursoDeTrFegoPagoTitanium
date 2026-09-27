@@ -48,6 +48,15 @@ function getLesson(lessonId: string) {
   return lessonDefinitions.find((lesson) => lesson.id === lessonId)
 }
 
+function getAuthoredStage(lessonId: string, stageId: string) {
+  const lesson = getLesson(lessonId)
+  if (!lesson) return undefined
+
+  return lesson.stages
+    .flatMap((stage) => [stage, ...(stage.frames ?? [])])
+    .find((stage) => stage.id === stageId)
+}
+
 function getLessonLabel(lessonId: string) {
   const lesson = getLesson(lessonId)
   if (!lesson) return `Aula ${lessonId}`
@@ -122,34 +131,35 @@ export default function PerformancePage() {
     0,
   )
 
-  const openResponses = journeyEntries.flatMap(
-    ([lessonId, journey]) =>
-      Object.entries(journey.openResponses)
-        .filter(([, answer]) => Boolean(answer.trim()))
-        .map(([stageId, answer]) => {
-          const stage = getLesson(lessonId)?.stages.find(
-            (item) => item.id === stageId,
-          )
+  const closedInteractions = journeyEntries.flatMap(([lessonId, journey]) =>
+    Object.entries(journey.decisions)
+      .filter(([, decision]) => decision.confirmed && decision.selectedOptionId)
+      .map(([stageId, decision]) => {
+        const stage = getAuthoredStage(lessonId, stageId)
+        const selected = stage?.options?.find(
+          (option) => option.id === decision.selectedOptionId,
+        )
 
-          return {
-            lessonId,
-            lessonLabel: getLessonLabel(lessonId),
-            stageId,
-            stageTitle: stage?.title ?? stageId,
-            prompt: stage?.prompt,
-            answer,
-            modelAnswer: stage?.modelAnswer,
-            selfAssessment: journey.selfAssessments[stageId],
-          }
-        }),
+        return {
+          lessonId,
+          lessonLabel: getLessonLabel(lessonId),
+          stageId,
+          stageTitle: stage?.title ?? stageId,
+          scenario: stage?.scenario ?? stage?.prompt,
+          answer: selected?.label ?? decision.selectedOptionId,
+          feedback: selected?.feedback,
+          recommended: Boolean(selected?.recommended),
+        }
+      }),
   )
+
 
   return (
     <>
       <PageHeader
         eyebrow={`Aluno · ${student?.name ?? "Titanium"}`}
         title="Desempenho"
-        description="Histórico individual de progresso, avaliações, respostas abertas e tempo ativo de estudo."
+        description="Histórico individual de progresso, avaliações, interações A-D e tempo ativo de estudo."
       />
 
       <section className="mb-14 grid gap-px bg-line sm:grid-cols-2 xl:grid-cols-4">
@@ -334,10 +344,10 @@ export default function PerformancePage() {
       </section>
 
       <section>
-        <SectionHeader title="Respostas abertas" />
-        {openResponses.length ? (
+        <SectionHeader title="Interações de aprendizagem" />
+        {closedInteractions.length ? (
           <div className="grid gap-3">
-            {openResponses.map((item) => (
+            {closedInteractions.map((item) => (
               <details
                 key={`${item.lessonId}-${item.stageId}`}
                 className="border border-line bg-graphite"
@@ -349,44 +359,44 @@ export default function PerformancePage() {
                   <p className="mt-2 font-medium text-paper">
                     {item.stageTitle}
                   </p>
-                  <p className="mt-2 text-xs text-muted">
-                    {item.selfAssessment
-                      ? `Autoavaliação · ${item.selfAssessment}`
-                      : "Sem correção automática · avaliação por rubrica"}
+                  <p
+                    className={`mt-2 font-mono text-xs uppercase tracking-label ${
+                      item.recommended ? "text-gold" : "text-muted"
+                    }`}
+                  >
+                    {item.recommended ? "Resposta recomendada" : "Revisar raciocínio"}
                   </p>
                 </summary>
 
-                <div className="grid gap-5 border-t border-line px-5 py-5 lg:grid-cols-2">
-                  <div>
-                    {item.prompt && (
-                      <p className="mb-3 text-sm font-medium leading-6 text-paper">
-                        {item.prompt}
+                <div className="border-t border-line px-5 py-5">
+                  {item.scenario && (
+                    <p className="text-sm font-medium leading-6 text-paper">
+                      {item.scenario}
+                    </p>
+                  )}
+                  <p className="mt-4 font-mono text-xs uppercase tracking-label text-muted">
+                    Sua resposta
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-silver">
+                    {item.answer}
+                  </p>
+                  {item.feedback && (
+                    <>
+                      <p className="mt-5 font-mono text-xs uppercase tracking-label text-muted">
+                        Feedback
                       </p>
-                    )}
-                    <p className="font-mono text-xs uppercase tracking-label text-muted">
-                      Resposta do aluno
-                    </p>
-                    <p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-silver">
-                      {item.answer}
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-label text-muted">
-                      Referência
-                    </p>
-                    <p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-silver">
-                      {item.modelAnswer ??
-                        "A resposta será julgada por rubrica/manual quando esta atividade exigir nota."}
-                    </p>
-                  </div>
+                      <p className="mt-2 text-sm leading-7 text-silver">
+                        {item.feedback}
+                      </p>
+                    </>
+                  )}
                 </div>
               </details>
             ))}
           </div>
         ) : (
           <EmptyState>
-            Nenhuma resposta aberta registrada.
+            Nenhuma interação A-D registrada.
           </EmptyState>
         )}
 
@@ -395,9 +405,7 @@ export default function PerformancePage() {
             Regra Titanium
           </p>
           <p className="mt-3 text-sm leading-7 text-silver">
-            Respostas abertas não recebem “certo” ou “errado” por busca de
-            palavras-chave. Elas são preservadas integralmente para comparação,
-            autoavaliação e futura correção manual por rubrica.
+            Perguntas de aprendizagem e avaliação usam quatro alternativas, A-D. Isso permite correção imediata, histórico objetivo e feedback sem depender de IA ou correção manual.
           </p>
         </div>
       </section>

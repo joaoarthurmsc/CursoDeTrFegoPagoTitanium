@@ -1,74 +1,150 @@
-# figma-make-app
+# Titanium — Product & Engineering Guide
 
-React + Vite + Tailwind CSS project running inside Figma Make.
+## Product
 
-## Development Server
+Titanium is a private premium learning environment for two students, focused on Google Ads, acquisition, performance and strategy. It is not a commercial SaaS and should not look or behave like one.
 
-A Vite development server is **already running** on `$PORT` (default 8443). You don't need to start it manually.
+The product objective is mastery: students should progress from fundamentals toward diagnosis, strategy and acquisition architecture (N0–N6).
 
-- Preview URL: The user can access the running app through the preview panel
-- Hot reload: Changes to source files are reflected immediately
+## Stack
 
-## Project Structure
+- React 19
+- TypeScript
+- Vite 8
+- Tailwind CSS v4
+- Local persistence through `learningRepository`
+- No backend, auth service, paid AI API or external grading dependency unless explicitly introduced later
 
-This is the canonical project structure. Start with task-relevant files below. Only follow imports or inspect other files when required, when a documented path is missing, or when the repository contradicts this guide.
+Core commands:
 
-- `src/main.tsx` - React entrypoint; imports `src/index.css` and mounts `src/App.tsx` into the `#root` element
-- `src/App.tsx` - Primary application component and the usual starting point for UI work
-- `src/index.css` - Global CSS entrypoint and Tailwind CSS v4 import
-- `index.html` - Vite HTML shell containing the `#root` element and loading `src/main.tsx`
-- `package.json` - Project dependencies and the Vite build, development, preview, and formatting scripts
-- `vite.config.ts` - Vite configuration with React, Tailwind CSS v4, and Figma Make plugins plus the `@` alias for `src`
-- `.mise.toml` - Toolchain versions for Node.js and pnpm
+```bash
+pnpm dev
+pnpm typecheck
+pnpm build
+```
 
-## Dependencies
+## Architecture
 
-- Runtime: React 19 and React DOM 19
-- Styling: Tailwind CSS v4 with the `@tailwindcss/vite` plugin
-- Build tooling: Vite 8, TypeScript 5.7, and `@vitejs/plugin-react`
-- Formatting: oxfmt
+- `src/data/` — curriculum and authored lesson data
+- `src/types/` — learning and progress contracts
+- `src/components/lesson/` — lesson players and lesson-level UI
+- `src/components/lesson-engine/` — reusable learning interactions
+- `src/components/exam/` — exams and error-map UI
+- `src/storage/` — profile-scoped persistence
+- `src/pages/` — route-level screens
+- `public/lessons/` — lesson images and authentic interface captures
+- `public/materials/` — official downloadable/review materials
 
-## Styling
+Lessons are data. The player renders the authored pedagogy; the player must not invent pedagogical sequencing.
 
-This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin configured in `vite.config.ts`. `src/index.css` imports Tailwind with `@import 'tailwindcss';`. Use Tailwind utility classes directly in JSX and put global CSS or Tailwind v4 theme customization in `src/index.css`. This scaffold does not need a Tailwind config file or PostCSS config.
+## Profiles & persistence
 
-`src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
+- Arthur and Rafael are separate local student profiles.
+- Academic progress must remain isolated per profile.
+- `/desempenho` belongs inside the user menu.
+- Aula 00 must be completed before Module 01 becomes available.
+
+## Visual direction
+
+- Premium, dark, cinematic, editorial learning environment.
+- Black/graphite base, white/silver type, restrained gold/bronze accents.
+- Avoid neon, generic SaaS dashboards, excessive glassmorphism and decorative gradients.
+- No sidebar.
+- Typography and whitespace must remain comfortable; never shrink text merely to force content into one viewport.
+
+## Viewport-first learning
+
+- Prefer one complete learning unit per useful viewport when meaning and legibility are preserved.
+- Small scroll is acceptable when it protects semantic coherence.
+- Long explanations, cases, tables, screenshots and exams may scroll deliberately.
+- On desktop, keep lesson progress and previous/next navigation stable while the central learning area scrolls only when needed.
+- Every page/frame change resets window and lesson viewport to the top after render and moves focus to the new frame root.
+- On short/mobile screens, natural document scroll is allowed.
+
+## Teaching modes
+
+Use three modes intentionally:
+
+- EXPLAIN → `APRENDA`
+- FOCUS → `PONTO-CHAVE`
+- APPLY → `AGORA É COM VOCÊ`
+
+A frame is a complete learning unit, not a sentence fragment. Never create a new page only to display an impact phrase.
+
+Typical lesson narrative:
+
+1. Why this matters
+2. Learning objective
+3. Explanation
+4. Visual/example
+5. Closed interaction
+6. Application/diagnosis
+7. Common errors
+8. Synthesis
+9. Mind map
+10. Assessment
+
+## Closed-question standard
+
+- Do not author open-ended questions in lessons, diagnostics, reviews, labs or exams.
+- Every authored question uses exactly four alternatives with stable ids `a`, `b`, `c`, `d`.
+- Every alternative should have meaningful feedback.
+- Closed questions may test recall, interpretation, calculation, diagnosis, prioritization, strategy and error recognition.
+- Avoid easy questions whose answer can be guessed from wording alone.
+- Ordinary completion must not depend on AI or manual correction.
+- Performance history should preserve selected alternatives, correctness/recommendation, feedback, attempts, scores and active study time.
+
+## Mastery
+
+- Lesson and module mastery threshold: 9.0/10 when an exam applies.
+- Completion is never based on consumption alone.
+- Error maps should point the student back to the concept or stage that needs reconstruction.
+- Initial Diagnostic has 20 A–D questions, 2 per competency, 0.5 point each, with no pass/fail gate.
+
+## Visual-first standard
+
+Use images whenever they reduce abstraction.
+
+- Google Ads operational instruction should use authentic, current screenshots of the real interface.
+- Screenshots may use zoom, highlights, hotspots and “Faça comigo” guidance.
+- Never use an AI-generated mock interface while presenting it as a real Google Ads screenshot.
+- Generated diagrams and explanatory images are allowed when clearly presented as explanatory visuals.
+- Every image must have useful alt text and may include caption/source context.
+- Detailed images should support enlargement.
+
+## Official lesson materials
+
+Each finished lesson has two mandatory core assets:
+
+1. **Guia + Notas da Aula** — one combined PDF for study and revision.
+2. **Mapa Mental** — a real image asset (PNG/JPG/WebP/SVG), not a PDF.
+
+Do not create a separate Titanium Notes PDF.
+
+Additional assets such as checklists, calculators, cases, templates or cheat sheets are optional and should exist only when useful.
+
+## Authoring pipeline
+
+Do not code a final lesson before the teaching design exists.
+
+```text
+pedagogical objective
+→ professor script
+→ examples/cases
+→ authentic screenshots / explanatory images
+→ closed A-D interactions
+→ mind map
+→ assessment
+→ combined Guide + Notes PDF
+→ interface implementation
+```
+
+Aula 00 V3 is the current reference model for future Titanium lesson authoring.
 
 ## Code quality
 
-- Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.
-- Ensure JSX tags are closed and braces are balanced.
-- Export components as default exports.
-
-## Viewport-First Learning
-
-- Prefer one lesson stage per useful viewport whenever legibility and depth are preserved.
-- Scroll is an intentional exception for long explanations, cases, large tables, guided screenshots, mind maps, reviews, and exams.
-- Never shrink typography or compress spacing aggressively just to avoid scroll.
-- On desktop, keep stage progress and previous/continue navigation stable while only the central learning area scrolls when necessary.
-- On small or short screens, allow natural document scroll and keep navigation accessible.
-- Changing stages must reset the stage reading position to the top.
-
-## Titanium Lesson Player V2
-
-- A lesson stage is a pedagogical unit; a frame is a screen-sized presentation unit inside that stage.
-- Use semantic pagination: split content at meaningful boundaries (concept, example, comparison, decision, practice), never at arbitrary pixel or word counts.
-- Prefer one frame per useful viewport. If a frame genuinely needs more space, allow internal scroll instead of shrinking typography.
-- Long structured fields are automatically chunked into frames; interactive actions remain on their own final frame whenever possible.
-- Aula 00 and standard lessons must use the same viewport-first player behavior.
-- Every frame/stage change must reset both window and lesson viewport to the top after render and move focus to the new frame root.
-- On desktop, progress and previous/next navigation stay stable while only the central frame may scroll.
-- On short/mobile screens, natural document scroll is allowed.
-- Development mode should warn when a frame substantially exceeds the useful viewport so content can be re-authored before publication.
-
-## Titanium Teaching Standard
-
-- The player never decides pedagogical breaks by height when an authored semantic frame exists.
-- A frame is a complete learning unit, not an arbitrary fragment of text.
-- Never create a new frame only to display one impact sentence.
-- Prefer a complete screen with one central idea, 2-4 short paragraphs, an example/visual when useful, and a clear conclusion or action.
-- Small scroll is acceptable when it preserves meaning; semantic coherence is more important than zero scroll.
-- Use three teaching modes intentionally: EXPLAIN (`APRENDA`), FOCUS (`PONTO-CHAVE`), and APPLY (`AGORA É COM VOCÊ`).
-- Every lesson should normally contain: opening relevance, objectives, teaching, example, application, common errors, synthesis, mind map, official materials, and assessment when applicable.
-- Authoring pipeline: pedagogical objective -> professor script -> examples/cases -> interactions -> mind map -> assessment -> materials -> interface.
-- The Aula 00 V2 is the reference lesson for future Titanium lesson authoring.
+- Keep lesson content in data files instead of embedding copy in UI components.
+- Preserve reusable engine components.
+- Use accessible buttons, focus management, labels and alt text.
+- Keep TypeScript strict and run `pnpm typecheck` plus `pnpm build` before commit.
+- Do not reintroduce Figma Make runtime dependencies.

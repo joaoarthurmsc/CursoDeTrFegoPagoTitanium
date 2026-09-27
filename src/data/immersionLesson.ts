@@ -354,17 +354,17 @@ export const immersionLesson: Lesson = {
   objective:
     "Entender como a formação funciona, experimentar o método Titanium e registrar um ponto de partida antes de entrar no Módulo 01.",
   overview:
-    "Aula de abertura da formação. Não é um tutorial de interface: é a primeira experiência pedagógica do Titanium.",
+    "Aula de abertura da formação. Ensina o método, demonstra o padrão de raciocínio e prepara o aluno para aprender por domínio.",
   completionMode: "diagnostic",
   stages: [
     {
-      id: "a00v2-welcome",
+      id: "a00v3-welcome",
       type: "context",
       eyebrow: "Capítulo 01 · Bem-vindo",
-      title: "Bem-vindo ao Titanium",
+      title: "O que é o Titanium",
       frames: [
         {
-          id: "a00v2-welcome-main",
+          id: "a00v3-welcome-main",
           type: "learn",
           mode: "explain",
           frameLabel: "Abertura",
@@ -372,171 +372,149 @@ export const immersionLesson: Lesson = {
           title: "Você não entrou em um curso para aprender onde clicar.",
           body: [
             "O Titanium foi construído para levar você do entendimento básico de tráfego pago até a capacidade de analisar um negócio, estruturar aquisição, diagnosticar problemas, tomar decisões e defender uma estratégia.",
-            "Google Ads será uma ferramenta central. Mas dominar a ferramenta não é o objetivo final. O objetivo é desenvolver o raciocínio de quem entende o sistema antes de alterar uma campanha.",
+            "Google Ads será uma ferramenta central. Mas dominar a ferramenta não é o objetivo final. O objetivo é desenvolver o raciocínio de quem consegue localizar gargalos, interpretar evidências e escolher prioridades.",
           ],
           cards: [
             {
-              title: "Ao terminar esta aula",
-              description:
-                "Você saberá como estudar, como funcionam as avaliações, o que representam N0–N6, como registrar decisões e por que o Módulo 01 só começa depois do diagnóstico inicial.",
+              title: "Entenda",
+              description: "Como o método, as aulas e a progressão foram organizados.",
             },
             {
-              title: "Pergunta que guia a formação",
-              description:
-                "O que está impedindo o resultado, qual evidência sustenta essa leitura e qual decisão faz sentido agora?",
+              title: "Experimente",
+              description: "Uma mini aula com leitura de métrica e decisão prática.",
+            },
+            {
+              title: "Registre",
+              description: "Seu ponto de partida no Diagnóstico Inicial.",
             },
           ],
           highlight:
-            "O Titanium não foi criado para formar um clicador de plataforma. Foi criado para formar operador, diagnosticador e estrategista.",
+            "A pergunta deve deixar de ser 'onde eu clico?' e passar a ser 'qual decisão faz sentido e por quê?'.",
         },
       ],
     },
     {
-      id: "a00v2-professional",
+      id: "a00v3-professional",
       type: "visual",
-      eyebrow: "Capítulo 02 · Evolução",
+      eyebrow: "Capítulo 02 · Profissional",
       title: "O profissional que você vai se tornar",
       frames: [
         {
-          id: "a00v2-professional-map",
+          id: "a00v3-professional-map",
           type: "visual",
           mode: "explain",
-          frameLabel: "Mapa de evolução",
+          frameLabel: "Evolução",
           eyebrow: "Capítulo 02 · Evolução",
-          title: "Existe uma diferença enorme entre operar e pensar.",
-          body: [
-            "A formação progride por camadas. Configurar uma campanha é importante, mas é apenas uma parte do trabalho profissional.",
-          ],
-          visualItems: [
-            {
-              label: "Operador de plataforma",
-              detail: "Sabe configurar e executar tarefas dentro da ferramenta.",
-            },
-            {
-              label: "Operador autônomo",
-              detail: "Consegue gerir a rotina sem depender de um roteiro para cada passo.",
-            },
-            {
-              label: "Diagnosticador",
-              detail: "Investiga a causa antes de prescrever uma mudança.",
-            },
-            {
-              label: "Estrategista / Arquiteto",
-              detail: "Conecta mídia, negócio, economia e desenho do sistema de aquisição.",
-            },
+          title: "Ferramenta é capacidade operacional. Estratégia exige mais.",
+          sequence: [
+            { label: "Operador de plataforma", detail: "Configura e executa tarefas." },
+            { label: "Operador autônomo", detail: "Conduz rotinas com consistência." },
+            { label: "Diagnosticador", detail: "Encontra causas antes de alterar." },
+            { label: "Estrategista", detail: "Conecta mídia, economia e prioridade." },
+            { label: "Arquiteto", detail: "Desenha e defende o sistema de aquisição." },
           ],
           afterSequence: [
-            "Trocar uma estratégia de lances porque o CPA aumentou é uma ação operacional. Descobrir por que o CPA aumentou antes de tocar na campanha é diagnóstico. Entender se aquele CPA ainda é economicamente saudável para o negócio é estratégia.",
+            "Trocar uma estratégia de lances porque o CPA aumentou é ação. Descobrir por que o CPA aumentou é diagnóstico. Entender se aquele CPA ainda é saudável para o negócio é estratégia.",
           ],
         },
         {
-          id: "a00v2-professional-focus",
+          id: "a00v3-professional-focus",
           type: "learn",
           mode: "focus",
           frameLabel: "Ponto-chave",
           eyebrow: "Capítulo 02 · Ponto-chave",
           title: "Saber usar Google Ads não significa saber gerar crescimento.",
           body: [
-            "Uma pessoa pode conhecer campanhas, palavras-chave, públicos, Performance Max e estratégias de lances e ainda tomar decisões ruins.",
-            "Ferramenta é capacidade operacional. O Titanium quer desenvolver capacidade de pensar antes de operar.",
+            "Uma pessoa pode conhecer campanhas, palavras-chave, públicos e estratégias de lances e ainda tomar decisões ruins.",
+            "O Titanium quer desenvolver capacidade de pensar antes de operar.",
           ],
           quote:
-            "Quando a formação avançar, a pergunta deve deixar de ser 'onde eu clico?' e passar a ser 'qual decisão faz sentido e por quê?'",
+            "Quando a formação avançar, queremos que sua pergunta principal seja: qual decisão faz sentido e por quê?",
         },
       ],
     },
     {
-      id: "a00v2-e5",
-      type: "visual",
+      id: "a00v3-e5",
+      type: "learn",
       eyebrow: "Capítulo 03 · Método E5",
       title: "Como você vai aprender",
       frames: [
         {
-          id: "a00v2-e5-context",
+          id: "a00v3-e5-main",
           type: "learn",
           mode: "explain",
-          frameLabel: "O problema",
-          eyebrow: "Capítulo 03 · Método E5",
+          frameLabel: "E5",
+          eyebrow: "Capítulo 03 · E5",
           title: "Saber a definição não é o mesmo que dominar o conceito.",
           body: [
-            "Imagine alguém que sabe dizer que CTR significa Click-Through Rate - Taxa de Cliques - e consegue repetir a fórmula corretamente.",
-            "Agora pergunte: um CTR de 8% é bom? Sem contexto, a resposta profissional é 'depende'. É preciso entender objetivo, intenção, qualidade do tráfego e o que acontece depois do clique.",
+            "Uma pessoa pode saber que CTR significa Taxa de Cliques e ainda não saber interpretar se um CTR é bom, ruim ou irrelevante para a decisão atual.",
+            "O E5 impede que reconhecimento de termos seja confundido com capacidade profissional.",
           ],
-          highlight:
-            "Conhecimento declarativo é uma camada do domínio. O Titanium exige que o conhecimento sobreviva ao contato com um caso real.",
-        },
-        {
-          id: "a00v2-e5-map",
-          type: "visual",
-          mode: "explain",
-          frameLabel: "E5",
-          eyebrow: "Capítulo 03 · Método E5",
-          title: "E5 transforma conteúdo em capacidade.",
-          visualItems: [
-            { label: "Entender", detail: "Compreender o conceito e sua lógica." },
-            { label: "Exemplificar", detail: "Reconhecer e produzir exemplos." },
+          sequence: [
+            { label: "Entender", detail: "Compreender o conceito e sua função." },
+            { label: "Exemplificar", detail: "Reconhecer o conceito em casos concretos." },
             { label: "Executar", detail: "Aplicar o conhecimento na prática." },
-            { label: "Examinar", detail: "Ler evidências, problemas e resultados." },
+            { label: "Examinar", detail: "Interpretar evidências, causas e resultados." },
+            { label: "Explicar", detail: "Defender o raciocínio e a decisão." },
           ],
-          afterSequenceLead:
-            "A quinta camada é Explicar: justificar o que aconteceu, qual decisão foi tomada e por que ela é defensável.",
         },
         {
-          id: "a00v2-e5-check",
-          type: "decide",
+          id: "a00v3-e5-check",
+          type: "think",
           mode: "apply",
           frameLabel: "Teste rápido",
-          eyebrow: "Capítulo 03 · Teste rápido",
-          title: "Conhecer a definição basta?",
+          eyebrow: "Capítulo 03 · Agora é com você",
+          title: "Conhecer um conceito é suficiente?",
           scenario:
-            "Uma pessoa consegue repetir perfeitamente o que significa CPA, mas diante de uma conta real não sabe dizer por que o CPA aumentou. Essa pessoa domina CPA?",
+            "Uma pessoa consegue repetir perfeitamente o que significa CPA, mas diante de uma conta real não sabe explicar por que ele aumentou. Qual leitura é a mais correta?",
           allowRetry: true,
           options: [
             {
               id: "a",
-              label: "Sim. Saber a definição é suficiente.",
-              feedback:
-                "Isso mede lembrança, não domínio operacional. Ainda falta usar o conceito para interpretar e decidir.",
+              label: "Ela domina CPA porque conhece a definição.",
+              feedback: "Definição é apenas uma camada. Ainda falta aplicação e diagnóstico.",
             },
             {
               id: "b",
-              label:
-                "Parcialmente. Ela conhece o conceito, mas ainda não domina aplicação e diagnóstico.",
-              feedback:
-                "Correto. O E5 existe justamente para impedir que reconhecimento de termos seja confundido com capacidade profissional.",
+              label: "Ela conhece o conceito, mas ainda não demonstrou domínio de aplicação e diagnóstico.",
+              feedback: "Correto. O E5 diferencia reconhecer um termo de conseguir usá-lo profissionalmente.",
               recommended: true,
             },
             {
               id: "c",
-              label: "Sim, desde que consiga calcular o CPA.",
-              feedback:
-                "Calcular é útil, mas ainda não mostra se a pessoa sabe interpretar causa, consequência e decisão.",
+              label: "Ela domina CPA se conseguir fazer a fórmula matemática.",
+              feedback: "Calcular ajuda, mas não prova interpretação de causa, contexto ou decisão.",
+            },
+            {
+              id: "d",
+              label: "CPA não pode ser utilizado para diagnóstico.",
+              feedback: "CPA é um sinal importante; o erro é tratá-lo sem contexto.",
             },
           ],
         },
       ],
     },
     {
-      id: "a00v2-mastery",
+      id: "a00v3-mastery",
       type: "discovery",
       eyebrow: "Capítulo 04 · Domínio",
       title: "Consumo não é domínio",
       frames: [
         {
-          id: "a00v2-mastery-compare",
+          id: "a00v3-mastery-compare",
           type: "discovery",
           mode: "explain",
           frameLabel: "Compare",
           eyebrow: "Capítulo 04 · Compare",
           title: "Quem está realmente mais preparado?",
           body: [
-            "Dois alunos tiveram experiências muito diferentes. Não olhe apenas para horas consumidas; olhe para o que cada um foi capaz de fazer.",
+            "Não olhe apenas para horas consumidas. Observe o que cada pessoa foi capaz de fazer com o conhecimento.",
           ],
           comparison: [
             {
               label: "Pessoa A",
               metrics: [
-                { label: "Vídeos assistidos", value: "20h" },
+                { label: "Conteúdo consumido", value: "20h" },
                 { label: "Diagnósticos", value: "0" },
                 { label: "Decisões justificadas", value: "0" },
                 { label: "Erros analisados", value: "0" },
@@ -547,65 +525,75 @@ export const immersionLesson: Lesson = {
               metrics: [
                 { label: "Estudo ativo", value: "8h" },
                 { label: "Cases resolvidos", value: "15" },
-                { label: "Decisões justificadas", value: "11" },
+                { label: "Decisões avaliadas", value: "11" },
                 { label: "Erros corrigidos", value: "6" },
               ],
             },
           ],
         },
         {
-          id: "a00v2-mastery-focus",
+          id: "a00v3-mastery-focus",
           type: "learn",
           mode: "focus",
           frameLabel: "Regra de domínio",
           eyebrow: "Capítulo 04 · Ponto-chave",
           title: "No Titanium, terminar não significa chegar ao fim.",
           body: [
-            "Assistir, ler e percorrer todas as telas pode ajudar você a aprender. Mas isso não demonstra competência.",
-            "A conclusão acontece quando você demonstra o nível mínimo de domínio esperado por meio de aplicação, avaliação e correção dos erros.",
+            "Assistir e ler ajudam você a aprender. Mas conclusão exige capacidade demonstrada por aplicação, avaliação e correção dos erros.",
           ],
           sequence: [
             { label: "Aprender" },
             { label: "Aplicar" },
-            { label: "Errar e entender o erro" },
-            { label: "Corrigir e demonstrar domínio" },
+            { label: "Receber feedback" },
+            { label: "Corrigir" },
+            { label: "Demonstrar domínio" },
           ],
           quote:
-            "Você não conclui uma aula Titanium porque chegou ao fim. Você conclui porque demonstrou domínio.",
+            "Você não conclui porque consumiu. Você conclui porque demonstrou.",
         },
       ],
     },
     {
-      id: "a00v2-mini-lesson",
+      id: "a00v3-mini-lesson",
       type: "think",
       eyebrow: "Capítulo 05 · Mini Aula",
       title: "Experimente uma aula Titanium",
       frames: [
         {
-          id: "a00v2-mini-think",
+          id: "a00v3-mini-think",
           type: "think",
           mode: "apply",
           frameLabel: "Think",
           eyebrow: "Capítulo 05 · THINK",
-          title: "Antes de receber a resposta, formule a sua.",
-          body: [
-            "Uma campanha recebeu muitos cliques e apresenta CTR alto. Mesmo assim, poucas vendas aconteceram.",
+          title: "Pense antes de receber a explicação.",
+          scenario:
+            "Uma campanha recebeu muitos cliques e apresenta CTR alto. Mesmo assim, poucas vendas aconteceram. Qual conclusão é mais madura?",
+          options: [
+            {
+              id: "a",
+              label: "A campanha está performando bem porque CTR alto significa resultado.",
+              feedback: "CTR descreve a passagem até o clique, não o resultado econômico.",
+            },
+            {
+              id: "b",
+              label: "A campanha está ruim porque muitos cliques sempre reduzem a qualidade.",
+              feedback: "Quantidade de cliques, isoladamente, não prova baixa qualidade.",
+            },
+            {
+              id: "c",
+              label: "Ainda não há informação suficiente; precisamos investigar o que acontece depois do clique.",
+              feedback: "Correto. A leitura precisa continuar pela conversão, qualidade e economia.",
+              recommended: true,
+            },
+            {
+              id: "d",
+              label: "O CTR deve ser ignorado porque nunca é útil.",
+              feedback: "CTR é útil, mas precisa ser interpretado dentro do sistema.",
+            },
           ],
-          prompt:
-            "Você diria que a campanha está performando bem? Explique com suas palavras.",
-          modelAnswer:
-            "Ainda não existe informação suficiente para concluir que a campanha está performando bem. CTR alto indica uma relação forte entre impressão e clique, mas resultado de negócio depende do que acontece depois: qualidade do tráfego, conversão, custo de aquisição, receita e margem.",
-          selfAssessment: {
-            prompt: "Depois de comparar, como você avalia sua resposta inicial?",
-            options: [
-              "Eu concluí rápido demais a partir do CTR",
-              "Eu pedi contexto antes de concluir",
-              "Minha resposta estava parcialmente estruturada",
-            ],
-          },
         },
         {
-          id: "a00v2-mini-learn",
+          id: "a00v3-mini-learn",
           type: "visual",
           mode: "explain",
           frameLabel: "Learn",
@@ -614,17 +602,17 @@ export const immersionLesson: Lesson = {
           body: [
             "CTR alto pode indicar que anúncio, mensagem ou intenção geraram cliques. Ele não informa, sozinho, se essas pessoas compraram, se a página converteu, se os leads eram qualificados ou se a aquisição foi economicamente saudável.",
           ],
-          visualItems: [
-            { label: "Impressão", detail: "O anúncio teve oportunidade de ser visto." },
-            { label: "Clique", detail: "CTR observa principalmente a relação até aqui." },
-            { label: "Conversão", detail: "A visita realizou a ação esperada?" },
-            { label: "Cliente / Receita", detail: "A aquisição produziu resultado econômico?" },
-          ],
-          highlight:
-            "Resultado exige entender o sistema inteiro, não eleger uma métrica intermediária como resposta final.",
+          media: {
+            src: "/lessons/aula-00/Titanium_CTR_Sistema.png",
+            alt: "Fluxo visual de impressão, clique, visita, conversão, cliente e receita.",
+            kind: "explanatory-image",
+            caption: "CTR observa principalmente a passagem entre impressão e clique; o sistema continua depois disso.",
+            sourceLabel: "Imagem explicativa Titanium",
+            zoomable: true,
+          },
         },
         {
-          id: "a00v2-mini-decide",
+          id: "a00v3-mini-decide",
           type: "decide",
           mode: "apply",
           frameLabel: "Decide",
@@ -636,144 +624,145 @@ export const immersionLesson: Lesson = {
           options: [
             {
               id: "a",
-              label: "Criaria outra campanha imediatamente.",
-              feedback:
-                "Criar uma nova campanha antes de entender a quebra adiciona complexidade sem diagnosticar a causa.",
+              label: "Aumentaria o orçamento para recuperar volume.",
+              feedback: "Escalar um sistema cuja conversão deteriorou pode amplificar o problema.",
             },
             {
               id: "b",
-              label: "Aumentaria o orçamento.",
-              feedback:
-                "Escalar um sistema cuja taxa de conversão deteriorou pode apenas amplificar o problema.",
+              label: "Criaria uma nova campanha imediatamente.",
+              feedback: "Isso adiciona complexidade antes de localizar a ruptura.",
             },
             {
               id: "c",
               label: "Investigaria a experiência e a conversão após o clique.",
-              feedback:
-                "Correto. O sinal mais forte está depois do clique: CPC estável e CVR em queda deslocam a investigação para a etapa de conversão.",
+              feedback: "Correto. CPC estável e CVR em queda deslocam a investigação para a etapa de conversão.",
               recommended: true,
             },
             {
               id: "d",
               label: "Mudaria imediatamente a estratégia de lances.",
-              feedback:
-                "A mudança pode até ser considerada depois, mas os dados apresentados apontam primeiro para uma deterioração de conversão.",
+              feedback: "A alteração pode ser considerada depois, mas os sinais apresentados apontam primeiro para conversão.",
             },
           ],
         },
         {
-          id: "a00v2-mini-review",
-          type: "review",
-          mode: "explain",
+          id: "a00v3-mini-review",
+          type: "decide",
+          mode: "apply",
           frameLabel: "Review",
           eyebrow: "Capítulo 05 · REVIEW",
-          title: "Perceba o que acabou de acontecer.",
-          reviewSections: [
+          title: "Qual princípio deve permanecer?",
+          body: [
+            "Você pensou antes da explicação, construiu um modelo mental e tomou uma decisão com base nos sinais.",
+          ],
+          scenario:
+            "Depois desta mini aula, qual afirmação resume melhor o raciocínio profissional esperado?",
+          options: [
             {
-              title: "THINK",
-              items: ["Você formulou um raciocínio antes de receber o modelo."],
+              id: "a",
+              label: "Uma métrica forte é suficiente para declarar sucesso.",
+              feedback: "O sistema não pode ser reduzido a uma única métrica.",
             },
             {
-              title: "LEARN",
-              items: ["Você construiu um modelo mental sobre CTR e resultado."],
+              id: "b",
+              label: "Toda queda de resultado deve ser resolvida com mudança de bidding.",
+              feedback: "A solução precisa seguir o diagnóstico, não uma prescrição automática.",
             },
             {
-              title: "DECIDE",
-              items: ["Você precisou escolher uma investigação e justificar a prioridade."],
+              id: "c",
+              label: "A leitura deve seguir a cadeia e priorizar a investigação onde o sinal mudou.",
+              feedback: "Correto. Métrica, contexto e ordem de investigação precisam caminhar juntos.",
+              recommended: true,
             },
             {
-              title: "REVIEW",
-              items: ["Você compara o raciocínio inicial com o raciocínio atual."],
+              id: "d",
+              label: "CTR não possui utilidade em nenhuma análise.",
+              feedback: "CTR é útil; o problema é tratá-lo como resposta final.",
             },
           ],
-          prompt:
-            "Em uma frase: o que mudou na forma como você olha para um CTR alto?",
         },
       ],
     },
     {
-      id: "a00v2-lesson-system",
+      id: "a00v3-lesson-system",
       type: "visual",
       eyebrow: "Capítulo 06 · Jornada da Aula",
       title: "Como uma Aula Titanium funciona",
       frames: [
         {
-          id: "a00v2-lesson-system-main",
+          id: "a00v3-lesson-system-main",
           type: "visual",
           mode: "explain",
           frameLabel: "Arquitetura",
           eyebrow: "Capítulo 06 · Jornada da Aula",
           title: "Cada bloco existe porque cumpre uma função de aprendizagem.",
           body: [
-            "Nem toda aula terá exatamente a mesma quantidade de blocos, mas a narrativa pedagógica segue uma ordem: entender por que algo importa, construir o conceito, ver o conceito em ação, aplicar, corrigir e demonstrar domínio.",
+            "Nem toda aula terá a mesma quantidade de blocos, mas a narrativa pedagógica segue uma ordem clara: relevância, ensino, exemplo, aplicação, correção, síntese e avaliação.",
           ],
           sequence: [
             { label: "Abertura", detail: "Por que isso importa?" },
-            { label: "Ensino", detail: "O que eu preciso compreender?" },
-            { label: "Exemplo", detail: "Como isso aparece na realidade?" },
-            { label: "Aplicação", detail: "Consigo usar ou decidir?" },
+            { label: "Ensino", detail: "O que preciso compreender?" },
+            { label: "Exemplo", detail: "Como aparece na realidade?" },
+            { label: "Aplicação A-D", detail: "Qual leitura ou decisão faz sentido?" },
             { label: "Erro e revisão", detail: "Onde meu raciocínio falhou?" },
             { label: "Mapa mental", detail: "Como as peças se conectam?" },
             { label: "Avaliação", detail: "Consigo demonstrar domínio?" },
           ],
           highlight:
-            "O player apresenta a aula. A pedagogia decide a aula. Nenhum conteúdo deve ser quebrado apenas porque atingiu uma altura de tela.",
+            "Pergunta fechada não significa pergunta fácil. Podemos testar cálculo, diagnóstico, interpretação e estratégia com quatro alternativas bem construídas.",
         },
       ],
     },
     {
-      id: "a00v2-levels",
+      id: "a00v3-levels",
       type: "visual",
       eyebrow: "Capítulo 07 · Níveis",
       title: "N0–N6 mede capacidade, não status",
       frames: [
         {
-          id: "a00v2-levels-main",
+          id: "a00v3-levels-main",
           type: "visual",
           mode: "explain",
           frameLabel: "Mapa de níveis",
           eyebrow: "Capítulo 07 · N0–N6",
           title: "A progressão vai muito além de saber configurar campanhas.",
-          sequence: [
-            { label: "N0 — Iniciante", detail: "Constrói vocabulário e referências." },
-            { label: "N1 — Compreensão", detail: "Consegue explicar conceitos e relações." },
-            { label: "N2 — Execução guiada", detail: "Executa seguindo processo e supervisão." },
-            { label: "N3 — Operação autônoma", detail: "Opera sozinho com consistência." },
-            { label: "N4 — Diagnóstico", detail: "Encontra causas e prioriza investigação." },
-            { label: "N5 — Estratégia", detail: "Conecta mídia, economia e decisão de negócio." },
-            { label: "N6 — Arquitetura", detail: "Desenha e defende sistemas completos de aquisição." },
-          ],
-          quote:
-            "O Titanium não termina quando você sabe criar uma campanha. Isso ainda é apenas uma parte da jornada.",
+          media: {
+            src: "/lessons/aula-00/Titanium_Niveis_N0_N6.png",
+            alt: "Progressão visual dos níveis N0 a N6 do Titanium.",
+            kind: "explanatory-image",
+            caption: "Os níveis representam tipos crescentes de capacidade profissional.",
+            sourceLabel: "Imagem explicativa Titanium",
+            zoomable: true,
+          },
         },
       ],
     },
     {
-      id: "a00v2-assessment",
+      id: "a00v3-assessment",
       type: "learn",
       eyebrow: "Capítulo 08 · Avaliação",
       title: "Como provas e erro funcionam",
       frames: [
         {
-          id: "a00v2-assessment-criteria",
+          id: "a00v3-assessment-criteria",
           type: "learn",
           mode: "explain",
           frameLabel: "O que avaliamos",
           eyebrow: "Capítulo 08 · Avaliação",
-          title: "Uma prova Titanium não mede apenas memória.",
+          title: "Toda pergunta usa alternativas A-D, mas pode testar níveis diferentes de raciocínio.",
           cards: [
-            { title: "Conhecimento", description: "Você sabe explicar o princípio?" },
-            { title: "Interpretação", description: "Você sabe ler os sinais e o contexto?" },
-            { title: "Diagnóstico", description: "Você sabe separar sintoma de causa?" },
-            { title: "Decisão", description: "Você sabe escolher a próxima ação?" },
-            { title: "Defesa", description: "Você consegue justificar por que faria isso?" },
+            { title: "Conhecimento", description: "Você reconhece o princípio correto?" },
+            { title: "Interpretação", description: "Você sabe ler sinais e contexto?" },
+            { title: "Diagnóstico", description: "Você separa sintoma de causa?" },
+            { title: "Decisão", description: "Você escolhe a próxima ação coerente?" },
+            { title: "Estratégia", description: "Você conecta decisão e objetivo de negócio?" },
           ],
           afterSequence: [
-            "Questões objetivas podem ser corrigidas automaticamente. Respostas abertas são registradas para comparação com modelo, autoavaliação e, nas atividades avaliativas apropriadas, correção por rubrica no Professor Mode.",
+            "Como todas as respostas são fechadas, o Titanium consegue corrigir imediatamente, registrar histórico e mostrar feedback sem depender de IA ou avaliação manual.",
           ],
         },
         {
-          id: "a00v2-assessment-focus",
+          id: "a00v3-assessment-focus",
           type: "learn",
           mode: "focus",
           frameLabel: "Nota 9",
@@ -781,76 +770,89 @@ export const immersionLesson: Lesson = {
           title: "Por que a nota mínima é 9,0?",
           body: [
             "O 9 não existe para punir. Ele existe porque pequenas lacunas ignoradas no início se tornam decisões maiores e mais caras quando o sistema fica complexo.",
-            "Erro não é fracasso. Erro é evidência sobre o que precisa ser revisado. Por isso a correção deve apontar a causa do erro e o conceito que merece nova atenção.",
+            "Erro não é fracasso. Erro é evidência sobre o que precisa ser revisado.",
           ],
           sequence: [
-            { label: "Tentativa", detail: "Você demonstra o raciocínio atual." },
-            { label: "Mapa de Erros", detail: "O sistema identifica onde revisar." },
-            { label: "Revisão", detail: "Você reconstrói a parte frágil." },
-            { label: "Nova tentativa", detail: "Você demonstra o domínio novamente." },
+            { label: "Tentativa", detail: "O sistema registra suas respostas." },
+            { label: "Mapa de Erros", detail: "Cada erro aponta para o conceito relacionado." },
+            { label: "Revisão", detail: "Você volta ao trecho necessário." },
+            { label: "Nova tentativa", detail: "Você demonstra domínio novamente." },
           ],
         },
       ],
     },
     {
-      id: "a00v2-journal",
-      type: "journal",
-      eyebrow: "Capítulo 09 · Diário de Decisões",
-      title: "Estratégia melhora quando decisões deixam rastros",
+      id: "a00v3-journal",
+      type: "learn",
+      eyebrow: "Capítulo 09 · Decisões",
+      title: "Diagnosticar antes de prescrever",
       frames: [
         {
-          id: "a00v2-journal-example",
+          id: "a00v3-journal-example",
           type: "learn",
           mode: "explain",
           frameLabel: "Exemplo",
           eyebrow: "Capítulo 09 · Exemplo",
-          title: "Uma decisão sem evidência é apenas um palpite registrado.",
+          title: "Uma decisão sem evidência é apenas um palpite.",
           body: [
-            "Cenário: o CPA aumentou 35%. Uma reação fraca seria escrever apenas 'trocar bidding'. Isso não registra o problema de forma investigável e não explica por que a ação deveria funcionar.",
+            "Cenário: o CPA aumentou 35%. Uma reação fraca seria mudar bidding imediatamente. Uma decisão profissional começa separando problema, evidência, hipótese e próxima investigação.",
           ],
           cards: [
             {
-              title: "Decisão fraca",
+              title: "Prescrição precoce",
               subtitle: "Trocar bidding",
-              description:
-                "Não registra evidência, hipótese, prioridade de investigação ou resultado esperado.",
+              description: "Age antes de validar onde ocorreu a quebra.",
             },
             {
-              title: "Decisão Titanium",
-              subtitle: "Diagnosticar antes de prescrever",
-              description:
-                "CPC estável + CVR em queda -> hipótese de problema após o clique -> auditar landing antes de alterar lances.",
+              title: "Diagnóstico",
+              subtitle: "CPC estável + CVR caiu",
+              description: "Investiga página, oferta, qualidade do tráfego e mensuração antes de alterar lances.",
             },
           ],
-          highlight:
-            "Uma boa decisão permite voltar depois e descobrir se seu raciocínio estava correto, incompleto ou errado.",
         },
         {
-          id: "a00v2-journal-do",
+          id: "a00v3-journal-check",
           type: "journal",
           mode: "apply",
-          frameLabel: "Seu primeiro registro",
-          eyebrow: "Capítulo 09 · Registre",
-          title: "Crie seu primeiro rastro de decisão.",
-          body: [
-            "Use uma decisão real de marketing, negócio ou estudo. Não precisa ser complexa; o objetivo é praticar a estrutura.",
-          ],
-          journalFields: [
-            { id: "problem", label: "Qual era o problema ou situação?" },
-            { id: "decision", label: "Qual decisão você tomou?" },
-            { id: "expected", label: "O que você esperava que acontecesse?" },
+          frameLabel: "Decisão",
+          eyebrow: "Capítulo 09 · Agora é com você",
+          title: "Qual registro representa uma decisão profissional?",
+          scenario:
+            "O CPA subiu 35%, o CPC permaneceu estável e a taxa de conversão caiu. Qual registro é o mais útil para orientar a próxima ação?",
+          options: [
+            {
+              id: "a",
+              label: "Problema: CPA subiu. Decisão: aumentar orçamento.",
+              feedback: "O registro pula evidência, hipótese e investigação.",
+            },
+            {
+              id: "b",
+              label: "Problema: CPA subiu. Hipótese: o Google piorou. Decisão: trocar tudo.",
+              feedback: "A hipótese não está sustentada pelos sinais apresentados.",
+            },
+            {
+              id: "c",
+              label: "Problema: CPA +35%. Evidência: CPC estável e CVR caiu. Hipótese: quebra após o clique. Próxima ação: auditar conversão antes de alterar lances.",
+              feedback: "Correto. O registro conecta problema, evidência, hipótese e investigação.",
+              recommended: true,
+            },
+            {
+              id: "d",
+              label: "Problema: CPA subiu. Decisão: esperar indefinidamente sem investigar.",
+              feedback: "Evitar a investigação também não produz aprendizado nem ação orientada.",
+            },
           ],
         },
       ],
     },
     {
-      id: "a00v2-curriculum",
+      id: "a00v3-curriculum",
       type: "visual",
       eyebrow: "Capítulo 10 · Formação",
       title: "Mapa completo da formação",
       frames: [
         {
-          id: "a00v2-curriculum-1",
+          id: "a00v3-curriculum-1",
           type: "visual",
           mode: "explain",
           frameLabel: "Módulos 01–05",
@@ -863,11 +865,9 @@ export const immersionLesson: Lesson = {
             { label: "04 — Google Search: Dominando a Intenção" },
             { label: "05 — Anúncios, Oferta e Conversão" },
           ],
-          highlight:
-            "A ordem é intencional: antes de otimizar botões, precisamos entender aquisição, economia, intenção e conversão.",
         },
         {
-          id: "a00v2-curriculum-2",
+          id: "a00v3-curriculum-2",
           type: "visual",
           mode: "explain",
           frameLabel: "Módulos 06–10",
@@ -880,102 +880,107 @@ export const immersionLesson: Lesson = {
             { label: "09 — Ecossistema Google: PMax, Demand Gen, YouTube e Shopping" },
             { label: "10 — Escala, Gestão e Estratégia Profissional" },
           ],
-          afterSequence: [
-            "A formação avança de fundamentos para arquitetura. Cada módulo adiciona uma camada que será exigida nos seguintes.",
-          ],
+          highlight:
+            "A ordem é intencional. Cada módulo adiciona uma camada que será exigida nos seguintes.",
         },
       ],
     },
     {
-      id: "a00v2-review",
+      id: "a00v3-review",
       type: "mindmap",
       eyebrow: "Capítulo 11 · Revisão Guiada",
       title: "Reconstrua o sistema antes de seguir",
       frames: [
         {
-          id: "a00v2-review-map",
+          id: "a00v3-review-map",
           type: "mindmap",
           mode: "explain",
           frameLabel: "Mapa Mental",
           eyebrow: "Capítulo 11 · Mapa Mental",
           title: "Sistema Titanium de Aprendizagem",
-          mindmapBranches: [
-            { title: "OBJETIVO", detail: "N5 / N6", result: "pensar e arquitetar" },
-            { title: "APRENDER", detail: "E5", result: "entender até explicar" },
-            { title: "AULA", detail: "ensino + aplicação", result: "raciocínio ativo" },
-            { title: "DOMÍNIO", detail: "nota ≥ 9", result: "progressão" },
-            { title: "ERRO", detail: "Mapa de Erros", result: "revisão orientada" },
-            { title: "DECISÕES", detail: "Diário", result: "aprendizado acumulado" },
+          body: [
+            "Use o mapa para reconstruir as conexões principais da aula. Abra a imagem em tamanho maior se quiser revisar cada ramo.",
           ],
+          media: {
+            src: "/materials/aula-00/Titanium_Mind_Map_Aula_00.png",
+            alt: "Mapa mental do Sistema Titanium de Aprendizagem.",
+            kind: "mindmap",
+            caption: "Objetivo, E5, aula, avaliação, erro e uso de imagens conectados ao domínio demonstrado.",
+            sourceLabel: "Mapa Mental Titanium",
+            zoomable: true,
+          },
         },
         {
-          id: "a00v2-review-recall",
+          id: "a00v3-review-check",
           type: "review",
           mode: "apply",
-          frameLabel: "Recuperação ativa",
+          frameLabel: "Revisão",
           eyebrow: "Capítulo 11 · Revisão",
-          title: "Explique o sistema sem reler a aula.",
-          reviewSections: [
+          title: "Qual afirmação representa melhor a filosofia da formação?",
+          scenario:
+            "Escolha a opção que melhor conecta aprendizagem, avaliação e progressão no Titanium.",
+          options: [
             {
-              title: "Perguntas para recuperar da memória",
-              items: [
-                "O que diferencia consumo de domínio?",
-                "Para que serve o E5?",
-                "Qual é a diferença entre operar e diagnosticar?",
-                "Por que uma decisão deve registrar evidências e hipótese?",
-              ],
+              id: "a",
+              label: "Concluir conteúdos rapidamente é a principal medida de progresso.",
+              feedback: "Velocidade de consumo não demonstra capacidade.",
             },
             {
-              title: "O que precisa permanecer",
-              items: [
-                "Ferramenta não substitui raciocínio.",
-                "Aula é experiência de aprendizagem, não sequência de telas.",
-                "Erro precisa apontar o que revisar.",
-                "Domínio é demonstrado, não declarado.",
-              ],
+              id: "b",
+              label: "Aprender significa memorizar conceitos e evitar erros.",
+              feedback: "Erro analisado faz parte do processo de domínio.",
+            },
+            {
+              id: "c",
+              label: "O aluno aprende, aplica, recebe feedback, revisa e avança quando demonstra domínio.",
+              feedback: "Correto. Essa sequência resume o sistema de aprendizagem do Titanium.",
+              recommended: true,
+            },
+            {
+              id: "d",
+              label: "A ferramenta é mais importante do que a qualidade do raciocínio.",
+              feedback: "A ferramenta é importante, mas o curso busca desenvolver decisão e diagnóstico.",
             },
           ],
-          prompt:
-            "Se você tivesse que explicar a filosofia do Titanium em uma frase para outra pessoa, o que diria?",
         },
       ],
     },
     {
-      id: "a00v2-diagnostic",
+      id: "a00v3-diagnostic",
       type: "diagnostic",
       eyebrow: "Capítulo 12 · Diagnóstico Inicial",
       title: "Registre seu ponto de partida",
       body: [
         "Este diagnóstico não possui aprovação nem reprovação. Ele existe para registrar exatamente onde você está hoje.",
-        "Não pesquise, não peça ajuda e não tente parecer mais avançado. Escolha aquilo que você consegue defender agora.",
+        "Não pesquise, não peça ajuda e não tente parecer mais avançado. Todas as 20 questões têm quatro alternativas, A a D.",
       ],
       quote:
         "O valor deste diagnóstico depende da honestidade do ponto de partida.",
     },
     {
-      id: "a00v2-closing",
+      id: "a00v3-closing",
       type: "context",
       eyebrow: "Capítulo 13 · Encerramento",
       title: "Ponto de partida registrado",
       frames: [
         {
-          id: "a00v2-closing-main",
+          id: "a00v3-closing-main",
           type: "learn",
           mode: "focus",
           frameLabel: "Encerramento",
           eyebrow: "Capítulo 13 · Encerramento",
           title: "Agora a formação começa de verdade.",
           body: [
-            "Você já sabe o que o Titanium exige: compreender, aplicar, decidir, corrigir e demonstrar domínio.",
-            "Seu diagnóstico inicial foi registrado. Ele não define seu teto; ele cria uma referência para comparar sua evolução ao final da formação.",
+            "Você já sabe como o Titanium ensina: contexto, explicação, imagem, pergunta A-D, feedback, revisão e demonstração de domínio.",
+            "Seu diagnóstico inicial cria a referência que será comparada com sua evolução ao final da formação.",
           ],
           sequence: [
             { label: "Aula 00 concluída" },
             { label: "Diagnóstico inicial registrado" },
+            { label: "Guia + Notas liberado" },
+            { label: "Mapa Mental em imagem liberado" },
             { label: "Módulo 01 liberado" },
           ],
-          quote:
-            "Daqui em diante, o professor deve se tornar progressivamente menos necessário e o seu raciocínio progressivamente mais forte.",
         },
       ],
     },
@@ -988,29 +993,21 @@ export const immersionLesson: Lesson = {
   },
   materials: [
     {
-      id: "a00-lesson",
+      id: "a00-guide",
       type: "titanium-lesson",
-      title: "Titanium Lesson — Guia de Início",
-      purpose: "Guia completo da formação, método E5, níveis, avaliações e rotina de estudo.",
+      title: "Guia + Notas — Aula 00",
+      purpose: "Um único PDF para estudo e revisão, reunindo método, níveis, avaliação, imagens e notas essenciais.",
       status: "available",
-      asset: "/materials/aula-00/Titanium_Lesson_Guia_de_Inicio.pdf",
-    },
-    {
-      id: "a00-notes",
-      type: "titanium-notes",
-      title: "Titanium Notes — Aula 00",
-      purpose: "Resumo de revisão em duas páginas com os princípios que precisam permanecer.",
-      status: "available",
-      asset: "/materials/aula-00/Titanium_Notes_Aula_00.pdf",
+      asset: "/materials/aula-00/Titanium_Guia_e_Notas_Aula_00.pdf",
     },
     {
       id: "a00-mindmap",
       type: "mindmap",
       title: "Mapa Mental — Sistema Titanium",
-      purpose: "Mapa visual de uma página conectando E5, domínio, erro, níveis e decisões.",
+      purpose: "Imagem visual para revisar objetivo, E5, avaliação, erro e domínio em uma única visão.",
       status: "available",
-      reviewStageId: "a00v2-review",
-      asset: "/materials/aula-00/Titanium_Mind_Map_Aula_00.pdf",
+      reviewStageId: "a00v3-review",
+      asset: "/materials/aula-00/Titanium_Mind_Map_Aula_00.png",
     },
   ],
 }

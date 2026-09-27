@@ -15,7 +15,7 @@ export const lessonOneDemo: Lesson = {
   objective:
     "Compreender o que tráfego pago representa dentro de um sistema de aquisição.",
   overview:
-    "Uma experiência demonstrativa da arquitetura que combina descoberta, explicação progressiva, aplicação, diagnóstico, síntese e prova de domínio.",
+    "Demonstração da arquitetura fechada A-D, visual-first e orientada a domínio.",
   demo: true,
   stages: [
     {
@@ -24,7 +24,7 @@ export const lessonOneDemo: Lesson = {
       eyebrow: "Descoberta",
       title: "Qual campanha parece melhor?",
       body: [
-        "Observe dois sinais antes de receber uma explicação. A comparação existe para revelar como uma métrica isolada pode conduzir a uma conclusão precipitada.",
+        "Observe dois sinais antes de receber uma explicação. A comparação revela como uma métrica isolada pode conduzir a uma conclusão precipitada.",
       ],
       comparison: [
         {
@@ -56,7 +56,7 @@ export const lessonOneDemo: Lesson = {
     {
       id: "learn",
       type: "learn",
-      eyebrow: "Learn · Aprenda",
+      eyebrow: "Aprenda",
       title: "Tráfego é fluxo, não destino",
       body: [
         "Uma campanha cria fluxo entre uma mensagem, uma audiência e uma próxima ação. A qualidade desse fluxo depende de intenção, oferta, experiência e mensuração.",
@@ -79,69 +79,67 @@ export const lessonOneDemo: Lesson = {
       ],
     },
     {
-      id: "concept",
-      type: "concept",
-      eyebrow: "Conceito",
-      title: "Aquisição é uma cadeia de dependências",
-      body: [
-        "A campanha influencia apenas parte do resultado. Mensagem, audiência, página, oferta, conversão e economia formam uma cadeia: a fragilidade de uma etapa limita o sistema inteiro.",
-      ],
-    },
-    {
-      id: "example",
-      type: "example",
-      eyebrow: "Exemplo",
-      title: "Quando o clique ajuda o negócio",
-      body: [
-        "Uma campanha atrai pessoas com intenção compatível, conduz para uma oferta coerente e mede uma ação ligada à receita. Nesse cenário, o clique funciona como passagem útil.",
-      ],
-    },
-    {
-      id: "counterexample",
-      type: "counterexample",
-      eyebrow: "Contraexemplo",
-      title: "Quando mais tráfego amplia o desperdício",
-      body: [
-        "Um anúncio chamativo produz muitos cliques, mas promete algo diferente da página. A conversão cai e o aumento de volume acelera um fluxo que já estava quebrado.",
-      ],
-    },
-    {
       id: "think",
       type: "think",
-      eyebrow: "Think · Pense",
+      mode: "apply",
+      eyebrow: "Pense",
       title: "O clique pode esconder um problema",
-      prompt:
+      scenario:
         "Por que uma campanha com CTR alto ainda pode gerar prejuízo para o negócio?",
-      modelAnswer:
-        "Porque o clique mede apenas uma passagem da jornada. Se a oferta, a página, a conversão ou a economia da aquisição forem frágeis, o volume de cliques pode ampliar o desperdício em vez de gerar resultado.",
+      options: [
+        {
+          id: "a",
+          label: "Porque CTR alto sempre aumenta o custo de mídia.",
+          feedback: "CTR alto não implica automaticamente custo maior.",
+        },
+        {
+          id: "b",
+          label: "Porque o clique é apenas uma passagem; conversão, qualidade e economia ainda podem falhar.",
+          feedback: "Correto. O clique não garante que as etapas seguintes criem valor.",
+          recommended: true,
+        },
+        {
+          id: "c",
+          label: "Porque campanhas com muitos cliques não podem gerar vendas.",
+          feedback: "Volume de cliques pode gerar vendas; o ponto é avaliar o sistema completo.",
+        },
+        {
+          id: "d",
+          label: "Porque CTR não possui nenhuma utilidade em análise de campanha.",
+          feedback: "CTR é útil, mas não deve ser tratado como resultado final.",
+        },
+      ],
     },
     {
       id: "decide",
       type: "decide",
-      eyebrow: "Decide · Decida",
+      mode: "apply",
+      eyebrow: "Decida",
       title: "Onde investigar primeiro?",
       scenario:
         "O CPA aumentou 40%. O CPC permaneceu estável, mas a taxa de conversão caiu. Qual é a primeira investigação mais coerente?",
       allowRetry: true,
       options: [
         {
-          id: "budget",
-          label: "Aumentar imediatamente o orçamento da campanha",
-          feedback:
-            "Mais orçamento ampliaria o fluxo sem explicar a queda de conversão. Antes de escalar, localize a ruptura.",
+          id: "a",
+          label: "Aumentar imediatamente o orçamento da campanha.",
+          feedback: "Mais orçamento ampliaria o fluxo sem explicar a queda de conversão.",
         },
         {
-          id: "conversion",
-          label: "Investigar página, oferta e funcionamento da conversão",
-          feedback:
-            "Boa decisão. Com CPC estável e conversão menor, a primeira hipótese está depois do clique ou na qualidade do tráfego.",
+          id: "b",
+          label: "Investigar página, oferta e funcionamento da conversão.",
+          feedback: "Correto. O sinal que mudou está depois do clique.",
           recommended: true,
         },
         {
-          id: "ctr",
-          label: "Otimizar apenas os anúncios para elevar o CTR",
-          feedback:
-            "CTR não explica sozinho a queda de conversão. Essa ação pode melhorar cliques e manter o problema econômico intacto.",
+          id: "c",
+          label: "Otimizar apenas os anúncios para elevar o CTR.",
+          feedback: "CTR não explica sozinho a queda de conversão.",
+        },
+        {
+          id: "d",
+          label: "Duplicar a campanha e comparar os resultados.",
+          feedback: "Duplicar antes do diagnóstico adiciona ruído e complexidade.",
         },
       ],
     },
@@ -161,18 +159,9 @@ export const lessonOneDemo: Lesson = {
       ],
     },
     {
-      id: "business",
-      type: "business",
-      eyebrow: "Conexão com o negócio",
-      title: "A métrica só importa quando muda uma decisão",
-      body: [
-        "O objetivo não é colecionar indicadores positivos. É reconhecer quais sinais explicam receita, margem, capacidade de atendimento e sustentabilidade da aquisição.",
-      ],
-    },
-    {
       id: "practice",
       type: "practice",
-      eyebrow: "Do · Execute",
+      eyebrow: "Execute",
       title: "Reconheça o fluxo de uma campanha",
       body: [
         "Use uma campanha conhecida ou um exemplo hipotético. Complete a inspeção mínima antes de avançar.",
@@ -187,18 +176,36 @@ export const lessonOneDemo: Lesson = {
     {
       id: "audit",
       type: "audit",
-      eyebrow: "Audit · Diagnostique",
+      mode: "apply",
+      eyebrow: "Diagnostique",
       title: "Leia o sintoma sem precipitar a solução",
       body: [
-        "Cenário demonstrativo: 1.000 cliques, CPC estável, conversão caiu de 5% para 2,5% e o CPA dobrou.",
+        "Cenário: 1.000 cliques, CPC estável, conversão caiu de 5% para 2,5% e o CPA dobrou.",
       ],
-      auditPrompts: [
-        "O que você observa?",
-        "Qual é sua hipótese principal?",
-        "O que investigaria primeiro?",
+      scenario: "Qual hipótese merece prioridade na investigação?",
+      options: [
+        {
+          id: "a",
+          label: "O CPC é a causa principal porque todo aumento de CPA vem do clique.",
+          feedback: "O cenário informa CPC estável, portanto o sinal que mudou está em outro ponto.",
+        },
+        {
+          id: "b",
+          label: "A queda de conversão deve ser investigada em tráfego, oferta, página e mensuração.",
+          feedback: "Correto. O CPA dobrou junto com a deterioração da conversão.",
+          recommended: true,
+        },
+        {
+          id: "c",
+          label: "O orçamento diário é necessariamente a causa.",
+          feedback: "Não há evidência apresentada sobre orçamento como causa.",
+        },
+        {
+          id: "d",
+          label: "O problema deve ser resolvido trocando bidding imediatamente.",
+          feedback: "A prescrição vem antes do diagnóstico nessa opção.",
+        },
       ],
-      commentedAnalysis:
-        "O custo do clique não mudou. O aumento de CPA acompanha a queda da conversão. A investigação deve começar na qualidade do tráfego, na oferta, na página e no funcionamento da mensuração antes de alterar lances ou orçamento.",
     },
     {
       id: "mindmap",
@@ -206,14 +213,14 @@ export const lessonOneDemo: Lesson = {
       eyebrow: "Mapa Mental",
       title: "Conecte as partes",
       body: [
-        "Você viu as partes separadamente. Agora conecte atenção, fluxo, conversão e resultado econômico.",
+        "O mapa visual definitivo da Aula 01 será produzido junto com o conteúdo final.",
       ],
     },
     {
       id: "review",
       type: "review",
       eyebrow: "Revisão",
-      title: "O que você aprendeu",
+      title: "O que precisa permanecer",
       reviewSections: [
         {
           title: "Princípios essenciais",
@@ -223,21 +230,10 @@ export const lessonOneDemo: Lesson = {
           ],
         },
         {
-          title: "Novos termos",
-          items: ["CTR · Taxa de Cliques", "CPA · Custo por Aquisição"],
-        },
-        {
           title: "Erros comuns",
           items: [
             "Otimizar uma métrica isolada.",
             "Escalar antes de localizar a ruptura.",
-          ],
-        },
-        {
-          title: "Antes da prova",
-          items: [
-            "Saiba diferenciar atenção, visita, conversão e resultado.",
-            "Consiga escolher a primeira investigação a partir dos sinais.",
           ],
         },
       ],
@@ -247,7 +243,7 @@ export const lessonOneDemo: Lesson = {
       type: "exam",
       eyebrow: "Prova da Aula",
       title: "Hora de provar domínio",
-      body: ["O conteúdo foi percorrido. A aprovação exige nota mínima 9,0."],
+      body: ["A aprovação exige nota mínima 9,0. Todas as questões usam alternativas A-D."],
     },
   ],
   completionMode: "exam",
@@ -262,21 +258,13 @@ export const lessonOneDemo: Lesson = {
         kind: "objective",
         prompt: "Qual descrição representa melhor o papel do tráfego pago?",
         options: [
-          {
-            id: "a",
-            label: "Comprar cliques como objetivo final",
-            feedback:
-              "O clique é uma passagem da jornada, não o resultado final.",
-          },
-          {
-            id: "b",
-            label: "Criar fluxo mensurável até um resultado",
-            feedback: "Correto. O tráfego conecta atenção, ação e resultado.",
-          },
+          { id: "a", label: "Comprar cliques como objetivo final", feedback: "O clique é uma passagem, não o destino." },
+          { id: "b", label: "Criar fluxo mensurável até um resultado", feedback: "Correto.", },
+          { id: "c", label: "Aumentar seguidores independentemente do negócio", feedback: "Seguidores não definem o papel da mídia paga." },
+          { id: "d", label: "Usar exclusivamente Google Search", feedback: "Tráfego pago não se limita a uma campanha ou inventário." },
         ],
         correctAnswer: "b",
-        explanation:
-          "Tráfego pago é um mecanismo de distribuição dentro de um sistema de aquisição.",
+        explanation: "Tráfego pago é um mecanismo de distribuição dentro de um sistema de aquisição.",
         reviewStageId: "learn",
       },
       {
@@ -284,21 +272,13 @@ export const lessonOneDemo: Lesson = {
         kind: "interpretation",
         prompt: "Um CTR alto prova que uma campanha é lucrativa?",
         options: [
-          {
-            id: "a",
-            label: "Sim, porque mais cliques sempre geram lucro",
-            feedback:
-              "Cliques podem aumentar sem conversão ou resultado econômico.",
-          },
-          {
-            id: "b",
-            label: "Não, é preciso avaliar conversão e economia",
-            feedback: "Correto. Métricas precisam de contexto.",
-          },
+          { id: "a", label: "Sim, porque mais cliques sempre geram lucro", feedback: "Cliques podem aumentar sem conversão." },
+          { id: "b", label: "Não, é preciso avaliar conversão e economia", feedback: "Correto." },
+          { id: "c", label: "Sim, desde que CTR seja maior que 5%", feedback: "Não existe um limiar universal que prove lucro." },
+          { id: "d", label: "Não, porque CTR nunca deve ser analisado", feedback: "CTR é útil, mas precisa de contexto." },
         ],
         correctAnswer: "b",
-        explanation:
-          "CTR mede resposta ao anúncio, mas não mede sozinho o resultado do negócio.",
+        explanation: "CTR mede resposta ao anúncio, não o resultado completo do negócio.",
         reviewStageId: "think",
       },
       {
@@ -306,20 +286,13 @@ export const lessonOneDemo: Lesson = {
         kind: "objective",
         prompt: "O que significa CTR?",
         options: [
-          {
-            id: "a",
-            label: "Taxa de Cliques",
-            feedback: "Correto.",
-          },
-          {
-            id: "b",
-            label: "Custo Total de Receita",
-            feedback: "Essa expansão não corresponde à sigla CTR.",
-          },
+          { id: "a", label: "Taxa de Cliques", feedback: "Correto." },
+          { id: "b", label: "Custo Total de Receita", feedback: "Não corresponde à sigla." },
+          { id: "c", label: "Taxa de Conversão de Receita", feedback: "Essa não é a definição de CTR." },
+          { id: "d", label: "Custo por Tráfego Relevante", feedback: "Essa não é a definição de CTR." },
         ],
         correctAnswer: "a",
-        explanation:
-          "CTR é Click-Through Rate, traduzido como Taxa de Cliques.",
+        explanation: "CTR é Click-Through Rate, traduzido como Taxa de Cliques.",
         reviewStageId: "learn",
       },
       {
@@ -327,20 +300,13 @@ export const lessonOneDemo: Lesson = {
         kind: "objective",
         prompt: "O que o CPA expressa?",
         options: [
-          {
-            id: "a",
-            label: "Custo médio para gerar uma aquisição",
-            feedback: "Correto.",
-          },
-          {
-            id: "b",
-            label: "Quantidade de impressões do anúncio",
-            feedback: "Impressões medem exibição, não custo por aquisição.",
-          },
+          { id: "a", label: "Custo médio para gerar uma aquisição", feedback: "Correto." },
+          { id: "b", label: "Quantidade de impressões do anúncio", feedback: "Impressões medem exibição." },
+          { id: "c", label: "Percentual de cliques sobre impressões", feedback: "Isso descreve CTR." },
+          { id: "d", label: "Receita total da campanha", feedback: "Receita e CPA são medidas diferentes." },
         ],
         correctAnswer: "a",
-        explanation:
-          "CPA relaciona investimento e aquisições ou conversões produzidas.",
+        explanation: "CPA relaciona investimento e aquisições ou conversões produzidas.",
         reviewStageId: "learn",
       },
       {
@@ -348,20 +314,13 @@ export const lessonOneDemo: Lesson = {
         kind: "decision",
         prompt: "Se o CPC está estável e a conversão cai, onde começar?",
         options: [
-          {
-            id: "a",
-            label: "Aumentar o orçamento",
-            feedback: "Escalar pode ampliar o desperdício.",
-          },
-          {
-            id: "b",
-            label: "Investigar o que acontece após o clique",
-            feedback: "Correto. A queda aponta para a etapa de conversão.",
-          },
+          { id: "a", label: "Aumentar o orçamento", feedback: "Escalar pode ampliar o desperdício." },
+          { id: "b", label: "Investigar o que acontece após o clique", feedback: "Correto." },
+          { id: "c", label: "Trocar todos os anúncios", feedback: "O sinal apresentado está na conversão." },
+          { id: "d", label: "Ignorar a queda e esperar", feedback: "Esperar sem investigar não produz diagnóstico." },
         ],
         correctAnswer: "b",
-        explanation:
-          "A primeira investigação deve acompanhar o sinal que mudou.",
+        explanation: "A investigação deve acompanhar o sinal que mudou.",
         reviewStageId: "decide",
       },
       {
@@ -369,21 +328,13 @@ export const lessonOneDemo: Lesson = {
         kind: "interpretation",
         prompt: "Qual sequência representa a cadeia mínima apresentada?",
         options: [
-          {
-            id: "a",
-            label: "Atenção → Visita → Ação → Resultado",
-            feedback: "Correto.",
-          },
-          {
-            id: "b",
-            label: "Orçamento → Clique → Orçamento → Impressão",
-            feedback:
-              "Essa sequência não representa a progressão da aquisição.",
-          },
+          { id: "a", label: "Atenção → Visita → Ação → Resultado", feedback: "Correto." },
+          { id: "b", label: "Orçamento → Clique → Orçamento → Impressão", feedback: "Não representa a progressão." },
+          { id: "c", label: "Receita → Impressão → Clique → Atenção", feedback: "A ordem está invertida." },
+          { id: "d", label: "Conversão → Atenção → Orçamento → Visita", feedback: "A sequência não segue a jornada." },
         ],
         correctAnswer: "a",
-        explanation:
-          "A cadeia acompanha a pessoa da percepção até o resultado.",
+        explanation: "A cadeia acompanha a pessoa da percepção até o resultado.",
         reviewStageId: "visual",
       },
       {
@@ -391,20 +342,13 @@ export const lessonOneDemo: Lesson = {
         kind: "interpretation",
         prompt: "Uma métrica deve ser interpretada de que forma?",
         options: [
-          {
-            id: "a",
-            label: "Isoladamente, sem considerar o objetivo",
-            feedback: "Uma métrica isolada pode induzir uma decisão ruim.",
-          },
-          {
-            id: "b",
-            label: "Em conjunto com contexto e objetivo",
-            feedback: "Correto.",
-          },
+          { id: "a", label: "Isoladamente, sem considerar o objetivo", feedback: "Pode induzir decisão ruim." },
+          { id: "b", label: "Em conjunto com contexto e objetivo", feedback: "Correto." },
+          { id: "c", label: "Apenas comparando com o mês anterior", feedback: "A comparação temporal é uma evidência, não o contexto inteiro." },
+          { id: "d", label: "Somente quando melhora", feedback: "Métricas precisam ser lidas também quando pioram ou permanecem estáveis." },
         ],
         correctAnswer: "b",
-        explanation:
-          "O significado operacional depende das relações entre os sinais.",
+        explanation: "O significado operacional depende das relações entre os sinais.",
         reviewStageId: "review",
       },
       {
@@ -412,17 +356,10 @@ export const lessonOneDemo: Lesson = {
         kind: "decision",
         prompt: "Qual ação deve preceder uma tentativa de escala?",
         options: [
-          {
-            id: "a",
-            label: "Localizar a ruptura principal",
-            feedback: "Correto.",
-          },
-          {
-            id: "b",
-            label: "Ignorar a conversão e elevar o orçamento",
-            feedback:
-              "Escalar sem diagnóstico pode multiplicar a ineficiência.",
-          },
+          { id: "a", label: "Localizar a ruptura principal", feedback: "Correto." },
+          { id: "b", label: "Ignorar a conversão e elevar o orçamento", feedback: "Pode multiplicar ineficiência." },
+          { id: "c", label: "Duplicar campanhas sem hipótese", feedback: "Adiciona complexidade sem diagnóstico." },
+          { id: "d", label: "Trocar lances automaticamente", feedback: "Ação sem leitura não substitui diagnóstico." },
         ],
         correctAnswer: "a",
         explanation: "Diagnóstico precede escala em um sistema disciplinado.",
@@ -433,20 +370,13 @@ export const lessonOneDemo: Lesson = {
         kind: "objective",
         prompt: "O clique representa qual parte da jornada?",
         options: [
-          {
-            id: "a",
-            label: "Uma passagem, não o destino final",
-            feedback: "Correto.",
-          },
-          {
-            id: "b",
-            label: "A confirmação automática de lucro",
-            feedback: "Um clique não confirma conversão nem lucro.",
-          },
+          { id: "a", label: "Uma passagem, não o destino final", feedback: "Correto." },
+          { id: "b", label: "A confirmação automática de lucro", feedback: "Clique não confirma lucro." },
+          { id: "c", label: "A própria conversão final", feedback: "Clique e conversão são etapas diferentes." },
+          { id: "d", label: "O valor de vida do cliente", feedback: "LTV é outra medida." },
         ],
         correctAnswer: "a",
-        explanation:
-          "O clique move a pessoa para outra etapa que ainda precisa funcionar.",
+        explanation: "O clique move a pessoa para uma etapa que ainda precisa funcionar.",
         reviewStageId: "context",
       },
       {
@@ -454,45 +384,30 @@ export const lessonOneDemo: Lesson = {
         kind: "diagnosis",
         prompt: "Qual comportamento combina com diagnóstico profissional?",
         options: [
-          {
-            id: "a",
-            label: "Agir sobre a primeira métrica visível",
-            feedback:
-              "A primeira métrica visível nem sempre é a causa do problema.",
-          },
-          {
-            id: "b",
-            label: "Ler sinais, formular hipótese e priorizar investigação",
-            feedback: "Correto.",
-          },
+          { id: "a", label: "Agir sobre a primeira métrica visível", feedback: "A primeira métrica nem sempre é a causa." },
+          { id: "b", label: "Ler sinais, formular hipótese e priorizar investigação", feedback: "Correto." },
+          { id: "c", label: "Copiar a ação feita em outra conta", feedback: "Contextos diferentes exigem leitura própria." },
+          { id: "d", label: "Alterar várias variáveis ao mesmo tempo", feedback: "Isso dificulta isolar causa e efeito." },
         ],
         correctAnswer: "b",
-        explanation:
-          "Diagnóstico conecta evidência, hipótese e ordem de investigação.",
+        explanation: "Diagnóstico conecta evidência, hipótese e ordem de investigação.",
         reviewStageId: "audit",
       },
     ],
   },
   materials: [
     {
-      id: "lesson-reference",
+      id: "lesson-guide",
       type: "titanium-lesson",
-      title: "Titanium Lesson",
-      purpose: "Referência aprofundada e estruturada da aula.",
-      status: "planned",
-    },
-    {
-      id: "lesson-notes",
-      type: "titanium-notes",
-      title: "Titanium Notes",
-      purpose: "Resumo condensado para revisão futura.",
+      title: "Guia + Notas da Aula",
+      purpose: "Material único para estudo e revisão do conteúdo.",
       status: "planned",
     },
     {
       id: "lesson-mindmap",
       type: "mindmap",
       title: "Mapa Mental",
-      purpose: "Síntese visual para reconstruir o raciocínio central.",
+      purpose: "Imagem visual para reconstruir o raciocínio central.",
       status: "planned",
       reviewStageId: "mindmap",
     },

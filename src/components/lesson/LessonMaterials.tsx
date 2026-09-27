@@ -21,9 +21,16 @@ export default function LessonMaterials({
         Use os materiais para revisar e reconstruir o raciocínio. Eles não
         substituem as atividades da aula.
       </p>
-      <div className="mt-6 grid gap-px bg-line sm:grid-cols-3">
+      <div className="mt-6 grid gap-px bg-line sm:grid-cols-2">
         {materials.map((material) => (
           <div key={material.id} className="flex min-h-56 flex-col bg-graphite p-5">
+            {material.type === "mindmap" && material.asset && (
+              <img
+                src={material.asset}
+                alt={material.title}
+                className="mb-5 aspect-video w-full border border-line bg-black object-contain"
+              />
+            )}
             <p className="font-semibold text-paper">{material.title}</p>
             <p className="mt-3 flex-1 text-sm leading-6 text-muted">
               {material.purpose}
@@ -35,7 +42,7 @@ export default function LessonMaterials({
                 rel="noreferrer"
                 className="mt-5 inline-flex w-fit items-center border border-gold px-4 py-2 font-mono text-xs font-semibold uppercase tracking-label text-gold transition hover:bg-gold hover:text-black"
               >
-                Abrir material ↗
+                {material.type === "mindmap" ? "Ver imagem ↗" : "Abrir PDF ↗"}
               </a>
             ) : (
               <p className="mt-5 font-mono text-status uppercase tracking-label text-silver">

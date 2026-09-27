@@ -18,16 +18,9 @@ import LessonMaterials from "./LessonMaterials"
 
 function canAdvance(stage: LessonStage, journey: LessonJourneyState) {
   if (journey.completedStageIds.includes(stage.id)) return true
-  if (stage.type === "think")
-    return Boolean(
-      journey.openResponses[stage.id]?.trim() &&
-        (!stage.selfAssessment || journey.selfAssessments[stage.id]),
-    )
-  if (stage.type === "decide")
+  if (stage.options?.length) {
     return Boolean(journey.decisions[stage.id]?.confirmed)
-  if (stage.type === "review" && stage.prompt)
-    return Boolean(journey.openResponses[stage.id]?.trim())
-  if (stage.type === "journal") return Boolean(journey.journalEntries[stage.id])
+  }
   return true
 }
 

@@ -41,9 +41,16 @@ export default function LibraryPage() {
           <Heading level={2} className="mt-3 text-2xl font-semibold">
             Materiais oficiais
           </Heading>
-          <div className="mt-5 grid gap-px bg-line md:grid-cols-3">
+          <div className="mt-5 grid gap-px bg-line md:grid-cols-2">
             {aulaZeroMaterials.map((material) => (
               <div key={material.id} className="flex min-h-52 flex-col bg-graphite p-5">
+                {immersionCompleted && material.type === "mindmap" && material.asset && (
+                  <img
+                    src={material.asset}
+                    alt={material.title}
+                    className="mb-5 aspect-video w-full border border-line bg-black object-contain"
+                  />
+                )}
                 <p className="font-semibold text-paper">{material.title}</p>
                 <p className="mt-3 flex-1 text-sm leading-6 text-muted">
                   {material.purpose}
@@ -55,7 +62,7 @@ export default function LibraryPage() {
                     rel="noreferrer"
                     className="mt-5 inline-flex w-fit border border-gold px-4 py-2 font-mono text-xs font-semibold uppercase tracking-label text-gold transition hover:bg-gold hover:text-black"
                   >
-                    Abrir material ↗
+                    {material.type === "mindmap" ? "Ver imagem ↗" : "Abrir PDF ↗"}
                   </a>
                 ) : (
                   <p className="mt-5 text-xs leading-5 text-muted">

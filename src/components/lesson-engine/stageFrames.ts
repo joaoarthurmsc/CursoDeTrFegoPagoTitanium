@@ -53,6 +53,14 @@ export function getLessonFrames(stage: LessonStage): LessonFrame[] {
     }),
   )
 
+  if (stage.media) {
+    push("media", "Visual", {
+      ...shell(stage, stage.type === "mindmap" ? "mindmap" : stage.type),
+      media: stage.media,
+      body: frames.length ? undefined : stage.body,
+    })
+  }
+
   if (stage.comparison?.length) {
     push("comparison", "Compare", {
       ...shell(stage, "discovery"),
@@ -131,7 +139,7 @@ export function getLessonFrames(stage: LessonStage): LessonFrame[] {
     )
   }
 
-  if (stage.mindmapBranches?.length || stage.type === "mindmap") {
+  if (!stage.media && (stage.mindmapBranches?.length || stage.type === "mindmap")) {
     push("mindmap", "Conecte", {
       ...shell(stage, "mindmap"),
       mindmapBranches: stage.mindmapBranches,
@@ -148,11 +156,11 @@ export function getLessonFrames(stage: LessonStage): LessonFrame[] {
   }
 
   if (stage.type === "think") {
-    push("think", "Responda", {
+    push("think", "Pense", {
       ...shell(stage, "think"),
-      prompt: stage.prompt,
-      modelAnswer: stage.modelAnswer,
-      selfAssessment: stage.selfAssessment,
+      scenario: stage.scenario ?? stage.prompt,
+      options: stage.options,
+      allowRetry: stage.allowRetry,
     })
   }
 
@@ -175,22 +183,29 @@ export function getLessonFrames(stage: LessonStage): LessonFrame[] {
   if (stage.type === "audit") {
     push("audit", "Diagnostique", {
       ...shell(stage, "audit"),
-      auditPrompts: stage.auditPrompts,
+      scenario: stage.scenario,
+      options: stage.options,
+      allowRetry: stage.allowRetry,
       commentedAnalysis: stage.commentedAnalysis,
     })
   }
 
   if (stage.type === "journal") {
-    push("journal", "Registre", {
+    push("journal", "Decida", {
       ...shell(stage, "journal"),
-      journalFields: stage.journalFields,
+      scenario: stage.scenario,
+      options: stage.options,
+      allowRetry: stage.allowRetry,
     })
   }
 
-  if (stage.type === "review" && stage.prompt) {
-    push("review-response", "Explique", {
+
+  if (stage.type === "review" && stage.options?.length) {
+    push("review-question", "Revise", {
       ...shell(stage, "review"),
-      prompt: stage.prompt,
+      scenario: stage.scenario,
+      options: stage.options,
+      allowRetry: stage.allowRetry,
     })
   }
 

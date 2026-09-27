@@ -3,17 +3,11 @@ import type {
   LessonJourneyState,
   LessonStage as LessonStageType,
 } from "../../types/learning"
-import {
-  ActionButton,
-  HomeHeading,
-  TextAreaField,
-} from "../titanium/HomePrimitives"
-import AuditStage from "./AuditStage"
+import { ActionButton, HomeHeading } from "../titanium/HomePrimitives"
 import DecisionStage from "./DecisionStage"
 import GlossaryTerm from "./GlossaryTerm"
-import JournalStage from "./JournalStage"
 import PracticeStage from "./PracticeStage"
-import ThinkStage from "./ThinkStage"
+import LessonMedia from "./LessonMedia"
 
 function StandardContent({ stage }: { stage: LessonStageType }) {
   return (
@@ -28,6 +22,7 @@ function StandardContent({ stage }: { stage: LessonStageType }) {
           </p>
         ))}
       </div>
+      {stage.media && <LessonMedia media={stage.media} />}
       {stage.glossary && (
         <div className="mt-8 border-t border-line pt-6">
           <p className="mb-4 font-mono text-xs uppercase tracking-label text-muted">
@@ -268,6 +263,15 @@ function GuidedStage({ stage }: { stage: LessonStageType }) {
 }
 
 function MindMapStage({ stage }: { stage: LessonStageType }) {
+  if (stage.media) {
+    return (
+      <>
+        <StandardContent stage={{ ...stage, media: undefined }} />
+        <LessonMedia media={stage.media} />
+      </>
+    )
+  }
+
   if (stage.mindmapBranches) {
     return (
       <div className="mt-6">
@@ -321,58 +325,6 @@ function MindMapStage({ stage }: { stage: LessonStageType }) {
           </p>
         </div>
       </div>
-    </>
-  )
-}
-
-function ReviewStage({
-  lessonId,
-  stage,
-  journey,
-  onSave,
-}: {
-  lessonId: string
-  stage: LessonStageType
-  journey: LessonJourneyState
-  onSave: (lessonId: string, stageId: string, value: string) => void
-}) {
-  const [value, setValue] = useState(journey.openResponses[stage.id] ?? "")
-  return (
-    <>
-      <div className="mt-4 grid gap-px bg-line md:grid-cols-2">
-        {stage.reviewSections?.map((section) => (
-          <div key={section.title} className="bg-graphite p-5 md:p-6">
-            <p className="font-semibold text-paper">{section.title}</p>
-            <ul className="mt-4 space-y-3">
-              {section.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm leading-6 text-silver"
-                >
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      {stage.prompt && (
-        <div className="mt-8 border-t border-line pt-7">
-          <TextAreaField
-            label={stage.prompt}
-            value={value}
-            onChange={setValue}
-          />
-          <ActionButton
-            className="mt-4"
-            disabled={!value.trim()}
-            onClick={() => onSave(lessonId, stage.id, value)}
-          >
-            Salvar resposta
-          </ActionButton>
-        </div>
-      )}
     </>
   )
 }
@@ -443,25 +395,9 @@ export default function LessonStage({
       <div className="lesson-stage-content mt-6">
         {stage.type === "discovery" ? (
           <DiscoveryStage stage={stage} />
-        ) : stage.type === "think" ? (
+        ) : ["think", "decide", "audit", "journal", "review"].includes(stage.type) &&
+          stage.options?.length ? (
           <>
-            <StandardContent stage={{ ...stage, prompt: undefined }} />
-            <ThinkStage
-              lessonId={lessonId}
-              stage={stage}
-              journey={journey}
-              onSave={onOpenResponse}
-              onAssessment={onSelfAssessment}
-            />
-          </>
-        ) : stage.type === "decide" ? (
-          <>
-            <DecisionStage
-              lessonId={lessonId}
-              stage={stage}
-              journey={journey}
-              onSave={onDecision}
-            />
             <StandardContent
               stage={{
                 ...stage,
@@ -469,15 +405,11 @@ export default function LessonStage({
                 options: undefined,
               }}
             />
-          </>
-        ) : stage.type === "journal" ? (
-          <>
-            <StandardContent stage={stage} />
-            <JournalStage
+            <DecisionStage
               lessonId={lessonId}
               stage={stage}
               journey={journey}
-              onSave={onJournal}
+              onSave={onDecision}
             />
           </>
         ) : stage.type === "practice" ? (
@@ -490,29 +422,16 @@ export default function LessonStage({
               onSave={onChecklist}
             />
           </>
-        ) : stage.type === "audit" ? (
-          <>
-            <StandardContent stage={stage} />
-            <AuditStage
-              lessonId={lessonId}
-              stage={stage}
-              journey={journey}
-              onSave={onAudit}
-            />
-          </>
+) : stage.type === "audit" ? (
+          <StandardContent stage={stage} />
         ) : stage.type === "visual" ? (
           <VisualStage stage={stage} />
         ) : stage.type === "guided" ? (
           <GuidedStage stage={stage} />
         ) : stage.type === "mindmap" ? (
           <MindMapStage stage={stage} />
-        ) : stage.type === "review" ? (
-          <ReviewStage
-            lessonId={lessonId}
-            stage={stage}
-            journey={journey}
-            onSave={onOpenResponse}
-          />
+) : stage.type === "review" ? (
+          <StandardContent stage={stage} />
         ) : (
           <StandardContent stage={stage} />
         )}

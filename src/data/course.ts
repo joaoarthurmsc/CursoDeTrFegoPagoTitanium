@@ -161,8 +161,8 @@ export const cases = [
 ]
 
 export const libraryCategories = [
-  "Titanium Lesson",
-  "Titanium Notes",
+  "Guia + Notas da Aula",
+  "Mind Maps",
   "Titanium Visual",
   "Titanium Cheat Sheet",
   "Titanium Checklist",
