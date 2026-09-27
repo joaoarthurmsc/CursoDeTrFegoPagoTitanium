@@ -56,9 +56,19 @@ function StandardLessonPage({
   const lesson = lessonOneDemo
   useLessonActiveTime(lesson.id)
 
-  const [journey, setJourney] = useState<LessonJourneyState>(() =>
-    learningRepository.getLessonJourney(lesson.id),
-  )
+  const [journey, setJourney] = useState<LessonJourneyState>(() => {
+    const current = learningRepository.getLessonJourney(lesson.id)
+    const currentStageIds = new Set(lesson.stages.map((stage) => stage.id))
+    const hasLegacyProgress =
+      current.currentStageIndex >= lesson.stages.length ||
+      current.completedStageIds.some((id) => !currentStageIds.has(id))
+
+    if (hasLegacyProgress) {
+      return learningRepository.resetLessonJourney(lesson.id)
+    }
+
+    return current
+  })
   const [journeyOpen, setJourneyOpen] = useState(false)
 
   const update = (next: LessonJourneyState) => setJourney(next)

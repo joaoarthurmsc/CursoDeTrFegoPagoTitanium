@@ -1,6 +1,5 @@
 import type { DiagnosticQuestion as DiagnosticQuestionType } from "../../types/learning"
 import { ActionButton } from "../titanium/HomePrimitives"
-import GlossaryText from "../lesson-engine/GlossaryText"
 
 export default function DiagnosticQuestion({
   question,
@@ -14,7 +13,7 @@ export default function DiagnosticQuestion({
   return (
     <fieldset data-diagnostic-question tabIndex={-1} className="m-0 border-0 p-0 outline-none">
       <legend className="text-xl font-semibold leading-8 text-paper md:text-2xl">
-        <GlossaryText text={question.prompt} />
+        {question.prompt}
       </legend>
       {question.table && (
         <div className="mt-6 overflow-x-auto border border-line">
@@ -26,7 +25,7 @@ export default function DiagnosticQuestion({
                     key={header}
                     className="border-b border-line px-4 py-3 font-medium"
                   >
-                    <GlossaryText text={header} />
+                    {header}
                   </th>
                 ))}
               </tr>
@@ -36,7 +35,7 @@ export default function DiagnosticQuestion({
                 <tr key={row.join("-")} className="border-b border-line">
                   {row.map((cell) => (
                     <td key={cell} className="px-4 py-3 text-silver">
-                      <GlossaryText text={cell} />
+                      {cell}
                     </td>
                   ))}
                 </tr>

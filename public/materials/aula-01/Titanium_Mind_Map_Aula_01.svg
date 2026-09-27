@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1080" viewBox="0 0 1800 1080">
+  <rect width="1800" height="1080" fill="#090B0D"/>
+  <text x="80" y="78" fill="#C8A467" font-family="Arial, sans-serif" font-size="28" font-weight="700">AULA 01 · MAPA MENTAL</text>
+  <text x="80" y="135" fill="#F5F3EF" font-family="Arial, sans-serif" font-size="52" font-weight="700">O que realmente é tráfego pago</text>
+
+  <g font-family="Arial, sans-serif">
+    <circle cx="900" cy="570" r="135" fill="#15191D" stroke="#C8A467" stroke-width="4"/>
+    <text x="790" y="552" fill="#F5F3EF" font-size="34" font-weight="700">TRÁFEGO</text>
+    <text x="760" y="596" fill="#C8A467" font-size="21">movimento até um destino</text>
+
+    <g stroke="#2B3136" stroke-width="4">
+      <line x1="790" y1="490" x2="520" y2="330"/>
+      <line x1="770" y1="570" x2="500" y2="570"/>
+      <line x1="790" y1="650" x2="520" y2="820"/>
+      <line x1="1010" y1="490" x2="1280" y2="330"/>
+      <line x1="1030" y1="570" x2="1300" y2="570"/>
+      <line x1="1010" y1="650" x2="1280" y2="820"/>
+    </g>
+
+    <g fill="#15191D" stroke="#2B3136" stroke-width="3">
+      <rect x="120" y="235" width="400" height="190" rx="22"/>
+      <rect x="100" y="475" width="400" height="190" rx="22"/>
+      <rect x="120" y="755" width="400" height="190" rx="22"/>
+      <rect x="1280" y="235" width="400" height="190" rx="22"/>
+      <rect x="1300" y="475" width="400" height="190" rx="22"/>
+      <rect x="1280" y="755" width="400" height="190" rx="22"/>
+    </g>
+
+    <text x="155" y="280" fill="#C8A467" font-size="21" font-weight="700">ORIGEM</text>
+    <text x="155" y="325" fill="#F5F3EF" font-size="27" font-weight="700">Pago x orgânico</text>
+    <text x="155" y="365" fill="#C8C5BE" font-size="19">A diferença está em como</text>
+    <text x="155" y="392" fill="#C8C5BE" font-size="19">a distribuição é conquistada.</text>
+
+    <text x="135" y="520" fill="#C8A467" font-size="21" font-weight="700">PESSOA</text>
+    <text x="135" y="565" fill="#F5F3EF" font-size="27" font-weight="700">Atenção x intenção</text>
+    <text x="135" y="605" fill="#C8C5BE" font-size="19">Pode estar apenas percebendo</text>
+    <text x="135" y="632" fill="#C8C5BE" font-size="19">ou já procurando solução.</text>
+
+    <text x="155" y="800" fill="#C8A467" font-size="21" font-weight="700">PASSAGEM</text>
+    <text x="155" y="845" fill="#F5F3EF" font-size="27" font-weight="700">Clique</text>
+    <text x="155" y="885" fill="#C8C5BE" font-size="19">Faz a pessoa avançar.</text>
+    <text x="155" y="912" fill="#C8C5BE" font-size="19">Não é o resultado final.</text>
+
+    <text x="1315" y="280" fill="#C8A467" font-size="21" font-weight="700">CHEGADA</text>
+    <text x="1315" y="325" fill="#F5F3EF" font-size="27" font-weight="700">Destino</text>
+    <text x="1315" y="365" fill="#C8C5BE" font-size="19">Página, site, conversa</text>
+    <text x="1315" y="392" fill="#C8C5BE" font-size="19">ou aplicativo.</text>
+
+    <text x="1335" y="520" fill="#C8A467" font-size="21" font-weight="700">PRÓXIMO PASSO</text>
+    <text x="1335" y="565" fill="#F5F3EF" font-size="27" font-weight="700">Ação</text>
+    <text x="1335" y="605" fill="#C8C5BE" font-size="19">O que esperamos que</text>
+    <text x="1335" y="632" fill="#C8C5BE" font-size="19">a pessoa faça depois.</text>
+
+    <text x="1315" y="800" fill="#C8A467" font-size="21" font-weight="700">SISTEMA MAIOR</text>
+    <text x="1315" y="845" fill="#F5F3EF" font-size="27" font-weight="700">Aquisição</text>
+    <text x="1315" y="885" fill="#C8C5BE" font-size="19">Tráfego é uma parte.</text>
+    <text x="1315" y="912" fill="#C8C5BE" font-size="19">O resultado depende do caminho.</text>
+
+    <rect x="525" y="905" width="750" height="95" rx="18" fill="#20262B" stroke="#C8A467" stroke-width="2"/>
+    <text x="560" y="945" fill="#C8A467" font-size="19" font-weight="700">REGRA CENTRAL</text>
+    <text x="560" y="978" fill="#F5F3EF" font-size="20">Movimento cria oportunidade. Resultado exige que o restante do sistema funcione.</text>
+  </g>
+</svg>

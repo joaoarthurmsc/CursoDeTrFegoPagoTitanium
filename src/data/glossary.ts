@@ -9,6 +9,64 @@ export type GlobalGlossaryEntry = GlossaryEntry & {
 
 export const glossaryEntries: GlobalGlossaryEntry[] = [
   {
+    term: "Tráfego",
+    translation: "Tráfego",
+    explanation:
+      "Movimento de pessoas entre um ponto de origem e um destino. No marketing digital, descreve pessoas chegando a um site, página, aplicativo ou outro ambiente.",
+    aliases: ["tráfego"],
+    caution:
+      "Tráfego descreve movimento. Ele não garante, por si só, venda, lucro ou qualquer outro resultado.",
+  },
+  {
+    term: "Tráfego pago",
+    translation: "Tráfego pago",
+    explanation:
+      "Movimento de pessoas gerado por distribuição comprada em uma plataforma de mídia. O anunciante investe para alcançar pessoas e conduzi-las a um destino.",
+    aliases: ["tráfego pago"],
+  },
+  {
+    term: "Tráfego orgânico",
+    translation: "Tráfego orgânico",
+    explanation:
+      "Movimento de pessoas conquistado sem compra direta daquela distribuição, como acesso por conteúdo, busca orgânica, indicação ou audiência própria.",
+    aliases: ["tráfego orgânico"],
+  },
+  {
+    term: "Atenção",
+    translation: "Atenção",
+    explanation:
+      "Momento em que uma pessoa percebe uma mensagem, oferta ou estímulo. Atenção pode existir mesmo quando ela ainda não está procurando ativamente por aquilo.",
+    aliases: ["atenção"],
+  },
+  {
+    term: "Intenção",
+    translation: "Intenção",
+    explanation:
+      "Sinal de que a pessoa demonstra desejo, necessidade ou interesse ativo em resolver algo, comparar opções ou realizar uma ação.",
+    aliases: ["intenção"],
+  },
+  {
+    term: "Clique",
+    translation: "Clique",
+    explanation:
+      "Ação de selecionar um anúncio, link ou elemento para avançar até outro ambiente. O clique é uma passagem da jornada, não o resultado final.",
+    aliases: ["clique", "cliques"],
+  },
+  {
+    term: "Destino",
+    translation: "Destino",
+    explanation:
+      "Ambiente para o qual a pessoa é conduzida depois de uma interação, como uma página, site, formulário, conversa ou aplicativo.",
+    aliases: ["destino"],
+  },
+  {
+    term: "Aquisição",
+    translation: "Aquisição",
+    explanation:
+      "Processo de transformar atenção e interesse em um resultado de negócio, como lead, paciente, cliente ou venda. Tráfego é uma parte desse processo.",
+    aliases: ["aquisição"],
+  },
+  {
     term: "CTR",
     original: "Click-through rate",
     translation: "Taxa de cliques",

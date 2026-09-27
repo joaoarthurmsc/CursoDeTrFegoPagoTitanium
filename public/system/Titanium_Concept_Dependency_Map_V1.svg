@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120">
+  <rect width="1800" height="1120" fill="#090B0D"/>
+  <text x="80" y="75" fill="#C8A467" font-family="Arial, sans-serif" font-size="27" font-weight="700">TITANIUM · MAPA MESTRE DE DEPENDÊNCIAS</text>
+  <text x="80" y="135" fill="#F5F3EF" font-family="Arial, sans-serif" font-size="52" font-weight="700">Do fenômeno à estratégia</text>
+  <text x="80" y="185" fill="#85898B" font-family="Arial, sans-serif" font-size="23">Um conceito só pode ser combinado depois de ter sido ensinado e praticado.</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="260" width="1640" height="125" rx="18" fill="#15191D" stroke="#C8A467" stroke-width="3"/>
+    <text x="115" y="302" fill="#C8A467" font-size="19" font-weight="700">M01 · FUNDAMENTO</text>
+    <text x="115" y="340" fill="#F5F3EF" font-size="24" font-weight="700">Tráfego → publicidade digital → jornada → métricas → relações → Lab</text>
+    <text x="115" y="369" fill="#C8C5BE" font-size="18">A base nasce simples e só então ganha vocabulário, cálculo e diagnóstico.</text>
+
+    <g fill="#15191D" stroke="#2B3136" stroke-width="2">
+      <rect x="80" y="435" width="300" height="210" rx="18"/>
+      <rect x="415" y="435" width="300" height="210" rx="18"/>
+      <rect x="750" y="435" width="300" height="210" rx="18"/>
+      <rect x="1085" y="435" width="300" height="210" rx="18"/>
+      <rect x="1420" y="435" width="300" height="210" rx="18"/>
+    </g>
+
+    <text x="110" y="475" fill="#C8A467" font-size="18" font-weight="700">AULA 01</text>
+    <text x="110" y="510" fill="#F5F3EF" font-size="23" font-weight="700">Movimento</text>
+    <text x="110" y="546" fill="#C8C5BE" font-size="17">tráfego</text>
+    <text x="110" y="574" fill="#C8C5BE" font-size="17">pago / orgânico</text>
+    <text x="110" y="602" fill="#C8C5BE" font-size="17">atenção / intenção</text>
+
+    <text x="445" y="475" fill="#C8A467" font-size="18" font-weight="700">AULA 02</text>
+    <text x="445" y="510" fill="#F5F3EF" font-size="23" font-weight="700">Publicidade</text>
+    <text x="445" y="546" fill="#C8C5BE" font-size="17">plataforma</text>
+    <text x="445" y="574" fill="#C8C5BE" font-size="17">anunciante</text>
+    <text x="445" y="602" fill="#C8C5BE" font-size="17">leilão conceitual</text>
+
+    <text x="780" y="475" fill="#C8A467" font-size="18" font-weight="700">AULA 03</text>
+    <text x="780" y="510" fill="#F5F3EF" font-size="23" font-weight="700">Jornada</text>
+    <text x="780" y="546" fill="#C8C5BE" font-size="17">impressão</text>
+    <text x="780" y="574" fill="#C8C5BE" font-size="17">visita / conversão</text>
+    <text x="780" y="602" fill="#C8C5BE" font-size="17">cliente / receita</text>
+
+    <text x="1115" y="475" fill="#C8A467" font-size="18" font-weight="700">AULA 04</text>
+    <text x="1115" y="510" fill="#F5F3EF" font-size="23" font-weight="700">Métricas</text>
+    <text x="1115" y="546" fill="#C8C5BE" font-size="17">CTR / CPC</text>
+    <text x="1115" y="574" fill="#C8C5BE" font-size="17">CVR / CPA</text>
+    <text x="1115" y="602" fill="#C8C5BE" font-size="17">ROAS</text>
+
+    <text x="1450" y="475" fill="#C8A467" font-size="18" font-weight="700">AULAS 05–06</text>
+    <text x="1450" y="510" fill="#F5F3EF" font-size="23" font-weight="700">Relações</text>
+    <text x="1450" y="546" fill="#C8C5BE" font-size="17">causa e efeito</text>
+    <text x="1450" y="574" fill="#C8C5BE" font-size="17">diagnóstico simples</text>
+    <text x="1450" y="602" fill="#C8C5BE" font-size="17">Lab integrado</text>
+
+    <g stroke="#C8A467" stroke-width="4" fill="#C8A467">
+      <line x1="382" y1="540" x2="403" y2="540"/><polygon points="403,540 392,533 392,547"/>
+      <line x1="717" y1="540" x2="738" y2="540"/><polygon points="738,540 727,533 727,547"/>
+      <line x1="1052" y1="540" x2="1073" y2="540"/><polygon points="1073,540 1062,533 1062,547"/>
+      <line x1="1387" y1="540" x2="1408" y2="540"/><polygon points="1408,540 1397,533 1397,547"/>
+    </g>
+
+    <rect x="80" y="705" width="1640" height="245" rx="18" fill="#15191D" stroke="#2B3136" stroke-width="2"/>
+    <text x="115" y="747" fill="#C8A467" font-size="19" font-weight="700">DEPOIS DA BASE</text>
+    <text x="115" y="785" fill="#F5F3EF" font-size="24" font-weight="700">Economia → Google Ads → Search → Conversão → Mensuração → Diagnóstico → Automação → Ecossistema → Escala</text>
+    <text x="115" y="833" fill="#C8C5BE" font-size="18">M02: CAC, margem, LTV e economia</text>
+    <text x="115" y="866" fill="#C8C5BE" font-size="18">M03–M06: plataforma, intenção, oferta e mensuração</text>
+    <text x="115" y="899" fill="#C8C5BE" font-size="18">M07–M10: diagnóstico multivariável, automação, ecossistema e arquitetura estratégica</text>
+
+    <rect x="80" y="990" width="1640" height="70" rx="14" fill="#20262B" stroke="#C8A467" stroke-width="2"/>
+    <text x="115" y="1034" fill="#F5F3EF" font-size="21" font-weight="700">Regra: se a pergunta exige um conceito que ainda não foi ensinado, o problema é da aula — não do aluno.</text>
+  </g>
+</svg>

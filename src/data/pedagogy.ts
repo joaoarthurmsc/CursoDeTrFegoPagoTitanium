@@ -11,6 +11,8 @@ export const TITANIUM_LESSON_PRINCIPLES = {
     "Toda pergunta de aprendizagem ou avaliação usa exatamente quatro alternativas, A-D. Não utilizamos respostas abertas como mecanismo de avaliação.",
   visualReality:
     "Sempre que a compreensão melhorar com evidência visual, a aula usa imagens explicativas ou capturas reais da interface. Capturas de Google Ads devem ser autênticas e atuais, nunca imagens geradas fingindo ser a interface real.",
+  zeroAssumption:
+    "O curso não pressupõe conhecimento que ainda não foi formalmente ensinado. Primeiro constrói o fenômeno, depois apresenta o vocabulário profissional e só então combina conceitos em diagnóstico e decisão.",
 } as const
 
 export const REQUIRED_LESSON_CAPABILITIES = [

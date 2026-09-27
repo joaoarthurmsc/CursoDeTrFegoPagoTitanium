@@ -185,3 +185,23 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Full profile reset is the only action that deletes the reset archive and requires typed-name confirmation.
 - Destructive progress actions must never be triggered without explicit user confirmation.
 
+## Zero Assumption learning
+
+- The course runs from beginner to specialist. Never write as if the student already knows professional vocabulary that Titanium has not taught.
+- Teach the phenomenon before the professional label whenever possible.
+- The progression is: phenomenon -> name -> meaning -> example -> application -> relation -> diagnosis -> decision.
+- A glossary definition never counts as formal teaching.
+- Do not combine concepts in a diagnostic scenario before each required concept has been introduced and practiced.
+- Aula 00 teaches the learning system and must not use CTR, CPC, CPA, CVR, ROAS or similar metrics as instructional prerequisites.
+- The Initial Diagnostic is a baseline measurement exception; advanced terms may appear there, but the diagnostic must not reveal glossary definitions inside the questions.
+- Aula 01 introduces only traffic foundations. Professional metrics begin later according to `docs/Titanium_Concept_Dependency_Map_V1.md`.
+- Before shipping lesson content, run `node scripts/check-concept-order.mjs`.
+
+## Module 01 foundation sequence
+
+1. O que realmente é tráfego pago
+2. Como funciona a publicidade digital
+3. Da impressão ao resultado
+4. As métricas fundamentais
+5. Como as métricas se conectam
+6. Titanium Lab 01

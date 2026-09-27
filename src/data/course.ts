@@ -95,9 +95,9 @@ export const modules: CourseModule[] = [
 export const moduleOneLessons = [
   "O que realmente é tráfego pago",
   "Como funciona a publicidade digital",
-  "Atenção, intenção e jornada",
+  "Da impressão ao resultado",
   "As métricas fundamentais",
-  "Da campanha ao resultado econômico",
+  "Como as métricas se conectam",
   "Titanium Lab 01",
 ]
 
