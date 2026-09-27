@@ -12,6 +12,7 @@ import ModuleFinalExamPage from "../pages/ModuleFinalExamPage"
 import ModulePage from "../pages/ModulePage"
 import ModulesPage from "../pages/ModulesPage"
 import PerformancePage from "../pages/PerformancePage"
+import ProgressControlPage from "../pages/ProgressControlPage"
 import PlaceholderPage from "../pages/PlaceholderPage"
 import StudentSelectPage from "../pages/StudentSelectPage"
 import { learningRepository } from "../storage/learningRepository"
@@ -94,6 +95,9 @@ function RouteContent({ path }: { path: string }) {
   if (path === "/biblioteca") return <LibraryPage />
   if (path === "/desempenho" || path === "/progresso") {
     return <PerformancePage />
+  }
+  if (path === "/controle") {
+    return <ProgressControlPage onNavigate={navigate} />
   }
   if (path === "/diario") return <JournalPage />
   if (path === "/challenge") {

@@ -43,6 +43,14 @@ export default function UserMenu({
 
         <button
           type="button"
+          onClick={() => onNavigate("/controle")}
+          className="w-full px-3 py-3 text-left text-sm text-silver transition hover:bg-charcoal hover:text-paper focus-visible:outline-2 focus-visible:outline-gold"
+        >
+          Gerenciar progresso
+        </button>
+
+        <button
+          type="button"
           onClick={switchStudent}
           className="w-full px-3 py-3 text-left text-sm text-muted transition hover:bg-charcoal hover:text-paper focus-visible:outline-2 focus-visible:outline-gold"
         >

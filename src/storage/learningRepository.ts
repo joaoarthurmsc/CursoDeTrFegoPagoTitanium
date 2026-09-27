@@ -5,7 +5,11 @@ import type {
   ExamAttempt,
   LessonJourneyState,
 } from "../types/learning"
-import type { Decision, LearningState } from "../types/progress"
+import type {
+  Decision,
+  LearningState,
+  ProgressResetRecord,
+} from "../types/progress"
 import { studentRepository } from "./studentRepository"
 
 const LEGACY_STORAGE_KEY = "titanium-learning-state-v1"
@@ -22,6 +26,7 @@ const initialState: LearningState = {
   lessonJourneys: {},
   moduleExamAttempts: {},
   decisions: [],
+  resetHistory: [],
 }
 
 export function createLessonJourneyState(): LessonJourneyState {
@@ -39,6 +44,40 @@ export function createLessonJourneyState(): LessonJourneyState {
     diagnosticAnswers: {},
     examAttempts: [],
     lastErrors: [],
+  }
+}
+
+
+function withoutKeys<T>(record: Record<string, T>, keys: string[]) {
+  const next = { ...record }
+  keys.forEach((key) => delete next[key])
+  return next
+}
+
+function linkedDecisionIds(
+  journeys: Record<string, LessonJourneyState | undefined>,
+) {
+  return new Set(
+    Object.values(journeys).flatMap((journey) =>
+      journey ? Object.values(journey.journalEntries ?? {}) : [],
+    ),
+  )
+}
+
+function archive(
+  state: LearningState,
+  record: Omit<ProgressResetRecord, "id" | "date">,
+): LearningState {
+  return {
+    ...state,
+    resetHistory: [
+      {
+        ...record,
+        id: crypto.randomUUID(),
+        date: new Date().toISOString(),
+      },
+      ...(state.resetHistory ?? []),
+    ],
   }
 }
 
@@ -404,5 +443,249 @@ export const learningRepository = {
         [moduleId]: [...attempts, attempt],
       },
     })
+  },
+  openLessonFromStart(lessonId: string): LessonJourneyState {
+    const current = this.getLessonJourney(lessonId)
+    const started = current.startedAt ? current : this.startLesson(lessonId)
+    return this.updateLessonJourney(lessonId, () => ({
+      ...started,
+      currentStageIndex: 0,
+    }))
+  },
+  resetLesson(
+    lessonId: string,
+    targetLabel: string,
+    moduleId?: string,
+  ) {
+    const state = this.load()
+    const storedJourney = state.lessonJourneys[lessonId]
+    if (!storedJourney) return
+
+    const journey = normalizeJourney(storedJourney)
+    const decisionIds = linkedDecisionIds({ [lessonId]: journey })
+    const moduleAttempts = moduleId
+      ? (state.moduleExamAttempts[moduleId] ?? [])
+      : []
+    const archived = archive(state, {
+      scope: "lesson",
+      targetId: lessonId,
+      targetLabel,
+      lessonJourneys: { [lessonId]: journey },
+      moduleExamAttempts: moduleAttempts.length ? moduleAttempts : undefined,
+    })
+
+    this.save({
+      ...archived,
+      lessonJourneys: withoutKeys(archived.lessonJourneys, [lessonId]),
+      moduleExamAttempts: moduleId
+        ? withoutKeys(archived.moduleExamAttempts, [moduleId])
+        : archived.moduleExamAttempts,
+      completedLessons: archived.completedLessons.filter(
+        (id) => id !== lessonId,
+      ),
+      quizScores: withoutKeys(archived.quizScores, [lessonId]),
+      completedExercises: archived.completedExercises.filter(
+        (id) => id !== lessonId,
+      ),
+      decisions: archived.decisions.filter(
+        (decision) => !decisionIds.has(decision.id),
+      ),
+    })
+  },
+  resetLessonExam(
+    lessonId: string,
+    examStageIndex: number,
+    targetLabel: string,
+    moduleId?: string,
+  ) {
+    const state = this.load()
+    const storedJourney = state.lessonJourneys[lessonId]
+    if (!storedJourney) return
+
+    const journey = normalizeJourney(storedJourney)
+    if (!journey.examAttempts.length && journey.bestScore === undefined) return
+
+    const examArchive: LessonJourneyState = {
+      ...createLessonJourneyState(),
+      examAttempts: journey.examAttempts,
+      bestScore: journey.bestScore,
+      lastScore: journey.lastScore,
+      lastErrors: journey.lastErrors,
+      completedAt: journey.completedAt,
+    }
+    const moduleAttempts = moduleId
+      ? (state.moduleExamAttempts[moduleId] ?? [])
+      : []
+    const archived = archive(state, {
+      scope: "lesson-exam",
+      targetId: lessonId,
+      targetLabel,
+      lessonJourneys: { [lessonId]: examArchive },
+      moduleExamAttempts: moduleAttempts.length ? moduleAttempts : undefined,
+    })
+    const nextJourney: LessonJourneyState = {
+      ...journey,
+      examAttempts: [],
+      bestScore: undefined,
+      lastScore: undefined,
+      lastErrors: [],
+      completedAt: undefined,
+      currentStageIndex: Math.max(0, examStageIndex),
+      maxUnlockedStageIndex: Math.max(
+        journey.maxUnlockedStageIndex,
+        examStageIndex,
+      ),
+    }
+
+    this.save({
+      ...archived,
+      lessonJourneys: {
+        ...archived.lessonJourneys,
+        [lessonId]: nextJourney,
+      },
+      moduleExamAttempts: moduleId
+        ? withoutKeys(archived.moduleExamAttempts, [moduleId])
+        : archived.moduleExamAttempts,
+    })
+  },
+  resetInitialDiagnostic(
+    lessonId: string,
+    diagnosticStageIndex: number,
+    targetLabel: string,
+    stageIdsFromDiagnostic: string[],
+  ) {
+    const state = this.load()
+    const journey = normalizeJourney(state.lessonJourneys[lessonId])
+    const archived = state.initialDiagnostic
+      ? archive(state, {
+          scope: "diagnostic",
+          targetId: lessonId,
+          targetLabel,
+          initialDiagnostic: state.initialDiagnostic,
+        })
+      : state
+
+    const blockedStageIds = new Set(stageIdsFromDiagnostic)
+    const nextJourney: LessonJourneyState = {
+      ...journey,
+      currentStageIndex: Math.max(0, diagnosticStageIndex),
+      maxUnlockedStageIndex: Math.max(0, diagnosticStageIndex),
+      completedAt: undefined,
+      diagnosticAnswers: {},
+      completedStageIds: journey.completedStageIds.filter(
+        (id) => !blockedStageIds.has(id),
+      ),
+    }
+
+    this.save({
+      ...archived,
+      initialDiagnostic: undefined,
+      lessonJourneys: {
+        ...archived.lessonJourneys,
+        [lessonId]: nextJourney,
+      },
+    })
+  },
+  resetImmersion(lessonId: string, targetLabel: string) {
+    const state = this.load()
+    const storedJourney = state.lessonJourneys[lessonId]
+    const journey = storedJourney ? normalizeJourney(storedJourney) : undefined
+
+    if (!journey && !state.initialDiagnostic) return
+
+    const decisionIds = linkedDecisionIds({ [lessonId]: journey })
+    const archived = archive(state, {
+      scope: "lesson",
+      targetId: lessonId,
+      targetLabel,
+      lessonJourneys: journey ? { [lessonId]: journey } : undefined,
+      initialDiagnostic: state.initialDiagnostic,
+    })
+
+    this.save({
+      ...archived,
+      initialDiagnostic: undefined,
+      lessonJourneys: withoutKeys(archived.lessonJourneys, [lessonId]),
+      decisions: archived.decisions.filter(
+        (decision) => !decisionIds.has(decision.id),
+      ),
+    })
+  },
+  resetModule(
+    moduleId: string,
+    lessonIds: string[],
+    targetLabel: string,
+  ) {
+    const state = this.load()
+    const snapshots = Object.fromEntries(
+      lessonIds
+        .filter((lessonId) => Boolean(state.lessonJourneys[lessonId]))
+        .map((lessonId) => [
+          lessonId,
+          normalizeJourney(state.lessonJourneys[lessonId]),
+        ]),
+    )
+    const moduleAttempts = state.moduleExamAttempts[moduleId] ?? []
+    const hasProgress =
+      Object.keys(snapshots).length > 0 ||
+      moduleAttempts.length > 0 ||
+      (state.moduleProgress[moduleId] ?? 0) > 0
+
+    if (!hasProgress) return
+
+    const decisionIds = linkedDecisionIds(snapshots)
+    const archived = archive(state, {
+      scope: "module",
+      targetId: moduleId,
+      targetLabel,
+      lessonJourneys: snapshots,
+      moduleExamAttempts: moduleAttempts,
+    })
+
+    this.save({
+      ...archived,
+      lessonJourneys: withoutKeys(archived.lessonJourneys, lessonIds),
+      moduleExamAttempts: withoutKeys(archived.moduleExamAttempts, [moduleId]),
+      moduleProgress: withoutKeys(archived.moduleProgress, [moduleId]),
+      completedLessons: archived.completedLessons.filter(
+        (id) => !lessonIds.includes(id),
+      ),
+      completedExercises: archived.completedExercises.filter(
+        (id) => !lessonIds.includes(id),
+      ),
+      quizScores: withoutKeys(archived.quizScores, lessonIds),
+      decisions: archived.decisions.filter(
+        (decision) => !decisionIds.has(decision.id),
+      ),
+    })
+  },
+  resetModuleExam(moduleId: string, targetLabel: string) {
+    const state = this.load()
+    const attempts = state.moduleExamAttempts[moduleId] ?? []
+    if (!attempts.length) return
+
+    const archived = archive(state, {
+      scope: "module-exam",
+      targetId: moduleId,
+      targetLabel,
+      moduleExamAttempts: attempts,
+    })
+
+    this.save({
+      ...archived,
+      moduleExamAttempts: withoutKeys(archived.moduleExamAttempts, [moduleId]),
+    })
+  },
+  resetProfile() {
+    const studentId = studentRepository.getActiveStudentId()
+    if (!studentId) return
+
+    // Save an explicit blank state rather than removing the key. That prevents
+    // Arthur's old pre-profile storage from being imported again after reset.
+    const blank: LearningState = JSON.parse(JSON.stringify(initialState))
+    localStorage.setItem(storageKey(studentId), JSON.stringify(blank))
+    if (studentId === "arthur") {
+      localStorage.removeItem(LEGACY_STORAGE_KEY)
+    }
   },
 }

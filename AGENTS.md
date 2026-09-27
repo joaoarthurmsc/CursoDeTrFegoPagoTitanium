@@ -174,3 +174,14 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Interface screenshots must include a source label and capture date and remain zoomable.
 - Generated explanatory visuals are welcome for concepts, diagrams and mind maps, but must never impersonate a real Google Ads screenshot.
 - Prefer a sequence of focused screenshots over one overloaded screenshot when teaching a multi-step workflow.
+## Progress control
+
+- `/controle` is the official Progress Control Room and is accessible from the user avatar menu.
+- Progress mutations always affect only the active student profile.
+- "Open from start" is non-destructive and must preserve scores, answers, completion and time.
+- Lesson/module/exam resets archive the prior snapshot in `resetHistory` before clearing current progress.
+- Resetting the Aula 00 diagnostic re-locks Module 01 until a new diagnostic is submitted.
+- Resetting Aula 00 re-locks Module 01 but does not silently delete Module 01 learning data.
+- Full profile reset is the only action that deletes the reset archive and requires typed-name confirmation.
+- Destructive progress actions must never be triggered without explicit user confirmation.
+

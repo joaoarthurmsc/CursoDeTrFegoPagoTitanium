@@ -111,7 +111,25 @@ export default function PerformancePage() {
     })),
   )
 
-  const attempts = [...lessonAttempts, ...moduleAttempts].sort(
+  const archivedAttempts: AttemptHistoryItem[] = (state.resetHistory ?? []).flatMap(
+    (record) => {
+      const lessonItems = Object.entries(record.lessonJourneys ?? {}).flatMap(
+        ([lessonId, journey]) =>
+          journey.examAttempts.map((attempt) => ({
+            source: `${getLessonLabel(lessonId)} · histórico arquivado`,
+            lessonId,
+            attempt,
+          })),
+      )
+      const moduleItems = (record.moduleExamAttempts ?? []).map((attempt) => ({
+        source: `${record.targetLabel} · histórico arquivado`,
+        attempt,
+      }))
+      return [...lessonItems, ...moduleItems]
+    },
+  )
+
+  const attempts = [...lessonAttempts, ...moduleAttempts, ...archivedAttempts].sort(
     (a, b) =>
       new Date(b.attempt.date).getTime() -
       new Date(a.attempt.date).getTime(),
@@ -125,11 +143,21 @@ export default function PerformancePage() {
     Boolean(journey.completedAt),
   ).length
 
-  const activeTime = journeyEntries.reduce(
-    (total, [, journey]) =>
-      total + (journey.activeTimeSeconds ?? 0),
-    0,
-  )
+  const activeTime =
+    journeyEntries.reduce(
+      (total, [, journey]) => total + (journey.activeTimeSeconds ?? 0),
+      0,
+    ) +
+    (state.resetHistory ?? []).reduce(
+      (total, record) =>
+        total +
+        Object.values(record.lessonJourneys ?? {}).reduce(
+          (lessonTotal, journey) =>
+            lessonTotal + (journey.activeTimeSeconds ?? 0),
+          0,
+        ),
+      0,
+    )
 
   const closedInteractions = journeyEntries.flatMap(([lessonId, journey]) =>
     Object.entries(journey.decisions)
@@ -339,6 +367,36 @@ export default function PerformancePage() {
         ) : (
           <EmptyState>
             Nenhuma tentativa de prova registrada.
+          </EmptyState>
+        )}
+      </section>
+
+      <section className="mb-14">
+        <SectionHeader title="Reinicializações arquivadas" />
+        {state.resetHistory?.length ? (
+          <div className="border-t border-line">
+            {state.resetHistory.map((record) => (
+              <div
+                key={record.id}
+                className="grid gap-2 border-b border-line py-4 md:grid-cols-[1fr_auto] md:items-center"
+              >
+                <div>
+                  <p className="text-sm font-medium text-paper">
+                    {record.targetLabel}
+                  </p>
+                  <p className="mt-1 text-xs text-muted">
+                    {formatDate(record.date)} · progresso anterior preservado no histórico
+                  </p>
+                </div>
+                <span className="font-mono text-[10px] uppercase tracking-label text-muted">
+                  {record.scope}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState>
+            Nenhuma reinicialização foi realizada neste perfil.
           </EmptyState>
         )}
       </section>

@@ -17,6 +17,24 @@ export interface Decision {
   learning: string
 }
 
+export type ProgressResetScope =
+  | "diagnostic"
+  | "lesson"
+  | "lesson-exam"
+  | "module"
+  | "module-exam"
+
+export interface ProgressResetRecord {
+  id: string
+  date: string
+  scope: ProgressResetScope
+  targetId: string
+  targetLabel: string
+  lessonJourneys?: Record<string, LessonJourneyState>
+  moduleExamAttempts?: ExamAttempt[]
+  initialDiagnostic?: DiagnosticResult
+}
+
 export interface LearningState {
   completedLessons: string[]
   quizScores: Record<string, number>
@@ -35,4 +53,5 @@ export interface LearningState {
   initialDiagnostic?: DiagnosticResult
   finalDiagnostic?: DiagnosticResult
   decisions: Decision[]
+  resetHistory: ProgressResetRecord[]
 }
