@@ -1,5 +1,7 @@
 export type LessonStageType = "discovery" | "context" | "learn" | "concept" | "example" | "counterexample" | "think" | "decide" | "visual" | "case" | "business" | "guided" | "journal" | "practice" | "audit" | "mindmap" | "review" | "diagnostic" | "exam"
 
+export type LessonStageMode = "explain" | "focus" | "apply"
+
 export type GlossaryEntry = {
   term: string
   original?: string
@@ -19,6 +21,9 @@ export type LessonStage = {
   type: LessonStageType
   title: string
   eyebrow: string
+  mode?: LessonStageMode
+  frameLabel?: string
+  frames?: LessonStage[]
   body?: string[]
   glossary?: GlossaryEntry[]
   prompt?: string

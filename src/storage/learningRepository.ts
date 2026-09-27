@@ -116,6 +116,24 @@ export const learningRepository = {
   getLessonJourney(lessonId: string): LessonJourneyState {
     return normalizeJourney(this.load().lessonJourneys[lessonId])
   },
+  resetLessonJourney(
+    lessonId: string,
+    options: { clearInitialDiagnostic?: boolean } = {},
+  ): LessonJourneyState {
+    const state = this.load()
+    const next = {
+      ...createLessonJourneyState(),
+      startedAt: new Date().toISOString(),
+    }
+    this.save({
+      ...state,
+      initialDiagnostic: options.clearInitialDiagnostic
+        ? undefined
+        : state.initialDiagnostic,
+      lessonJourneys: { ...state.lessonJourneys, [lessonId]: next },
+    })
+    return next
+  },
   updateLessonJourney(
     lessonId: string,
     update: (journey: LessonJourneyState) => LessonJourneyState,

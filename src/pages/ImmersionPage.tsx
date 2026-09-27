@@ -14,6 +14,19 @@ export default function ImmersionPage({
 
   const [journey, setJourney] = useState<LessonJourneyState>(() => {
     const current = learningRepository.getLessonJourney(immersionLesson.id)
+    const currentStageIds = new Set(
+      immersionLesson.stages.map((stage) => stage.id),
+    )
+    const hasLegacyProgress =
+      current.currentStageIndex >= immersionLesson.stages.length ||
+      current.completedStageIds.some((id) => !currentStageIds.has(id))
+
+    if (hasLegacyProgress) {
+      return learningRepository.resetLessonJourney(immersionLesson.id, {
+        clearInitialDiagnostic: true,
+      })
+    }
+
     return current.startedAt
       ? current
       : learningRepository.startLesson(immersionLesson.id)

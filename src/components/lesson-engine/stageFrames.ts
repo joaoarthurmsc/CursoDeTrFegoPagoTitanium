@@ -15,24 +15,34 @@ const chunk = <T,>(items: T[] | undefined, size: number): T[][] => {
   return groups
 }
 
-const shell = (stage: LessonStage, type: LessonStage["type"] = "learn"): LessonStage => ({
+const shell = (
+  stage: LessonStage,
+  type: LessonStage["type"] = "learn",
+): LessonStage => ({
   id: stage.id,
   type,
   title: stage.title,
   eyebrow: stage.eyebrow,
+  mode: stage.mode,
 })
 
 export function getLessonFrames(stage: LessonStage): LessonFrame[] {
+  // Checkpoint 7: author-declared semantic frames always win. The lesson author
+  // decides where an idea begins and ends; the engine only renders that choice.
+  if (stage.frames?.length) {
+    return stage.frames.map((frame, index) => ({
+      id: `${stage.id}:frame-${index + 1}`,
+      label: frame.frameLabel ?? `Parte ${index + 1}`,
+      stage: { ...frame, frames: undefined },
+    }))
+  }
+
   if (stage.type === "diagnostic" || stage.type === "exam") {
     return [{ id: `${stage.id}:main`, label: "Aplicação", stage }]
   }
 
   const frames: LessonFrame[] = []
-  const push = (
-    key: string,
-    label: string,
-    projection: LessonStage,
-  ) => {
+  const push = (key: string, label: string, projection: LessonStage) => {
     frames.push({ id: `${stage.id}:${key}`, label, stage: projection })
   }
 

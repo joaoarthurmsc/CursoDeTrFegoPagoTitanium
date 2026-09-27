@@ -33,7 +33,7 @@ function canAdvance(stage: LessonStage, journey: LessonJourneyState) {
 
 function framesForStage(stage: LessonStage, lesson: Lesson): LessonFrame[] {
   const frames = getLessonFrames(stage)
-  if (stage.id !== "closing") return frames
+  if (!stage.id.endsWith("closing")) return frames
 
   return [
     ...frames,
@@ -94,7 +94,7 @@ export default function ImmersionJourney({
     (item) => item.type === "diagnostic",
   )
   const isDiagnostic = stage.type === "diagnostic"
-  const isClosing = stage.id === "closing"
+  const isClosing = stage.id.endsWith("closing")
   const frames = framesForStage(stage, lesson)
   const [frameState, setFrameState] = useState({ stageId: stage.id, index: 0 })
   const frameIndex =
@@ -103,7 +103,7 @@ export default function ImmersionJourney({
       : 0
   const frame = frames[frameIndex]
   const isLastFrame = frameIndex === frames.length - 1
-  const advanceAllowed = canAdvance(stage, journey)
+  const advanceAllowed = canAdvance(frame.stage, journey)
   const stageViewportRef = useRef<HTMLDivElement>(null)
 
   const selectStage = (index: number, targetFrame = 0) => {
@@ -196,7 +196,7 @@ export default function ImmersionJourney({
             )}
           </div>
           <span className="text-muted">
-            Etapa {journey.currentStageIndex + 1} de {lesson.stages.length}
+            Capítulo {journey.currentStageIndex + 1} de {lesson.stages.length}
           </span>
         </div>
         <div className="flex items-center justify-between gap-6">
@@ -231,6 +231,18 @@ export default function ImmersionJourney({
                 {stage.title}
               </p>
               <div className="lesson-stage-content mt-6">
+                <div className="mb-7 space-y-4">
+                  {stage.body?.map((paragraph) => (
+                    <p key={paragraph} className="text-base leading-7 text-silver md:text-lg">
+                      {paragraph}
+                    </p>
+                  ))}
+                  {stage.quote && (
+                    <p className="border-l-2 border-gold bg-graphite p-5 text-base font-semibold leading-7 text-paper">
+                      {stage.quote}
+                    </p>
+                  )}
+                </div>
                 <InitialDiagnostic
                   diagnostic={lesson.diagnostic}
                   journey={journey}
@@ -285,13 +297,13 @@ export default function ImmersionJourney({
             </div>
           ) : (
             <div className="flex items-center gap-4 text-right">
-              {isLastFrame && !advanceAllowed && (
+              {!advanceAllowed && (
                 <p className="hidden text-xs text-muted sm:block">
                   Conclua a interação para avançar.
                 </p>
               )}
               <ActionButton
-                disabled={isLastFrame && !advanceAllowed}
+                disabled={!advanceAllowed}
                 onClick={nextPage}
               >
                 {journey.currentStageIndex === 0 && isLastFrame

@@ -411,10 +411,28 @@ export default function LessonStage({
     values: { problem: string; decision: string; expected: string },
   ) => void
 }) {
+  const mode =
+    stage.mode ??
+    (["think", "decide", "practice", "audit", "journal"].includes(stage.type)
+      ? "apply"
+      : "explain")
+  const modeLabel =
+    mode === "focus"
+      ? "PONTO-CHAVE"
+      : mode === "apply"
+        ? "AGORA É COM VOCÊ"
+        : "APRENDA"
+
   return (
-    <article data-frame-root tabIndex={-1} className="outline-none">
-      <p className="font-mono text-xs font-semibold uppercase tracking-label text-gold">
-        {stage.eyebrow}
+    <article
+      data-frame-root
+      data-learning-mode={mode}
+      tabIndex={-1}
+      className="lesson-frame outline-none"
+    >
+      <p className="font-mono text-xs font-semibold uppercase tracking-label">
+        <span className="text-gold">{modeLabel}</span>
+        <span className="text-muted"> · {stage.eyebrow}</span>
       </p>
       <HomeHeading
         level={2}

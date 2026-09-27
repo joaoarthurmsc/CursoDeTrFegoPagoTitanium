@@ -18,11 +18,15 @@ export const REQUIRED_LESSON_CAPABILITIES = [
 ] as const
 
 export function assertTitaniumLessonArchitecture(lesson: Lesson) {
-  const stageTypes = new Set(lesson.stages.map((stage) => stage.type))
+  const authoredStages = lesson.stages.flatMap((stage) => [
+    stage,
+    ...(stage.frames ?? []),
+  ])
+  const stageTypes = new Set(authoredStages.map((stage) => stage.type))
   const materialTypes = new Set(
     lesson.materials.map((material) => material.type),
   )
-  const hasDynamicTeaching = lesson.stages.some((stage) =>
+  const hasDynamicTeaching = authoredStages.some((stage) =>
     ["think", "decide", "practice", "audit", "guided"].includes(stage.type),
   )
   const diagnosticCompetencies =

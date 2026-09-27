@@ -60,3 +60,15 @@ This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin con
 - On desktop, progress and previous/next navigation stay stable while only the central frame may scroll.
 - On short/mobile screens, natural document scroll is allowed.
 - Development mode should warn when a frame substantially exceeds the useful viewport so content can be re-authored before publication.
+
+## Titanium Teaching Standard
+
+- The player never decides pedagogical breaks by height when an authored semantic frame exists.
+- A frame is a complete learning unit, not an arbitrary fragment of text.
+- Never create a new frame only to display one impact sentence.
+- Prefer a complete screen with one central idea, 2-4 short paragraphs, an example/visual when useful, and a clear conclusion or action.
+- Small scroll is acceptable when it preserves meaning; semantic coherence is more important than zero scroll.
+- Use three teaching modes intentionally: EXPLAIN (`APRENDA`), FOCUS (`PONTO-CHAVE`), and APPLY (`AGORA É COM VOCÊ`).
+- Every lesson should normally contain: opening relevance, objectives, teaching, example, application, common errors, synthesis, mind map, official materials, and assessment when applicable.
+- Authoring pipeline: pedagogical objective -> professor script -> examples/cases -> interactions -> mind map -> assessment -> materials -> interface.
+- The Aula 00 V2 is the reference lesson for future Titanium lesson authoring.
