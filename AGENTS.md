@@ -147,7 +147,7 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - No unexplained acronym or specialized term should appear before being taught or linked to the Titanium Glossary.
 - Central glossary source: `src/data/glossary.ts`.
 - Use inline glossary rendering instead of duplicating tooltip definitions inside lesson content.
-- Glossary terms must support mouse hover, click/tap and keyboard focus; `Esc` closes the explanation.
+- Glossary terms open only by explicit activation: click/tap or keyboard activation (Enter/Space). Hover and focus alone must never open the glossary. `Esc` or clicking outside closes the explanation.
 - Explanations may include original term, Portuguese translation, definition, formula, example and caution.
 - Apply glossary rendering to teaching copy, headings, scenarios, question prompts, tables and feedback where it does not create nested interactive controls.
 - Do not put an interactive glossary trigger inside an answer button; the prompt or surrounding explanation should carry the definition instead.

@@ -33,6 +33,7 @@ export default function GlossaryTerm({
     if (!open) return
 
     updatePosition()
+
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false)
@@ -40,37 +41,35 @@ export default function GlossaryTerm({
       }
     }
 
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      const target = event.target as Node | null
+      if (target && !wrapperRef.current?.contains(target)) {
+        setOpen(false)
+      }
+    }
+
     window.addEventListener("resize", updatePosition)
     window.addEventListener("scroll", updatePosition, true)
     window.addEventListener("keydown", closeOnEscape)
+    document.addEventListener("pointerdown", closeOnOutsidePointer)
 
     return () => {
       window.removeEventListener("resize", updatePosition)
       window.removeEventListener("scroll", updatePosition, true)
       window.removeEventListener("keydown", closeOnEscape)
+      document.removeEventListener("pointerdown", closeOnOutsidePointer)
     }
   }, [open])
 
   return (
-    <span
-      ref={wrapperRef}
-      className="relative inline"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      onBlur={(event) => {
-        if (!wrapperRef.current?.contains(event.relatedTarget as Node | null)) {
-          setOpen(false)
-        }
-      }}
-    >
+    <span ref={wrapperRef} className="relative inline">
       <button
         ref={buttonRef}
         type="button"
-        className="inline cursor-help border-0 border-b border-dashed border-gold/80 bg-transparent p-0 font-[inherit] text-inherit underline-offset-4 transition hover:text-gold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+        className="inline cursor-pointer border-0 border-b border-dashed border-gold/80 bg-transparent p-0 font-[inherit] text-inherit underline-offset-4 transition hover:text-gold focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
         onClick={() => setOpen((current) => !current)}
-        onFocus={() => setOpen(true)}
         aria-expanded={open}
-        aria-describedby={open ? `glossary-${id}` : undefined}
+        aria-controls={`glossary-${id}`}
       >
         {displayText ?? entry.term}
       </button>
@@ -78,7 +77,8 @@ export default function GlossaryTerm({
       {open && (
         <span
           id={`glossary-${id}`}
-          role="tooltip"
+          role="dialog"
+          aria-label={`Glossário: ${entry.term}`}
           className="fixed z-[80] block w-[min(24rem,calc(100vw-2rem))] max-h-[min(30rem,calc(100vh-2rem))] overflow-y-auto border border-gold/60 bg-charcoal p-5 text-left shadow-2xl"
           style={{ left: position.left, top: position.top }}
         >
@@ -123,7 +123,7 @@ export default function GlossaryTerm({
             </span>
           )}
           <span className="mt-4 block text-[11px] text-muted">
-            Passe o mouse, toque ou use Tab para consultar. Esc fecha o glossário.
+            Clique, toque ou pressione Enter/Espaço para consultar. Clique fora ou pressione Esc para fechar.
           </span>
         </span>
       )}

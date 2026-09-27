@@ -25,4 +25,4 @@ A glossary card may contain:
 
 ## UX rule
 
-The inline trigger is subtle and must not interrupt reading. It is available by hover, click/tap and keyboard focus. Interactive glossary triggers must never be nested inside another button.
+The inline trigger is subtle and must not interrupt reading. It opens only after explicit activation: click/tap or keyboard activation with Enter/Space. Hover and focus alone never open it. Interactive glossary triggers must never be nested inside another button.
