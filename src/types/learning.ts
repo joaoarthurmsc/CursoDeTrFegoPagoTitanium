@@ -23,6 +23,10 @@ export type GlossaryEntry = {
   original?: string
   translation: string
   explanation: string
+  formula?: string
+  example?: string
+  caution?: string
+  aliases?: string[]
 }
 
 export type DecisionOption = {

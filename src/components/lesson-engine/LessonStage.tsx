@@ -6,6 +6,7 @@ import type {
 import { ActionButton, HomeHeading } from "../titanium/HomePrimitives"
 import DecisionStage from "./DecisionStage"
 import GlossaryTerm from "./GlossaryTerm"
+import GlossaryText from "./GlossaryText"
 import PracticeStage from "./PracticeStage"
 import LessonMedia from "./LessonMedia"
 
@@ -18,7 +19,7 @@ function StandardContent({ stage }: { stage: LessonStageType }) {
             key={paragraph}
             className="text-base leading-8 text-silver md:text-lg"
           >
-            {paragraph}
+            <GlossaryText text={paragraph} />
           </p>
         ))}
       </div>
@@ -54,10 +55,10 @@ function EditorialExtras({ stage }: { stage: LessonStageType }) {
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div>
-                <p className="font-semibold text-paper">{item.label}</p>
+                <p className="font-semibold text-paper"><GlossaryText text={item.label} /></p>
                 {item.detail && (
                   <p className="mt-1 text-sm leading-6 text-muted">
-                    {item.detail}
+                    <GlossaryText text={item.detail} />
                   </p>
                 )}
               </div>
@@ -67,12 +68,12 @@ function EditorialExtras({ stage }: { stage: LessonStageType }) {
       )}
       {stage.afterSequenceLead && (
         <p className="mt-7 text-base leading-8 text-silver md:text-lg">
-          {stage.afterSequenceLead}
+          <GlossaryText text={stage.afterSequenceLead} />
         </p>
       )}
       {stage.highlight && (
         <p className="mt-8 border-l-2 border-gold bg-graphite p-5 text-lg font-semibold leading-7 text-paper">
-          {stage.highlight}
+          <GlossaryText text={stage.highlight} />
         </p>
       )}
       {stage.afterSequence && (
@@ -82,7 +83,7 @@ function EditorialExtras({ stage }: { stage: LessonStageType }) {
               key={paragraph}
               className="text-base leading-8 text-silver md:text-lg"
             >
-              {paragraph}
+              <GlossaryText text={paragraph} />
             </p>
           ))}
         </div>
@@ -91,14 +92,14 @@ function EditorialExtras({ stage }: { stage: LessonStageType }) {
         <div className="mt-8 grid gap-px bg-line sm:grid-cols-2">
           {stage.cards.map((card) => (
             <div key={card.title} className="bg-graphite p-5 md:p-6">
-              <p className="font-semibold text-paper">{card.title}</p>
+              <p className="font-semibold text-paper"><GlossaryText text={card.title} /></p>
               {card.subtitle && (
                 <p className="mt-2 font-mono text-xs text-gold">
-                  {card.subtitle}
+                  <GlossaryText text={card.subtitle} />
                 </p>
               )}
               <p className="mt-4 text-sm leading-6 text-muted">
-                {card.description}
+                <GlossaryText text={card.description} />
               </p>
             </div>
           ))}
@@ -115,7 +116,7 @@ function EditorialExtras({ stage }: { stage: LessonStageType }) {
       )}
       {stage.quote && (
         <blockquote className="mt-8 border-y border-gold/50 py-7 font-display text-2xl font-semibold leading-snug text-paper md:text-3xl">
-          “{stage.quote}”
+          “<GlossaryText text={stage.quote} />”
         </blockquote>
       )}
     </>
@@ -135,8 +136,8 @@ function VisualStage({ stage }: { stage: LessonStageType }) {
             <span className="font-mono text-xs text-gold">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <p className="mt-8 font-semibold">{item.label}</p>
-            <p className="mt-2 text-xs leading-5 text-muted">{item.detail}</p>
+            <p className="mt-8 font-semibold"><GlossaryText text={item.label} /></p>
+            <p className="mt-2 text-xs leading-5 text-muted"><GlossaryText text={item.detail} /></p>
             {index < (stage.visualItems?.length ?? 0) - 1 && (
               <span className="absolute -right-2 top-1/2 z-10 hidden size-4 -translate-y-1/2 bg-gold md:block" />
             )}
@@ -155,7 +156,7 @@ function DiscoveryStage({ stage }: { stage: LessonStageType }) {
         {stage.comparison?.map((item) => (
           <div key={item.label} className="bg-graphite p-5 md:p-6">
             <p className="font-mono text-xs uppercase tracking-label text-gold">
-              {item.label}
+              <GlossaryText text={item.label} />
             </p>
             <dl className="mt-6 grid gap-4">
               {item.metrics.map((metric) => (
@@ -163,7 +164,7 @@ function DiscoveryStage({ stage }: { stage: LessonStageType }) {
                   key={metric.label}
                   className="flex items-end justify-between border-b border-line pb-3"
                 >
-                  <dt className="text-sm text-muted">{metric.label}</dt>
+                  <dt className="text-sm text-muted"><GlossaryText text={metric.label} /></dt>
                   <dd className="font-mono text-lg text-paper">
                     {metric.value}
                   </dd>
@@ -200,8 +201,8 @@ function GuidedStage({ stage }: { stage: LessonStageType }) {
               {String(index + 1).padStart(2, "0")}
             </span>
             <div>
-              <p className="font-semibold text-paper">{step.instruction}</p>
-              <p className="mt-2 text-sm leading-6 text-muted">{step.reason}</p>
+              <p className="font-semibold text-paper"><GlossaryText text={step.instruction} /></p>
+              <p className="mt-2 text-sm leading-6 text-muted"><GlossaryText text={step.reason} /></p>
               {step.image && (
                 <div className="relative mt-5">
                   <ActionButton
@@ -290,14 +291,14 @@ function MindMapStage({ stage }: { stage: LessonStageType }) {
               className="border border-line bg-graphite p-5 text-center"
             >
               <p className="font-mono text-xs font-semibold text-gold">
-                {branch.title}
+                <GlossaryText text={branch.title} />
               </p>
               <p className="mt-3 text-sm leading-6 text-silver">
-                {branch.detail}
+                <GlossaryText text={branch.detail} />
               </p>
               {branch.result && (
                 <p className="mt-5 border-t border-line pt-4 font-semibold text-paper">
-                  ↓ {branch.result}
+                  ↓ <GlossaryText text={branch.result} />
                 </p>
               )}
             </div>
@@ -390,7 +391,7 @@ export default function LessonStage({
         level={2}
         className="lesson-stage-title mt-3 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
       >
-        {stage.title}
+        <GlossaryText text={stage.title} />
       </HomeHeading>
       <div className="lesson-stage-content mt-6">
         {stage.type === "discovery" ? (

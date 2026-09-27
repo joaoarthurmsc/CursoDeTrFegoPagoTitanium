@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { LessonJourneyState, LessonStage } from "../../types/learning"
 import { ActionButton } from "../titanium/HomePrimitives"
+import GlossaryText from "./GlossaryText"
 
 export default function DecisionStage({
   lessonId,
@@ -26,7 +27,7 @@ export default function DecisionStage({
   return (
     <div className="mt-8">
       <p className="border-l-2 border-gold pl-5 text-lg font-semibold leading-8">
-        {stage.scenario}
+        {stage.scenario && <GlossaryText text={stage.scenario} />}
       </p>
       <div className="mt-7 grid gap-3">
         {stage.options?.map((item) => (
@@ -69,7 +70,7 @@ export default function DecisionStage({
               : "Revise o raciocínio"}
           </p>
           <p className="mt-3 text-sm leading-7 text-silver">
-            {option.feedback}
+            <GlossaryText text={option.feedback} />
           </p>
           {stage.allowRetry && !option.recommended && (
             <ActionButton

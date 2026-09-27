@@ -1,5 +1,6 @@
 import type { ExamQuestion as ExamQuestionType } from "../../types/learning"
 import { ActionButton } from "../titanium/HomePrimitives"
+import GlossaryText from "../lesson-engine/GlossaryText"
 
 export default function ExamQuestion({
   question,
@@ -13,7 +14,7 @@ export default function ExamQuestion({
   return (
     <fieldset className="m-0 border-0 p-0">
       <legend className="text-xl font-semibold leading-8 text-paper md:text-2xl">
-        {question.prompt}
+        <GlossaryText text={question.prompt} />
       </legend>
       <div className="mt-7 grid gap-3">
         {question.options.map((option, index) => (
