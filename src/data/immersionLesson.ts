@@ -9,339 +9,512 @@ const option = (id: string, label: string): ExamOption => ({
 
 const diagnosticQuestions: DiagnosticQuestion[] = [
   {
-    id: "d01",
+    id: "d01v2",
     competence: "Fundamentos",
     prompt:
-      "Uma campanha recebeu 20.000 impressões e 1.400 cliques. O responsável afirma: “Tivemos muitos cliques. Portanto, a campanha foi um sucesso.” Qual é a análise mais adequada?",
+      "Uma campanha gerou 20.000 impressões, 1.400 cliques e 56 formulários. O responsável afirma que a campanha foi um sucesso porque o CTR ficou em 7%. Qual leitura é mais adequada?",
     options: [
-      option("a", "Correto. Clique é o objetivo final do tráfego pago."),
-      option("b", "Correto, desde que o CTR seja superior a 5%."),
+      option(
+        "a",
+        "O CTR alto já permite considerar a campanha bem-sucedida, desde que esteja acima da média histórica da conta.",
+      ),
+      option(
+        "b",
+        "Os dados de mídia devem ser ignorados; apenas a receita final é útil para avaliar qualquer campanha.",
+      ),
       option(
         "c",
-        "Ainda não existe informação suficiente para avaliar o resultado econômico da campanha.",
+        "O anúncio parece gerar resposta, mas ainda precisamos avaliar conversão, qualidade, CPA e economia antes de concluir sobre sucesso.",
       ),
-      option("d", "A campanha foi ruim porque 1.400 cliques são poucos."),
+      option(
+        "d",
+        "A campanha deve ser considerada fraca porque uma taxa de 4% entre clique e formulário é necessariamente baixa.",
+      ),
     ],
     correctAnswer: "c",
   },
   {
-    id: "d02",
+    id: "d02v2",
     competence: "Fundamentos",
-    prompt: "Qual descrição melhor representa tráfego pago?",
+    prompt:
+      "Qual definição representa melhor o papel do tráfego pago em uma estratégia profissional de aquisição?",
     options: [
       option(
         "a",
-        "Comprar seguidores e visitas para aumentar presença digital.",
+        "Usar investimento em mídia para acessar atenção ou intenção e conduzir pessoas por uma jornada mensurável de aquisição.",
       ),
-      option("b", "Comprar cliques pelo menor preço possível."),
+      option(
+        "b",
+        "Maximizar a quantidade de visitas compradas, priorizando sempre o menor CPC possível em cada canal.",
+      ),
       option(
         "c",
-        "Utilizar investimento em mídia para gerar e direcionar atenção/intenção dentro de um sistema de aquisição mensurável.",
+        "Substituir os canais orgânicos por mídia paga para tornar o crescimento mais rápido e totalmente previsível.",
       ),
-      option("d", "Utilizar exclusivamente Google Ads para gerar leads."),
+      option(
+        "d",
+        "Comprar exposição apenas em plataformas nas quais o anunciante paga exclusivamente quando ocorre um clique.",
+      ),
     ],
-    correctAnswer: "c",
+    correctAnswer: "a",
   },
   {
-    id: "d03",
+    id: "d03v2",
     competence: "Negócio e Economia",
     prompt:
-      "Uma clínica ganha, em média, R$ 400 de contribuição econômica por novo paciente depois dos principais custos variáveis. Seu CAC é de R$ 550. Qual afirmação é mais adequada?",
+      "Uma clínica obtém R$ 400 de contribuição econômica por novo paciente no horizonte analisado e apresenta CAC de R$ 550. Qual interpretação é mais madura?",
     options: [
       option(
         "a",
-        "O marketing está funcionando porque existem novos pacientes.",
+        "O crescimento de pacientes compensa automaticamente a diferença, pois escala de volume é mais importante que margem unitária.",
       ),
       option(
         "b",
-        "Existe um possível problema econômico porque adquirir o cliente custa mais do que o valor disponível nessa relação analisada.",
+        "O CAC deve ser comparado apenas ao preço da primeira consulta, independentemente de custos e recorrência do paciente.",
       ),
-      option("c", "CAC não deve ser comparado com economia do negócio."),
-      option("d", "Basta aumentar o orçamento para compensar."),
+      option(
+        "c",
+        "A aquisição pode ser mantida sem revisão desde que a campanha esteja gerando um número crescente de conversões.",
+      ),
+      option(
+        "d",
+        "Nesse horizonte existe pressão econômica negativa; é preciso verificar recorrência, LTV e demais contribuições antes de decidir escalar.",
+      ),
     ],
-    correctAnswer: "b",
+    correctAnswer: "d",
   },
   {
-    id: "d04",
+    id: "d04v2",
     competence: "Negócio e Economia",
     prompt:
-      "O que melhor representa LTV — Lifetime Value (Valor do Cliente ao Longo do Tempo)?",
-    options: [
-      option("a", "O valor da primeira compra."),
-      option("b", "O custo médio de um clique."),
-      option(
-        "c",
-        "O valor econômico que um cliente gera ao longo de sua relação com o negócio.",
-      ),
-      option("d", "O orçamento mensal de marketing."),
-    ],
-    correctAnswer: "c",
-  },
-  {
-    id: "d05",
-    competence: "Google Ads",
-    prompt: "Em termos gerais, a publicidade no Google Ads opera através de:",
-    options: [
-      option("a", "uma tabela fixa de preços definida pelo Google."),
-      option(
-        "b",
-        "um sistema de leilões que considera múltiplos fatores para determinar oportunidades de exibição.",
-      ),
-      option("c", "compra antecipada obrigatória de posições."),
-      option("d", "ordem de chegada dos anunciantes."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d06",
-    competence: "Google Ads",
-    prompt:
-      "Uma empresa acabou de abrir uma conta no Google Ads. Qual sequência demonstra maior maturidade?",
+      "Qual alternativa descreve melhor LTV — Lifetime Value — em uma análise de aquisição?",
     options: [
       option(
         "a",
-        "Criar campanha → escolher orçamento → anunciar → pensar em conversões depois.",
+        "A receita bruta obtida na primeira compra, antes de considerar custos, recorrência ou retenção.",
       ),
       option(
         "b",
-        "Definir resultado de negócio → preparar mensuração → estruturar campanha → anunciar → analisar.",
+        "O valor econômico acumulado que um cliente tende a gerar durante sua relação com o negócio.",
       ),
       option(
         "c",
-        "Escolher palavras-chave com maior volume → utilizar orçamento máximo.",
+        "O limite máximo de orçamento que a empresa pode investir mensalmente em mídia para adquirir clientes.",
       ),
-      option("d", "Copiar a campanha de um concorrente."),
+      option(
+        "d",
+        "O valor médio de uma conversão registrado na plataforma de anúncios durante um determinado mês.",
+      ),
     ],
     correctAnswer: "b",
   },
   {
-    id: "d07",
-    competence: "Search",
+    id: "d05v2",
+    competence: "Google Ads",
     prompt:
-      "O anunciante configurou a Keyword “ortopedista fortaleza”. Um usuário pesquisou “médico especialista em joelho perto de mim”. Qual é o segundo texto?",
+      "Dois anunciantes participam de uma oportunidade de exibição no Google Ads. Um deles oferece lance maior. O que melhor descreve como a decisão de exibição acontece?",
     options: [
-      option("a", "Keyword."),
-      option("b", "Search Term — Termo de pesquisa."),
-      option("c", "Negative Keyword."),
-      option("d", "Asset."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d08",
-    competence: "Search",
-    prompt:
-      "Uma clínica de ortopedia aparece frequentemente para pesquisas contendo “curso de ortopedia”. Essas pessoas procuram formação acadêmica, não uma consulta. Qual recurso merece ser investigado?",
-    options: [
-      option("a", "Aumentar os lances."),
-      option("b", "Negative Keywords — Palavras-chave negativas."),
-      option("c", "Aumentar o raio geográfico."),
-      option("d", "Aumentar orçamento."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d09",
-    competence: "Conversão",
-    prompt:
-      "Uma campanha gera tráfego altamente relevante, mas quase ninguém completa o formulário da página. Qual hipótese merece investigação?",
-    options: [
-      option("a", "Somente o anúncio."),
+      option(
+        "a",
+        "O anunciante com maior lance vence automaticamente, porque o valor ofertado determina sozinho a posição.",
+      ),
       option(
         "b",
-        "A experiência e a capacidade de conversão da página de destino.",
+        "A posição é comprada por uma tabela fixa e o leilão serve apenas para definir quanto será cobrado depois.",
       ),
-      option("c", "Apenas o orçamento diário."),
-      option("d", "Apenas o número de impressões."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d10",
-    competence: "Conversão",
-    prompt:
-      "Uma empresa dobra o número de visitantes de uma página que possui graves problemas de conversão. O que necessariamente acontecerá?",
-    options: [
-      option("a", "As vendas dobrarão."),
-      option("b", "O CAC cairá pela metade."),
       option(
         "c",
-        "Nada garante que o resultado econômico melhorará apenas porque o tráfego aumentou.",
+        "O leilão considera lance e outros fatores de qualidade, contexto e elegibilidade; maior lance isolado não garante a melhor posição.",
       ),
-      option("d", "O Google corrigirá automaticamente a página."),
+      option(
+        "d",
+        "O anunciante com maior orçamento diário recebe prioridade, desde que ambas as campanhas estejam ativas.",
+      ),
     ],
     correctAnswer: "c",
   },
   {
-    id: "d11",
-    competence: "Tracking e Mensuração",
+    id: "d06v2",
+    competence: "Google Ads",
     prompt:
-      "Uma campanha gera formulários, mas o Google Ads não possui conversões configuradas corretamente. Qual é o principal problema?",
+      "Uma empresa está estruturando sua primeira operação no Google Ads. Qual sequência demonstra maior maturidade de implementação?",
     options: [
-      option("a", "O site ficará mais lento."),
+      option(
+        "a",
+        "Definir resultado de negócio → estruturar mensuração → desenhar campanhas → ativar tráfego → analisar e ajustar.",
+      ),
       option(
         "b",
-        "O sistema e o gestor terão uma visão incompleta dos resultados usados para análise e otimização.",
+        "Criar campanhas → gerar volume → observar cliques → configurar conversões depois que houver dados suficientes.",
       ),
-      option("c", "O CPC necessariamente aumentará."),
-      option("d", "Os anúncios serão automaticamente suspensos."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d12",
-    competence: "Tracking e Mensuração",
-    prompt:
-      "Uma clínica registra no Google Ads todos os formulários como conversões, mas não diferencia lead inválido, lead qualificado, paciente agendado e paciente que comprou. Qual risco existe?",
-    options: [
-      option("a", "Nenhum. Toda conversão possui o mesmo valor."),
-      option(
-        "b",
-        "Otimizar para quantidade sem compreender qualidade ou resultado real.",
-      ),
-      option("c", "O Google Ads deixa de funcionar."),
-      option("d", "Isso afeta apenas o design da campanha."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d13",
-    competence: "Diagnóstico",
-    prompt: "O CPA subiu 35% nesta semana. Qual deve ser a primeira postura?",
-    options: [
-      option("a", "Reduzir imediatamente orçamento em 35%."),
-      option("b", "Criar outra campanha."),
       option(
         "c",
-        "Decompor o resultado e investigar quais variáveis mudaram antes de prescrever uma ação.",
+        "Escolher palavras-chave de maior volume → definir o maior orçamento possível → otimizar apenas depois da primeira semana.",
       ),
-      option("d", "Trocar todas as palavras-chave."),
+      option(
+        "d",
+        "Copiar a estrutura de um concorrente → manter os mesmos lances → adaptar os anúncios quando o desempenho estabilizar.",
+      ),
+    ],
+    correctAnswer: "a",
+  },
+  {
+    id: "d07v2",
+    competence: "Search",
+    prompt:
+      "Uma campanha possui a Keyword “ortopedista fortaleza”. Um usuário pesquisou “especialista em joelho perto de mim” e acionou o anúncio. Como devemos classificar os dois textos?",
+    options: [
+      option(
+        "a",
+        "Os dois são Search Terms; o primeiro é apenas o termo cadastrado manualmente pelo anunciante.",
+      ),
+      option(
+        "b",
+        "Os dois são Keywords; a diferença é que o segundo foi escolhido automaticamente pelo algoritmo.",
+      ),
+      option(
+        "c",
+        "O primeiro é Search Term e o segundo é Keyword porque a pesquisa real sempre substitui o critério configurado.",
+      ),
+      option(
+        "d",
+        "O primeiro é a Keyword configurada; o segundo é o Search Term realmente digitado pelo usuário.",
+      ),
+    ],
+    correctAnswer: "d",
+  },
+  {
+    id: "d08v2",
+    competence: "Search",
+    prompt:
+      "Uma clínica de ortopedia recebe cliques recorrentes de pessoas que pesquisam “curso de ortopedia” e “residência em ortopedia”. Qual ação merece prioridade na investigação?",
+    options: [
+      option(
+        "a",
+        "Reduzir o raio geográfico, porque buscas educacionais normalmente indicam que a campanha está alcançando cidades distantes.",
+      ),
+      option(
+        "b",
+        "Revisar Search Terms e aplicar Negative Keywords para excluir intenções educacionais que não correspondem à oferta.",
+      ),
+      option(
+        "c",
+        "Reduzir os lances de todas as Keywords, porque o problema principal é o custo associado a esses cliques irrelevantes.",
+      ),
+      option(
+        "d",
+        "Migrar todas as Keywords para correspondência exata, porque isso elimina qualquer possibilidade de tráfego irrelevante.",
+      ),
+    ],
+    correctAnswer: "b",
+  },
+  {
+    id: "d09v2",
+    competence: "Conversão",
+    prompt:
+      "CTR e CPC permanecem estáveis, mas a taxa de conversão da landing page caiu de 8% para 2%. Onde deve começar a investigação?",
+    options: [
+      option(
+        "a",
+        "Nos anúncios, porque qualquer queda de conversão indica que a mensagem do anúncio deixou de gerar interesse.",
+      ),
+      option(
+        "b",
+        "No orçamento diário, porque pouca verba pode reduzir a qualidade do tráfego mesmo quando CPC e CTR permanecem estáveis.",
+      ),
+      option(
+        "c",
+        "Na experiência pós-clique: página, oferta, formulário, velocidade, confiança e eventuais mudanças no processo de conversão.",
+      ),
+      option(
+        "d",
+        "Na estratégia de lances, porque uma queda de CVR deve ser corrigida primeiro alterando a forma como o Google participa do leilão.",
+      ),
     ],
     correctAnswer: "c",
   },
   {
-    id: "d14",
+    id: "d10v2",
+    competence: "Conversão",
+    prompt:
+      "Uma empresa dobra o tráfego para uma landing page com problemas conhecidos de conversão. Qual afirmação é mais correta?",
+    options: [
+      option(
+        "a",
+        "O volume adicional pode gerar mais conversões absolutas, mas não garante ganho proporcional nem melhora da economia enquanto o gargalo permanecer.",
+      ),
+      option(
+        "b",
+        "O número de conversões tende a dobrar na mesma proporção porque o volume de visitantes é o principal determinante do resultado.",
+      ),
+      option(
+        "c",
+        "O CAC tende a cair pela metade, já que o mesmo custo fixo da página passa a ser distribuído entre mais visitantes.",
+      ),
+      option(
+        "d",
+        "A plataforma de anúncios tende a compensar automaticamente os problemas da página ao identificar o aumento de tráfego.",
+      ),
+    ],
+    correctAnswer: "a",
+  },
+  {
+    id: "d11v2",
+    competence: "Tracking e Mensuração",
+    prompt:
+      "Uma campanha gera leads reais, mas o acompanhamento de conversões do Google Ads está configurado de forma incompleta. Qual é o risco principal?",
+    options: [
+      option(
+        "a",
+        "O CPC aumentará necessariamente, porque a plataforma cobra mais quando não recebe dados de conversão suficientes.",
+      ),
+      option(
+        "b",
+        "A campanha deixará de participar de leilões até que todas as conversões sejam corrigidas e importadas para a conta.",
+      ),
+      option(
+        "c",
+        "O problema afeta apenas relatórios; as decisões do gestor e os sistemas de automação continuam recebendo os mesmos sinais.",
+      ),
+      option(
+        "d",
+        "Gestor e automação passam a trabalhar com sinais incompletos, prejudicando leitura, aprendizado e otimização da campanha.",
+      ),
+    ],
+    correctAnswer: "d",
+  },
+  {
+    id: "d12v2",
+    competence: "Tracking e Mensuração",
+    prompt:
+      "Uma clínica registra todos os formulários como conversão, sem distinguir lead inválido, lead qualificado, agendamento e paciente que comprou. Qual consequência é mais provável?",
+    options: [
+      option(
+        "a",
+        "A mensuração permanece adequada porque volume de conversões é suficiente para representar qualidade ao longo do funil.",
+      ),
+      option(
+        "b",
+        "A operação pode otimizar para quantidade de ações sem perceber se elas estão gerando qualidade e resultado econômico.",
+      ),
+      option(
+        "c",
+        "O problema afeta somente o relatório financeiro; a plataforma consegue inferir automaticamente quais leads compraram.",
+      ),
+      option(
+        "d",
+        "A principal consequência é estética, porque diferentes tipos de conversão servem apenas para organizar os relatórios da conta.",
+      ),
+    ],
+    correctAnswer: "b",
+  },
+  {
+    id: "d13v2",
     competence: "Diagnóstico",
     prompt:
-      "Qual mudança oferece a pista mais forte para explicar o aumento do CPA?",
+      "O CPA de uma campanha aumentou 35% nesta semana. Qual postura representa melhor um diagnóstico profissional?",
+    options: [
+      option(
+        "a",
+        "Reduzir o orçamento aproximadamente na mesma proporção para limitar perdas antes de analisar outras variáveis.",
+      ),
+      option(
+        "b",
+        "Reverter a última alteração realizada na campanha, porque a mudança mais recente é normalmente a causa mais provável.",
+      ),
+      option(
+        "c",
+        "Decompor o CPA em variáveis como CPC, CVR, mix, qualidade e volume antes de escolher a intervenção.",
+      ),
+      option(
+        "d",
+        "Migrar para uma estratégia de Target CPA para forçar a plataforma a retornar imediatamente ao custo anterior.",
+      ),
+    ],
+    correctAnswer: "c",
+  },
+  {
+    id: "d14v2",
+    competence: "Diagnóstico",
+    prompt:
+      "Com base na tabela, qual mudança oferece a explicação mais forte para o aumento do CPA?",
     table: {
       headers: ["Métrica", "Antes", "Agora"],
       rows: [
         ["CPC", "R$ 4,00", "R$ 4,10"],
         ["CVR", "10%", "5%"],
-        ["CPA", "R$ 40", "aproximadamente R$ 82"],
+        ["CPA", "R$ 40", "aprox. R$ 82"],
       ],
     },
     options: [
-      option("a", "A pequena mudança do CPC."),
-      option("b", "A queda da taxa de conversão."),
-      option("c", "Nenhuma das duas."),
-      option("d", "Não existe relação entre essas métricas."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d15",
-    competence: "Bidding e Automação",
-    prompt:
-      "O que melhor descreve Smart Bidding — Estratégias de Lances Inteligentes?",
-    options: [
-      option("a", "O gestor escolhe manualmente o lance de cada leilão."),
-      option(
-        "b",
-        "O Google utiliza automação e sinais disponíveis para ajustar lances conforme determinado objetivo.",
-      ),
-      option("c", "O Google cria automaticamente todo o negócio."),
-      option("d", "É sinônimo de Broad Match."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d16",
-    competence: "Bidding e Automação",
-    prompt: "Qual mentalidade é mais adequada sobre automação?",
-    options: [
       option(
         "a",
-        "Automatizar tudo porque algoritmos sempre sabem mais que o gestor.",
+        "A queda do CVR é a principal pista, porque reduziu pela metade a proporção de cliques que viraram conversão.",
       ),
       option(
         "b",
-        "Evitar toda automação porque o controle manual é sempre superior.",
+        "O aumento do CPC é a principal pista, porque qualquer aumento no custo do clique tende a explicar a maior parte do CPA.",
       ),
       option(
         "c",
-        "Automatizar decisões mecânicas quando apropriado, preservando decisões estratégicas e qualidade dos sinais.",
+        "CPC e CVR tiveram impacto aproximadamente equivalente, portanto nenhuma variável merece prioridade sobre a outra.",
       ),
-      option("d", "Utilizar automação apenas quando a campanha estiver ruim."),
+      option(
+        "d",
+        "Não é possível relacionar essas métricas; CPA deve ser analisado separadamente de CPC e taxa de conversão.",
+      ),
+    ],
+    correctAnswer: "a",
+  },
+  {
+    id: "d15v2",
+    competence: "Bidding e Automação",
+    prompt:
+      "Uma campanha utiliza Smart Bidding com objetivo de conversão. Qual descrição representa melhor o papel dessa automação?",
+    options: [
+      option(
+        "a",
+        "O gestor continua definindo manualmente o lance de cada leilão, enquanto o algoritmo apenas registra os resultados.",
+      ),
+      option(
+        "b",
+        "A estratégia de Keyword define os lances automaticamente; mensuração e qualidade dos sinais têm pouca influência.",
+      ),
+      option(
+        "c",
+        "O Google assume as decisões econômicas do negócio e define sozinho quanto a empresa deve aceitar pagar por um cliente.",
+      ),
+      option(
+        "d",
+        "O sistema ajusta lances em cada oportunidade usando sinais disponíveis para perseguir o objetivo definido, dependendo de boa mensuração.",
+      ),
+    ],
+    correctAnswer: "d",
+  },
+  {
+    id: "d16v2",
+    competence: "Bidding e Automação",
+    prompt:
+      "Qual postura representa melhor o uso profissional de automação em mídia paga?",
+    options: [
+      option(
+        "a",
+        "Usar automação apenas depois de longos períodos de operação manual, independentemente do objetivo e da qualidade dos sinais.",
+      ),
+      option(
+        "b",
+        "Automatizar decisões mecânicas quando objetivo e mensuração são confiáveis, mantendo estratégia, economia e qualidade dos sinais sob gestão.",
+      ),
+      option(
+        "c",
+        "Priorizar controle manual sempre que o orçamento for alto, porque automação se torna mais arriscada conforme o investimento aumenta.",
+      ),
+      option(
+        "d",
+        "Transferir para a plataforma também as decisões estratégicas para reduzir interferência humana e evitar vieses do gestor.",
+      ),
+    ],
+    correctAnswer: "b",
+  },
+  {
+    id: "d17v2",
+    competence: "Ecossistema Google",
+    prompt:
+      "Qual afirmação descreve melhor Performance Max — PMax — dentro do ecossistema Google?",
+    options: [
+      option(
+        "a",
+        "É uma campanha de Search com maior nível de automação, mas continua restrita aos resultados de pesquisa do Google.",
+      ),
+      option(
+        "b",
+        "É uma estrutura exclusiva de e-commerce que exige Merchant Center e não pode ser usada para outros objetivos.",
+      ),
+      option(
+        "c",
+        "É uma campanha orientada a objetivo que pode acessar múltiplos inventários do Google com forte uso de automação.",
+      ),
+      option(
+        "d",
+        "É um formato criado principalmente para substituir campanhas de marca quando a conta alcança alto volume de conversões.",
+      ),
     ],
     correctAnswer: "c",
   },
   {
-    id: "d17",
-    competence: "Ecossistema Google",
-    prompt: "Performance Max — PMax opera exclusivamente na Rede de Pesquisa?",
-    options: [
-      option("a", "Sim."),
-      option(
-        "b",
-        "Não. É uma abordagem que pode utilizar diferentes inventários/canais do ecossistema Google.",
-      ),
-      option("c", "Sim, mas apenas em mobile."),
-      option("d", "Somente se houver Merchant Center."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d18",
+    id: "d18v2",
     competence: "Ecossistema Google",
     prompt:
-      "Uma loja virtual possui centenas de produtos. Qual elemento ganha especial importância para campanhas de Shopping?",
-    options: [
-      option("a", "Apenas o texto da homepage."),
-      option(
-        "b",
-        "A qualidade e estrutura dos dados do catálogo/feed de produtos.",
-      ),
-      option("c", "Quantidade de seguidores no Instagram."),
-      option("d", "Número de funcionários."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d19",
-    competence: "Estratégia e Escala",
-    prompt:
-      "Uma campanha apresenta ROAS de 5x. Podemos concluir automaticamente que o negócio é altamente lucrativo?",
-    options: [
-      option("a", "Sim. ROAS 5x sempre significa lucro excelente."),
-      option(
-        "b",
-        "Não. Precisamos compreender margem, custos e demais elementos econômicos do negócio.",
-      ),
-      option("c", "Sim, desde que existam mais de 100 conversões."),
-      option("d", "Não, porque ROAS nunca deve ser utilizado."),
-    ],
-    correctAnswer: "b",
-  },
-  {
-    id: "d20",
-    competence: "Estratégia e Escala",
-    prompt:
-      "Uma campanha está gerando resultado rentável e consistente. Qual decisão representa melhor uma abordagem profissional de escala?",
+      "Duas lojas possuem orçamento semelhante em Shopping. Uma mantém feed completo, preciso e atualizado; a outra possui dados incompletos e inconsistentes. Qual leitura é mais adequada?",
     options: [
       option(
         "a",
-        "Dobrar imediatamente o orçamento e esperar o mesmo desempenho proporcional.",
+        "A qualidade do feed pode influenciar correspondência, apresentação e capacidade de otimização, portanto é parte importante da operação.",
       ),
-      option("b", "Nunca aumentar orçamento."),
+      option(
+        "b",
+        "O feed tem pouca relevância depois que a campanha recebe orçamento suficiente, porque os lances passam a dominar a entrega.",
+      ),
       option(
         "c",
-        "Escalar de forma monitorada, observando capacidade do mercado, economia, estabilidade e possíveis mudanças marginais de desempenho.",
+        "A loja com mais seguidores em redes sociais tende a compensar automaticamente um feed pior por possuir maior autoridade digital.",
       ),
-      option("d", "Duplicar a campanha dez vezes."),
+      option(
+        "d",
+        "O texto da homepage é mais importante que os dados de produto, pois o Shopping utiliza principalmente o conteúdo da página inicial.",
+      ),
     ],
-    correctAnswer: "c",
+    correctAnswer: "a",
+  },
+  {
+    id: "d19v2",
+    competence: "Estratégia e Escala",
+    prompt:
+      "Uma campanha apresenta ROAS de 5x, mas o produto possui margem estreita, devoluções relevantes e custos operacionais elevados. O que podemos concluir?",
+    options: [
+      option(
+        "a",
+        "ROAS de 5x já comprova alta lucratividade, porque cada real de mídia gerou cinco reais de receita atribuída.",
+      ),
+      option(
+        "b",
+        "A campanha deve ser escalada enquanto o ROAS permanecer acima de 1x, pois toda receita adicional aumenta o lucro.",
+      ),
+      option(
+        "c",
+        "O número de conversões é suficiente para julgar rentabilidade; margem e devoluções importam apenas para o financeiro.",
+      ),
+      option(
+        "d",
+        "ROAS isolado não determina lucro; precisamos conectar receita atribuída a margem, devoluções, custos e economia do negócio.",
+      ),
+    ],
+    correctAnswer: "d",
+  },
+  {
+    id: "d20v2",
+    competence: "Estratégia e Escala",
+    prompt:
+      "Uma campanha está rentável e estável em R$ 500 por dia. Qual abordagem representa melhor uma decisão profissional de escala?",
+    options: [
+      option(
+        "a",
+        "Dobrar imediatamente para R$ 1.000 por dia, porque estabilidade recente indica que o desempenho tende a crescer proporcionalmente.",
+      ),
+      option(
+        "b",
+        "Aumentar investimento de forma controlada e acompanhar desempenho marginal, capacidade do mercado, qualidade e economia.",
+      ),
+      option(
+        "c",
+        "Duplicar a campanha em várias cópias para preservar a eficiência da original enquanto cada nova estrutura encontra inventário adicional.",
+      ),
+      option(
+        "d",
+        "Manter o orçamento sem alterações até completar pelo menos trinta dias de estabilidade, independentemente da oportunidade de mercado.",
+      ),
+    ],
+    correctAnswer: "b",
   },
 ]
 
@@ -986,7 +1159,7 @@ export const immersionLesson: Lesson = {
     },
   ],
   diagnostic: {
-    id: "initial-diagnostic",
+    id: "initial-diagnostic-v2",
     title: "Diagnóstico Inicial",
     questions: diagnosticQuestions,
     pointsPerQuestion: 0.5,

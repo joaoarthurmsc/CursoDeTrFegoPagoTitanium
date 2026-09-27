@@ -73,6 +73,32 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
       {},
     )
 
+  const diagnosticAnswerDistribution =
+    lesson.diagnostic?.questions.reduce<Record<string, number>>(
+      (totals, question) => {
+        totals[question.correctAnswer] =
+          (totals[question.correctAnswer] ?? 0) + 1
+        return totals
+      },
+      {},
+    )
+
+  const invalidDiagnosticDistractors =
+    lesson.diagnostic?.questions.filter((question) => {
+      const lengths = question.options.map((option) => option.label.trim().length)
+      const shortest = Math.min(...lengths)
+      const longest = Math.max(...lengths)
+      return shortest < 45 || longest / shortest > 2.35
+    }) ?? []
+
+  const interfaceScreenshots = stages
+    .map((stage) => stage.media)
+    .filter((media) => media?.kind === "interface-screenshot")
+
+  const invalidInterfaceScreenshots = interfaceScreenshots.filter(
+    (media) => !media?.sourceLabel || !media?.capturedAt,
+  )
+
   const invalidStageQuestions = stages.filter(
     (stage) =>
       hasForbiddenOpenInteraction(stage) ||
@@ -112,6 +138,16 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
         (total) => total !== 2,
       ) &&
       "Diagnóstico com duas questões por competência",
+    lesson.completionMode === "diagnostic" &&
+      ["a", "b", "c", "d"].some(
+        (letter) => diagnosticAnswerDistribution?.[letter] !== 5,
+      ) &&
+      "Diagnóstico com respostas corretas equilibradas entre A-D",
+    lesson.completionMode === "diagnostic" &&
+      invalidDiagnosticDistractors.length > 0 &&
+      "Diagnóstico com alternativas excessivamente óbvias pelo tamanho",
+    invalidInterfaceScreenshots.length > 0 &&
+      "captura real de interface sem fonte ou data de captura",
     !materialTypes.has("titanium-lesson") && "Guia + Notas da Aula",
     !materialTypes.has("mindmap") && "material Mapa Mental em imagem",
     lesson.completionMode === "exam" &&

@@ -15,6 +15,7 @@ export type LessonMedia = {
   kind: LessonMediaKind
   caption?: string
   sourceLabel?: string
+  capturedAt?: string
   zoomable?: boolean
 }
 

@@ -177,3 +177,19 @@ pedagogical objective
 → interface implementation
 
 A Aula 00 V3 com Glossário Titanium é a referência atual.
+
+## 10. Qualidade do diagnóstico
+
+O Diagnóstico Inicial apresenta as instruções uma única vez antes da Questão 1. Depois que o aluno inicia, cada tela contém somente progresso, enunciado, eventual evidência e alternativas A-D.
+
+As alternativas devem ser plausíveis e equilibradas. O aluno não deve identificar a resposta correta apenas porque ela é mais longa, mais técnica ou mais cuidadosa que as demais.
+
+No diagnóstico de 20 questões, as respostas corretas são distribuídas de forma equilibrada entre A, B, C e D.
+
+## 11. Evidência visual real
+
+Quando o aprendizado depende da interface do Google Ads, a aula deve priorizar screenshot autêntico e atual, com zoom, fonte e data da captura.
+
+Imagens conceituais podem ser produzidas especificamente para o Titanium, mas nunca devem se passar por screenshots reais da plataforma.
+
+Ver `docs/Titanium_Visual_Standard_V1.md`.

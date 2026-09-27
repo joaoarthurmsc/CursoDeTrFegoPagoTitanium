@@ -21,14 +21,16 @@ export default function LessonMedia({ media }: { media: LessonMediaType }) {
             className="max-h-[58vh] w-full object-contain"
           />
         </button>
-        {(media.caption || media.sourceLabel) && (
+        {(media.caption || media.sourceLabel || media.capturedAt) && (
           <figcaption className="flex flex-wrap items-start justify-between gap-3 border-t border-line px-4 py-3 text-xs leading-5 text-muted">
             <span>{media.caption}</span>
-            {media.sourceLabel && (
-              <span className="font-mono uppercase tracking-label text-silver">
-                {media.sourceLabel}
-              </span>
-            )}
+            <span className="flex flex-wrap items-center gap-2 font-mono uppercase tracking-label text-silver">
+              {media.kind === "interface-screenshot" && (
+                <span className="text-gold">Captura real</span>
+              )}
+              {media.sourceLabel && <span>{media.sourceLabel}</span>}
+              {media.capturedAt && <span>· {media.capturedAt}</span>}
+            </span>
           </figcaption>
         )}
       </figure>

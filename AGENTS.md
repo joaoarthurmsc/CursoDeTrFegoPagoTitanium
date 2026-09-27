@@ -160,3 +160,17 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Use accessible buttons, focus management, labels and alt text.
 - Keep TypeScript strict and run `pnpm typecheck` plus `pnpm build` before commit.
 - Do not reintroduce Figma Make runtime dependencies.
+
+## Diagnostic quality
+
+- The Aula 00 diagnostic introduction appears once before the first question, not above every question.
+- Diagnostic distractors must be plausible, similarly detailed, and designed around realistic misconceptions.
+- In the 20-question initial diagnostic, correct answers should be balanced across A, B, C and D.
+- Avoid making the correct answer visually obvious because it is substantially longer or more qualified than the distractors.
+
+## Visual evidence standard
+
+- Operational Google Ads teaching should use authentic, current interface screenshots whenever the interface materially helps understanding.
+- Interface screenshots must include a source label and capture date and remain zoomable.
+- Generated explanatory visuals are welcome for concepts, diagrams and mind maps, but must never impersonate a real Google Ads screenshot.
+- Prefer a sequence of focused screenshots over one overloaded screenshot when teaching a multi-step workflow.

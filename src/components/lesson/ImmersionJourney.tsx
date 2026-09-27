@@ -217,34 +217,20 @@ export default function ImmersionJourney({
         <div className="lesson-stage-inner">
           {isDiagnostic && lesson.diagnostic ? (
             <article data-frame-root tabIndex={-1} className="outline-none">
-              <p className="font-mono text-xs font-semibold uppercase tracking-label text-gold">
-                {stage.eyebrow}
-              </p>
-              <p className="lesson-stage-title mt-3 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl">
-                {stage.title}
-              </p>
-              <div className="lesson-stage-content mt-6">
-                <div className="mb-7 space-y-4">
-                  {stage.body?.map((paragraph) => (
-                    <p key={paragraph} className="text-base leading-7 text-silver md:text-lg">
-                      {paragraph}
-                    </p>
-                  ))}
-                  {stage.quote && (
-                    <p className="border-l-2 border-gold bg-graphite p-5 text-base font-semibold leading-7 text-paper">
-                      {stage.quote}
-                    </p>
-                  )}
-                </div>
-                <InitialDiagnostic
-                  diagnostic={lesson.diagnostic}
-                  journey={journey}
-                  result={diagnosticResult}
-                  onAnswer={onDiagnosticAnswer}
-                  onComplete={onDiagnosticComplete}
-                  onContinue={() => selectStage(diagnosticIndex + 1)}
-                />
-              </div>
+              <InitialDiagnostic
+                diagnostic={lesson.diagnostic}
+                journey={journey}
+                result={diagnosticResult}
+                intro={{
+                  eyebrow: stage.eyebrow,
+                  title: stage.title,
+                  body: stage.body,
+                  quote: stage.quote,
+                }}
+                onAnswer={onDiagnosticAnswer}
+                onComplete={onDiagnosticComplete}
+                onContinue={() => selectStage(diagnosticIndex + 1)}
+              />
             </article>
           ) : (
             <>

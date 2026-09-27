@@ -12,7 +12,7 @@ export default function DiagnosticQuestion({
   onSelect: (optionId: string) => void
 }) {
   return (
-    <fieldset className="m-0 border-0 p-0">
+    <fieldset data-diagnostic-question tabIndex={-1} className="m-0 border-0 p-0 outline-none">
       <legend className="text-xl font-semibold leading-8 text-paper md:text-2xl">
         <GlossaryText text={question.prompt} />
       </legend>
@@ -51,7 +51,7 @@ export default function DiagnosticQuestion({
             key={item.id}
             variant="quiet"
             ariaPressed={selected === item.id}
-            className={`w-full justify-start border-line px-5 py-4 text-left leading-6 ${
+            className={`w-full min-h-16 justify-start border-line px-5 py-4 text-left leading-6 ${
               selected === item.id ? "border-gold bg-graphite text-paper" : ""
             }`}
             onClick={() => onSelect(item.id)}
