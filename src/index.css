@@ -200,13 +200,16 @@ button {
   overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
+  container-type: size;
+  container-name: lesson-stage;
 }
 
 .lesson-stage-inner {
   width: 100%;
+  height: 100%;
   min-height: 100%;
   display: grid;
-  align-content: center;
+  align-content: safe center;
   padding-block: clamp(1.25rem, 3vh, 2.5rem);
 }
 
@@ -269,6 +272,7 @@ button {
   }
 
   .lesson-stage-inner {
+    height: auto;
     min-height: 0;
     display: block;
     padding-block: 1.5rem 2rem;
@@ -426,11 +430,29 @@ button {
     0 0 0 1px color-mix(in srgb, var(--color-paper) 2%, transparent) inset;
 }
 
-.teaching-media-canvas img,
-.teaching-media-hero img {
-  display: block;
+.teaching-media-canvas,
+.teaching-media-hero {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.teaching-media-button {
+  min-height: 0;
   width: 100%;
-  aspect-ratio: 1672 / 941;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.teaching-media-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  margin-inline: auto;
   object-fit: contain;
 }
 
@@ -532,3 +554,361 @@ button {
     padding-block: 0.5rem;
   }
 }
+
+/* Checkpoint 14 — Viewport Fit + Centered Reasoning Feedback
+   Desktop lesson frames are authored to fit the useful viewport. Images are
+   scaled by the player, never cropped or rewritten. Assessment and guided
+   questions use compact vertical rhythm with scroll as emergency fallback. */
+@media (min-width: 48rem) and (min-height: 37.001rem) {
+  .teaching-canvas[data-canvas-layout="visual-first"],
+  .teaching-canvas[data-canvas-layout="compare"],
+  .teaching-canvas[data-canvas-layout="split"] {
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: stretch;
+  }
+
+  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-canvas-media-wide,
+  .teaching-canvas[data-canvas-layout="compare"] .teaching-canvas-media-wide {
+    min-height: 0;
+    height: 100%;
+    margin-top: clamp(0.75rem, 1.8vh, 1.25rem);
+    display: grid;
+  }
+
+  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media,
+  .teaching-canvas[data-canvas-layout="compare"] .teaching-media,
+  .teaching-canvas[data-canvas-layout="split"] .teaching-media,
+  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-media {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media-button,
+  .teaching-canvas[data-canvas-layout="compare"] .teaching-media-button,
+  .teaching-canvas[data-canvas-layout="split"] .teaching-media-button {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media-image,
+  .teaching-canvas[data-canvas-layout="compare"] .teaching-media-image,
+  .teaching-canvas[data-canvas-layout="split"] .teaching-media-image {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-split {
+    min-height: 0;
+    height: 100%;
+    margin-top: clamp(0.75rem, 1.8vh, 1.25rem);
+  }
+
+  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-media {
+    display: grid;
+    min-height: 0;
+  }
+
+  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-canvas-extras,
+  .teaching-canvas[data-canvas-layout="compare"] .teaching-canvas-extras,
+  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-extras {
+    margin-top: clamp(0.65rem, 1.5vh, 1rem);
+  }
+
+  .lesson-frame[data-learning-mode="apply"] {
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    align-content: center;
+    padding-block: clamp(0.65rem, 1.4vh, 1.1rem);
+  }
+
+  .lesson-frame[data-learning-mode="apply"] .lesson-stage-title {
+    margin-top: clamp(0.35rem, 0.8vh, 0.6rem);
+    font-size: clamp(1.65rem, 3.8vh, 2.55rem);
+    line-height: 1.08;
+  }
+
+  .lesson-frame[data-learning-mode="apply"] .lesson-stage-content {
+    min-height: 0;
+    margin-top: clamp(0.7rem, 1.4vh, 1rem);
+  }
+}
+
+.lesson-decision {
+  margin-top: clamp(0.8rem, 1.6vh, 1.25rem);
+}
+
+.lesson-decision-scenario {
+  border-left: 2px solid var(--color-gold);
+  padding-left: 1rem;
+  color: var(--color-paper);
+  font-size: clamp(1rem, 1.7vh, 1.18rem);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.lesson-decision-options {
+  margin-top: clamp(0.75rem, 1.6vh, 1.2rem);
+  display: grid;
+  gap: clamp(0.4rem, 0.85vh, 0.7rem);
+}
+
+.lesson-decision-option {
+  min-height: 2.85rem;
+  padding: clamp(0.6rem, 1.1vh, 0.8rem) 1rem;
+  line-height: 1.35;
+}
+
+.lesson-decision-confirm {
+  margin-top: clamp(0.65rem, 1.2vh, 0.9rem);
+}
+
+.lesson-feedback-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: color-mix(in srgb, var(--color-black) 82%, transparent);
+  backdrop-filter: blur(0.6rem);
+}
+
+.lesson-feedback-card {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: min(38rem, calc(100svh - 2rem));
+  overflow-y: auto;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 52%, var(--color-line));
+  background:
+    radial-gradient(
+      circle at 90% 4%,
+      color-mix(in srgb, var(--color-gold) 12%, transparent),
+      transparent 28%
+    ),
+    var(--color-graphite);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 2rem 7rem color-mix(in srgb, black 72%, transparent);
+}
+
+.lesson-feedback-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.lesson-feedback-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  border: 1px solid var(--color-line);
+  padding: 0.25rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.lesson-feedback-status-recommended {
+  border-color: color-mix(in srgb, var(--color-gold) 66%, var(--color-line));
+  color: var(--color-gold);
+}
+
+.lesson-feedback-status-review {
+  color: var(--color-silver);
+}
+
+.lesson-feedback-choice {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  border: 1px solid var(--color-line);
+  background: var(--color-black);
+  padding: 1rem;
+}
+
+.lesson-feedback-choice-letter {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.lesson-feedback-reasoning {
+  margin-top: 1rem;
+  border-left: 2px solid var(--color-gold);
+  background: var(--color-charcoal);
+  padding: 1rem 1.1rem;
+}
+
+.lesson-stage-inner-assessment {
+  align-content: stretch;
+  padding-block: clamp(0.75rem, 1.5vh, 1.25rem);
+}
+
+.exam-engine {
+  width: min(100%, 66rem);
+  height: 100%;
+  min-height: 0;
+  margin-inline: auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(0.75rem, 1.5vh, 1.15rem);
+}
+
+.exam-engine-progress {
+  min-height: 0;
+}
+
+.exam-engine-question {
+  min-height: 0;
+  display: grid;
+  align-content: center;
+}
+
+.exam-question {
+  min-width: 0;
+}
+
+.exam-question-legend {
+  font-size: clamp(1.2rem, 2.6vh, 1.65rem);
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.exam-question-options {
+  margin-top: clamp(0.9rem, 1.8vh, 1.35rem);
+  display: grid;
+  gap: clamp(0.4rem, 0.9vh, 0.7rem);
+}
+
+.exam-question-option {
+  min-height: 2.8rem;
+  padding: clamp(0.55rem, 1vh, 0.8rem) 1rem;
+  font-size: clamp(0.9rem, 1.55vh, 1rem);
+  line-height: 1.35;
+}
+
+.exam-engine-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (min-width: 48rem) and (max-height: 54rem) {
+  .teaching-canvas-header .teaching-canvas-title {
+    margin-top: 0.45rem;
+    font-size: clamp(1.65rem, 3.8vh, 2.35rem);
+  }
+
+  .teaching-canvas-header .teaching-canvas-body {
+    margin-top: 0.55rem;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .teaching-media-caption {
+    padding-block: 0.38rem;
+    font-size: 0.625rem;
+  }
+
+  .lesson-decision {
+    margin-top: 0.65rem;
+  }
+
+  .lesson-decision-scenario {
+    font-size: 0.98rem;
+    line-height: 1.38;
+  }
+
+  .lesson-decision-options {
+    margin-top: 0.65rem;
+    gap: 0.38rem;
+  }
+
+  .lesson-decision-option {
+    min-height: 2.6rem;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .lesson-decision-confirm {
+    margin-top: 0.55rem;
+  }
+
+  .exam-engine {
+    gap: 0.55rem;
+  }
+
+  .exam-question-legend {
+    font-size: clamp(1.05rem, 2.35vh, 1.35rem);
+    line-height: 1.25;
+  }
+
+  .exam-question-options {
+    margin-top: 0.65rem;
+    gap: 0.35rem;
+  }
+
+  .exam-question-option {
+    min-height: 2.5rem;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.875rem;
+    line-height: 1.28;
+  }
+
+  .exam-engine-nav .min-h-control {
+    min-height: 2.45rem;
+  }
+}
+
+@media (max-width: 47.999rem), (max-height: 37rem) {
+  .teaching-canvas[data-canvas-layout="visual-first"],
+  .teaching-canvas[data-canvas-layout="compare"],
+  .teaching-canvas[data-canvas-layout="split"],
+  .lesson-frame[data-learning-mode="apply"],
+  .exam-engine {
+    height: auto;
+    max-height: none;
+    display: block;
+  }
+
+  .teaching-media-button {
+    height: auto;
+  }
+
+  .teaching-media-image {
+    width: 100%;
+    height: auto;
+    max-height: 72svh;
+  }
+
+  .exam-engine-question {
+    display: block;
+    margin-top: 1.25rem;
+  }
+
+  .exam-engine-nav {
+    margin-top: 1.25rem;
+  }
+}
+

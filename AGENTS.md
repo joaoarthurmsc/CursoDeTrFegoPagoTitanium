@@ -222,3 +222,13 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Image numbering follows pedagogical appearance order, not generation order.
 - Semantic meaning remains in lesson data (`kind`, alt, caption), not in the physical filename.
 - Run `node scripts/check-lesson-assets.mjs` before shipping.
+
+## Viewport First V2
+
+- On desktop/notebook, a teaching visual must fit completely inside the useful lesson viewport; never crop or edit the source artwork just to make it fit.
+- Teaching visuals use proportional `contain` sizing and retain click-to-zoom.
+- A-D teaching interactions must fit kicker, title, scenario, four alternatives and confirmation action in the useful viewport at normal notebook heights.
+- Exam questions use a dedicated viewport layout and must not repeat generic exam-stage copy above every question.
+- Immediate teaching feedback appears as a centered reasoning card showing the selected alternative and its feedback, not as a subtle inline paragraph below the options.
+- Keep authored question density within the envelope documented in `docs/Titanium_Viewport_First_V2.md`.
+- Run `node scripts/check-viewport-density.mjs` before shipping lesson changes.

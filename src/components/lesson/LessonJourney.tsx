@@ -196,28 +196,31 @@ export default function LessonJourney({
         data-stage-type={stage.type}
         data-frame-id={frame.id}
       >
-        <div className="lesson-stage-inner">
-          <LessonStageContent
-            lessonId={lesson.id}
-            stage={frame.stage}
-            journey={journey}
-            onOpenResponse={onOpenResponse}
-            onDecision={onDecision}
-            onSelfAssessment={onSelfAssessment}
-            onChecklist={onChecklist}
-            onAudit={onAudit}
-            onJournal={onJournal}
-          />
-          {isExam && (
-            <div className="mt-8">
-              <ExamEngine
-                exam={lesson.exam!}
-                attempts={journey.examAttempts}
-                onComplete={onExamComplete}
-                onReviewStage={reviewStage}
-                onNext={() => onNavigate("/aulas/02")}
-              />
-            </div>
+        <div
+          className={`lesson-stage-inner ${
+            isExam ? "lesson-stage-inner-assessment" : ""
+          }`}
+        >
+          {isExam ? (
+            <ExamEngine
+              exam={lesson.exam!}
+              attempts={journey.examAttempts}
+              onComplete={onExamComplete}
+              onReviewStage={reviewStage}
+              onNext={() => onNavigate("/aulas/02")}
+            />
+          ) : (
+            <LessonStageContent
+              lessonId={lesson.id}
+              stage={frame.stage}
+              journey={journey}
+              onOpenResponse={onOpenResponse}
+              onDecision={onDecision}
+              onSelfAssessment={onSelfAssessment}
+              onChecklist={onChecklist}
+              onAudit={onAudit}
+              onJournal={onJournal}
+            />
           )}
         </div>
       </div>

@@ -80,14 +80,14 @@ export default function ExamEngine({
   const lastQuestion = questionIndex === exam.questions.length - 1
 
   return (
-    <div>
-      {exam.demo && (
-        <p className="mb-5 font-mono text-status uppercase tracking-label text-muted">
-          Conteúdo demonstrativo da engine
-        </p>
-      )}
-      <div className="mb-8">
-        <div className="mb-2 flex justify-between font-mono text-xs text-muted">
+    <div className="exam-engine" data-exam-question={question.id}>
+      <div className="exam-engine-progress">
+        {exam.demo && (
+          <p className="mb-3 font-mono text-status uppercase tracking-label text-muted">
+            Conteúdo demonstrativo da engine
+          </p>
+        )}
+        <div className="mb-2 flex justify-between gap-4 font-mono text-xs text-muted">
           <span>
             {questionKindLabels[question.kind]} · Questão {questionIndex + 1} de{" "}
             {exam.questions.length}
@@ -100,17 +100,21 @@ export default function ExamEngine({
           value={((questionIndex + 1) / exam.questions.length) * 100}
         />
       </div>
-      <ExamQuestion
-        question={question}
-        selected={selected}
-        onSelect={(optionId) =>
-          setAnswers((current) => ({
-            ...current,
-            [question.id]: optionId,
-          }))
-        }
-      />
-      <div className="mt-8 flex items-center justify-between">
+
+      <div className="exam-engine-question">
+        <ExamQuestion
+          question={question}
+          selected={selected}
+          onSelect={(optionId) =>
+            setAnswers((current) => ({
+              ...current,
+              [question.id]: optionId,
+            }))
+          }
+        />
+      </div>
+
+      <div className="exam-engine-nav">
         <ActionButton
           variant="secondary"
           disabled={questionIndex === 0}

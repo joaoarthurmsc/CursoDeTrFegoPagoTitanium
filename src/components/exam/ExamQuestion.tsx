@@ -12,16 +12,16 @@ export default function ExamQuestion({
   onSelect: (optionId: string) => void
 }) {
   return (
-    <fieldset className="m-0 border-0 p-0">
-      <legend className="text-xl font-semibold leading-8 text-paper md:text-2xl">
+    <fieldset className="exam-question m-0 border-0 p-0">
+      <legend className="exam-question-legend text-paper">
         <GlossaryText text={question.prompt} />
       </legend>
-      <div className="mt-7 grid gap-3">
+      <div className="exam-question-options">
         {question.options.map((option, index) => (
           <ActionButton
             key={option.id}
             variant="quiet"
-            className={`w-full justify-start border-line px-5 py-4 text-left leading-6 ${
+            className={`exam-question-option w-full justify-start border-line text-left ${
               selected === option.id ? "border-gold bg-graphite text-paper" : ""
             }`}
             ariaPressed={selected === option.id}
@@ -30,7 +30,9 @@ export default function ExamQuestion({
             <span className="grid size-7 shrink-0 place-items-center border border-current font-mono text-xs">
               {String.fromCharCode(65 + index)}
             </span>
-            {option.label}
+            <span className="min-w-0 flex-1">
+              <GlossaryText text={option.label} />
+            </span>
           </ActionButton>
         ))}
       </div>

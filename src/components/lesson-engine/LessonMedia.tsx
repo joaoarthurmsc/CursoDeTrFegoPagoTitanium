@@ -13,25 +13,23 @@ export default function LessonMedia({
 }) {
   const [expanded, setExpanded] = useState(false)
   const zoomable = media.zoomable !== false
+  const teachingVariant = variant !== "default"
   const figureClass =
     variant === "hero"
       ? "teaching-media teaching-media-hero"
       : variant === "canvas"
         ? "teaching-media teaching-media-canvas"
         : "mt-8 overflow-hidden border border-line bg-graphite"
-  const imageClass =
-    variant === "hero"
-      ? "w-full object-contain"
-      : variant === "canvas"
-        ? "w-full object-contain"
-        : "max-h-[58vh] w-full object-contain"
+  const imageClass = teachingVariant
+    ? "teaching-media-image"
+    : "max-h-[58vh] w-full object-contain"
 
   return (
     <>
       <figure className={figureClass}>
         <button
           type="button"
-          className={`block w-full bg-black/20 text-left ${zoomable ? "cursor-zoom-in" : "cursor-default"}`}
+          className={`${teachingVariant ? "teaching-media-button" : "block w-full"} bg-black/20 text-left ${zoomable ? "cursor-zoom-in" : "cursor-default"}`}
           onClick={() => zoomable && setExpanded(true)}
           aria-label={zoomable ? `Ampliar imagem: ${media.alt}` : undefined}
         >
