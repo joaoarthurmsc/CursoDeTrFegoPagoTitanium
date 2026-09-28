@@ -200,16 +200,13 @@ button {
   overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
-  container-type: size;
-  container-name: lesson-stage;
 }
 
 .lesson-stage-inner {
   width: 100%;
-  height: 100%;
   min-height: 100%;
   display: grid;
-  align-content: safe center;
+  align-content: center;
   padding-block: clamp(1.25rem, 3vh, 2.5rem);
 }
 
@@ -272,7 +269,6 @@ button {
   }
 
   .lesson-stage-inner {
-    height: auto;
     min-height: 0;
     display: block;
     padding-block: 1.5rem 2rem;
@@ -432,28 +428,23 @@ button {
 
 .teaching-media-canvas,
 .teaching-media-hero {
-  min-height: 0;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-
-.teaching-media-button {
-  min-height: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-
-.teaching-media-image {
-  display: block;
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 100%;
+  width: 65%;
   margin-inline: auto;
+}
+
+.teaching-media-canvas img,
+.teaching-media-hero img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
   object-fit: contain;
+}
+
+@media (max-width: 47.999rem) {
+  .teaching-media-canvas,
+  .teaching-media-hero {
+    width: 100%;
+  }
 }
 
 .teaching-media-hero {
@@ -560,66 +551,6 @@ button {
    scaled by the player, never cropped or rewritten. Assessment and guided
    questions use compact vertical rhythm with scroll as emergency fallback. */
 @media (min-width: 48rem) and (min-height: 37.001rem) {
-  .teaching-canvas[data-canvas-layout="visual-first"],
-  .teaching-canvas[data-canvas-layout="compare"],
-  .teaching-canvas[data-canvas-layout="split"] {
-    height: 100%;
-    max-height: 100%;
-    min-height: 0;
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    align-content: stretch;
-  }
-
-  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-canvas-media-wide,
-  .teaching-canvas[data-canvas-layout="compare"] .teaching-canvas-media-wide {
-    min-height: 0;
-    height: 100%;
-    margin-top: clamp(0.75rem, 1.8vh, 1.25rem);
-    display: grid;
-  }
-
-  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media,
-  .teaching-canvas[data-canvas-layout="compare"] .teaching-media,
-  .teaching-canvas[data-canvas-layout="split"] .teaching-media,
-  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-media {
-    min-height: 0;
-    height: 100%;
-  }
-
-  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media-button,
-  .teaching-canvas[data-canvas-layout="compare"] .teaching-media-button,
-  .teaching-canvas[data-canvas-layout="split"] .teaching-media-button {
-    min-height: 0;
-    height: 100%;
-  }
-
-  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-media-image,
-  .teaching-canvas[data-canvas-layout="compare"] .teaching-media-image,
-  .teaching-canvas[data-canvas-layout="split"] .teaching-media-image {
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-
-  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-split {
-    min-height: 0;
-    height: 100%;
-    margin-top: clamp(0.75rem, 1.8vh, 1.25rem);
-  }
-
-  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-media {
-    display: grid;
-    min-height: 0;
-  }
-
-  .teaching-canvas[data-canvas-layout="visual-first"] .teaching-canvas-extras,
-  .teaching-canvas[data-canvas-layout="compare"] .teaching-canvas-extras,
-  .teaching-canvas[data-canvas-layout="split"] .teaching-canvas-extras {
-    margin-top: clamp(0.65rem, 1.5vh, 1rem);
-  }
-
   .lesson-frame[data-learning-mode="apply"] {
     height: 100%;
     max-height: 100%;
@@ -882,24 +813,11 @@ button {
 }
 
 @media (max-width: 47.999rem), (max-height: 37rem) {
-  .teaching-canvas[data-canvas-layout="visual-first"],
-  .teaching-canvas[data-canvas-layout="compare"],
-  .teaching-canvas[data-canvas-layout="split"],
   .lesson-frame[data-learning-mode="apply"],
   .exam-engine {
     height: auto;
     max-height: none;
     display: block;
-  }
-
-  .teaching-media-button {
-    height: auto;
-  }
-
-  .teaching-media-image {
-    width: 100%;
-    height: auto;
-    max-height: 72svh;
   }
 
   .exam-engine-question {

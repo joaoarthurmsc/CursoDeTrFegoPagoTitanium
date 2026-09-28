@@ -8,18 +8,19 @@ Scroll continua sendo fallback para mobile, telas excepcionalmente baixas e cont
 
 ## 1. Imagens no Teaching Canvas
 
-As artes finais não são recortadas, reeditadas ou distorcidas para caber no player.
+As imagens voltam ao comportamento estável do Teaching Canvas V1.
 
-O player é responsável por adaptar a apresentação:
+Não usar geometria baseada na altura do viewport para forçar uma arte a caber. Não alterar o arquivo da imagem.
 
+A única alteração de apresentação é:
+
+- em desktop/tablet, o bloco visual ocupa `65%` da largura disponível e fica centralizado;
+- a imagem mantém sua proporção original;
 - `object-fit: contain`;
-- preservação da proporção original;
-- altura limitada pela área útil do stage;
-- centralização dentro do canvas;
-- zoom continua disponível por clique;
-- título e conteúdo da imagem permanecem integralmente visíveis.
+- o zoom por clique continua disponível;
+- em mobile, a imagem volta a `100%` da largura para preservar legibilidade.
 
-Uma imagem grande nunca pode criar rolagem apenas porque sua largura ocupou todo o canvas.
+Fora isso, o layout visual permanece como estava antes do Checkpoint 14.
 
 ## 2. Perguntas ao longo da aula
 

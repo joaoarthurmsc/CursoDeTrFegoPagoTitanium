@@ -232,3 +232,11 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Immediate teaching feedback appears as a centered reasoning card showing the selected alternative and its feedback, not as a subtle inline paragraph below the options.
 - Keep authored question density within the envelope documented in `docs/Titanium_Viewport_First_V2.md`.
 - Run `node scripts/check-viewport-density.mjs` before shipping lesson changes.
+
+## Teaching image sizing
+
+- Keep the stable Teaching Canvas V1 image layout.
+- Never force teaching images to fit by stage-height grids, `height: 100%`, or dynamic viewport max-heights.
+- Desktop/tablet teaching image components are centered at 65% of available width.
+- Preserve original ratio, `object-fit: contain`, caption and click-to-zoom behavior.
+- Mobile may use 100% width for legibility.
