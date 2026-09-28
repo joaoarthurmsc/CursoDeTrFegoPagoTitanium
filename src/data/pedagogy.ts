@@ -101,6 +101,13 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
     (media) => !media?.sourceLabel || !media?.capturedAt,
   )
 
+  const invalidTeachingCanvasStages = stages.filter(
+    (stage) =>
+      stage.canvasLayout &&
+      stage.canvasLayout !== "standard" &&
+      !stage.media,
+  )
+
   const invalidStageQuestions = stages.filter(
     (stage) =>
       hasForbiddenOpenInteraction(stage) ||
@@ -150,6 +157,8 @@ export function assertTitaniumLessonArchitecture(lesson: Lesson) {
       "Diagnóstico com alternativas excessivamente óbvias pelo tamanho",
     invalidInterfaceScreenshots.length > 0 &&
       "captura real de interface sem fonte ou data de captura",
+    invalidTeachingCanvasStages.length > 0 &&
+      "Teaching Canvas visual sem imagem principal",
     !materialTypes.has("titanium-lesson") && "Guia + Notas da Aula",
     !materialTypes.has("mindmap") && "material Mapa Mental em imagem",
     lesson.completionMode === "exam" &&

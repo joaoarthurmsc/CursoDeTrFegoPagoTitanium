@@ -542,6 +542,7 @@ export const immersionLesson: Lesson = {
           mode: "explain",
           frameLabel: "Abertura",
           eyebrow: "Capítulo 01 · Abertura",
+          canvasLayout: "split",
           title: "Você vai começar do fundamento e avançar até a estratégia.",
           body: [
             "O Titanium foi construído para quem pode começar sem familiaridade com mídia paga e quer chegar à capacidade de pensar, operar, diagnosticar e decidir profissionalmente.",
@@ -566,6 +567,15 @@ export const immersionLesson: Lesson = {
           ],
           highlight:
             "O curso começa no zero. O objetivo é terminar com capacidade profissional, não parecer avançado logo no início.",
+          media: {
+            src: "/images/modulo00/aula00/modulo00aula00imagem01.png",
+            alt: "Da base à estratégia: fundação, linguagem, compreensão, aplicação, diagnóstico e estratégia.",
+            kind: "explanatory-image",
+            caption:
+              "A complexidade cresce sobre uma base construída.",
+            sourceLabel: "Visual Titanium",
+            zoomable: true,
+          },
         },
       ],
     },
@@ -639,18 +649,21 @@ export const immersionLesson: Lesson = {
           mode: "explain",
           frameLabel: "E5",
           eyebrow: "Capítulo 03 · E5",
+          canvasLayout: "visual-first",
           title: "Saber repetir uma definição não significa dominar.",
           body: [
             "Imagine alguém que decorou a frase 'tráfego é movimento de pessoas', mas não consegue reconhecer de onde essas pessoas vêm, para onde estão indo ou qual resultado se espera depois.",
             "Essa pessoa reconhece uma definição, mas ainda não domina o conceito. O E5 existe para transformar informação em capacidade.",
           ],
-          sequence: [
-            { label: "Entender", detail: "Compreender a ideia e sua função." },
-            { label: "Exemplificar", detail: "Reconhecer a ideia em situações concretas." },
-            { label: "Executar", detail: "Aplicar o conhecimento em uma tarefa." },
-            { label: "Examinar", detail: "Ler evidências e perceber o que está acontecendo." },
-            { label: "Explicar", detail: "Defender o raciocínio com clareza." },
-          ],
+          media: {
+            src: "/images/modulo00/aula00/modulo00aula00imagem02.png",
+            alt: "Método E5: entender, exemplificar, executar, examinar e explicar.",
+            kind: "explanatory-image",
+            caption:
+              "O E5 transforma informação em capacidade utilizável.",
+            sourceLabel: "Framework Titanium",
+            zoomable: true,
+          },
         },
         {
           id: "a00v4-e5-check",
@@ -890,19 +903,20 @@ export const immersionLesson: Lesson = {
           mode: "explain",
           frameLabel: "Arquitetura",
           eyebrow: "Capítulo 06 · Jornada da Aula",
+          canvasLayout: "visual-first",
           title: "Cada bloco existe porque cumpre uma função de aprendizagem.",
           body: [
             "Nem toda aula terá a mesma quantidade de blocos, mas a narrativa pedagógica segue uma ordem clara: relevância, fundamento, exemplo, aplicação, correção, síntese e avaliação.",
           ],
-          sequence: [
-            { label: "Abertura", detail: "Por que isso importa?" },
-            { label: "Fundamento", detail: "O que preciso compreender primeiro?" },
-            { label: "Exemplo", detail: "Como isso aparece em uma situação concreta?" },
-            { label: "Aplicação A-D", detail: "Qual leitura ou decisão faz sentido?" },
-            { label: "Feedback", detail: "Por que cada alternativa funciona ou falha?" },
-            { label: "Mapa mental", detail: "Como as peças se conectam?" },
-            { label: "Avaliação", detail: "Consigo demonstrar domínio?" },
-          ],
+          media: {
+            src: "/images/modulo00/aula00/modulo00aula00imagem03.png",
+            alt: "Como uma Aula Titanium funciona: relevância, fundamento, exemplo, aplicação, feedback, síntese, mapa mental e prova.",
+            kind: "explanatory-image",
+            caption:
+              "Aprender, aplicar, corrigir e dominar formam uma única jornada.",
+            sourceLabel: "Arquitetura Titanium",
+            zoomable: true,
+          },
           highlight:
             "Pergunta fechada não significa pergunta fácil. A complexidade cresce junto com o conhecimento que já foi construído.",
         },
@@ -920,9 +934,10 @@ export const immersionLesson: Lesson = {
           mode: "explain",
           frameLabel: "Mapa de níveis",
           eyebrow: "Capítulo 07 · N0–N6",
+          canvasLayout: "visual-first",
           title: "A progressão começa na base e termina em arquitetura.",
           media: {
-            src: "/lessons/aula-00/Titanium_Niveis_N0_N6.png",
+            src: "/images/modulo00/aula00/modulo00aula00imagem04.png",
             alt: "Progressão visual dos níveis N0 a N6 do Titanium.",
             kind: "explanatory-image",
             caption:
@@ -1125,12 +1140,13 @@ export const immersionLesson: Lesson = {
           mode: "explain",
           frameLabel: "Mapa Mental",
           eyebrow: "Capítulo 11 · Mapa Mental",
+          canvasLayout: "visual-first",
           title: "Sistema Titanium de Aprendizagem",
           body: [
             "Use o mapa para reconstruir as conexões principais da aula. A imagem continua disponível na Biblioteca depois da conclusão.",
           ],
           media: {
-            src: "/materials/aula-00/Titanium_Mind_Map_Aula_00.png",
+            src: "/images/modulo00/aula00/modulo00aula00imagem05.png",
             alt: "Mapa mental do Sistema Titanium de Aprendizagem.",
             kind: "mindmap",
             caption:
@@ -1245,7 +1261,7 @@ export const immersionLesson: Lesson = {
       purpose: "Imagem visual para revisar objetivo, E5, avaliação, erro e domínio em uma única visão.",
       status: "available",
       reviewStageId: "a00v3-review",
-      asset: "/materials/aula-00/Titanium_Mind_Map_Aula_00.png",
+      asset: "/images/modulo00/aula00/modulo00aula00imagem05.png",
     },
   ],
 }

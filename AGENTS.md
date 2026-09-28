@@ -205,3 +205,20 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 4. As métricas fundamentais
 5. Como as métricas se conectam
 6. Titanium Lab 01
+
+## Teaching Canvas V1
+
+- Teaching screens are editorial compositions, not generic stacks of text and cards.
+- Use `canvasLayout` only for teaching/review frames; assessments keep focused reading geometry.
+- Supported authored layouts: `split`, `visual-first`, `compare`, `standard`.
+- An image must teach something that is faster or clearer to see than to read.
+- Do not repeat the full information from a dominant image again in cards or sequences below it.
+- Aula 00 and Aula 01 use the official visual package documented in `docs/Titanium_Teaching_Canvas_V1.md`.
+
+## Lesson image assets
+
+- Final visual assets live under `/public/images/moduloXX/aulaXX/`.
+- File names follow exactly `moduloXXaulaXXimagemXX.png`.
+- Image numbering follows pedagogical appearance order, not generation order.
+- Semantic meaning remains in lesson data (`kind`, alt, caption), not in the physical filename.
+- Run `node scripts/check-lesson-assets.mjs` before shipping.

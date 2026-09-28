@@ -122,6 +122,7 @@ export const lessonOneDemo: Lesson = {
           mode: "focus",
           frameLabel: "Definição",
           eyebrow: "Capítulo 02 · Ponto-chave",
+          canvasLayout: "visual-first",
           title: "Tráfego é movimento de pessoas até um destino.",
           body: [
             "No marketing digital, usamos a palavra tráfego para falar de pessoas chegando a um site, página, conversa, aplicativo ou outro ambiente.",
@@ -129,6 +130,15 @@ export const lessonOneDemo: Lesson = {
           ],
           quote:
             "Não confunda movimento com resultado. Tráfego cria oportunidade de resultado; ele não garante o resultado.",
+          media: {
+            src: "/images/modulo01/aula01/modulo01aula01imagem01.png",
+            alt: "Tráfego como movimento de uma origem até um destino.",
+            kind: "explanatory-image",
+            caption:
+              "Tráfego descreve movimento. Resultado acontece depois.",
+            sourceLabel: "Visual Titanium",
+            zoomable: true,
+          },
         },
         {
           id: "a01v2-traffic-check",
@@ -185,23 +195,21 @@ export const lessonOneDemo: Lesson = {
           mode: "explain",
           frameLabel: "Duas origens",
           eyebrow: "Capítulo 03 · Pago e orgânico",
+          canvasLayout: "compare",
           title: "A diferença está em como a distribuição é conquistada.",
           body: [
             "Uma pessoa pode chegar até um negócio porque encontrou um conteúdo, recebeu uma indicação ou acessou uma busca sem que a empresa tenha comprado diretamente aquela distribuição. Chamamos isso, de forma ampla, de tráfego orgânico.",
             "Também é possível pagar para uma plataforma distribuir uma mensagem para pessoas. Quando esse investimento gera movimento até um destino, estamos falando de tráfego pago.",
           ],
-          cards: [
-            {
-              title: "Tráfego orgânico",
-              description:
-                "A chegada acontece sem compra direta daquela distribuição. Pode vir de conteúdo, busca orgânica, indicação ou audiência própria.",
-            },
-            {
-              title: "Tráfego pago",
-              description:
-                "A empresa investe para comprar distribuição e aumentar a chance de uma mensagem alcançar pessoas e levá-las a um destino.",
-            },
-          ],
+          media: {
+            src: "/images/modulo01/aula01/modulo01aula01imagem02.png",
+            alt: "Comparação entre tráfego orgânico e tráfego pago.",
+            kind: "explanatory-image",
+            caption:
+              "Ambos geram movimento; a diferença está na origem da distribuição.",
+            sourceLabel: "Comparação Titanium",
+            zoomable: true,
+          },
         },
         {
           id: "a01v2-paid-organic-check",
@@ -258,13 +266,14 @@ export const lessonOneDemo: Lesson = {
           mode: "explain",
           frameLabel: "Atenção e intenção",
           eyebrow: "Capítulo 04 · Duas situações",
+          canvasLayout: "compare",
           title: "Nem toda pessoa está procurando ativamente por uma solução.",
           body: [
             "Às vezes, uma pessoa está apenas navegando e uma mensagem conquista sua atenção. Em outras situações, ela já está procurando resolver algo e demonstra intenção.",
             "Essa diferença muda a forma como uma mensagem pode ser apresentada. Nesta aula, não precisamos dominar canais ou formatos. Precisamos apenas reconhecer que o estado da pessoa importa.",
           ],
           media: {
-            src: "/lessons/aula-01/Titanium_Atencao_Intencao.svg",
+            src: "/images/modulo01/aula01/modulo01aula01imagem03.png",
             alt: "Comparação visual entre atenção e intenção.",
             kind: "explanatory-image",
             caption:
@@ -323,18 +332,40 @@ export const lessonOneDemo: Lesson = {
       title: "O tráfego ocupa apenas uma parte do sistema",
       frames: [
         {
+          id: "a01v2-click-passage",
+          type: "visual",
+          mode: "explain",
+          frameLabel: "Passagem",
+          eyebrow: "Capítulo 05 · Clique",
+          canvasLayout: "visual-first",
+          title: "O clique é uma passagem, não o resultado final.",
+          body: [
+            "Ao clicar, a pessoa deixa a mensagem e avança para um novo ambiente. Essa transição é importante, mas ainda não diz se a ação desejada aconteceu.",
+          ],
+          media: {
+            src: "/images/modulo01/aula01/modulo01aula01imagem04.png",
+            alt: "O clique como passagem entre uma mensagem e um destino.",
+            kind: "explanatory-image",
+            caption:
+              "Clique significa avanço para um destino. O resultado ainda vem depois.",
+            sourceLabel: "Visual Titanium",
+            zoomable: true,
+          },
+        },
+        {
           id: "a01v2-flow-image",
           type: "visual",
           mode: "explain",
-          frameLabel: "Visual",
+          frameLabel: "Sistema",
           eyebrow: "Capítulo 05 · O caminho",
+          canvasLayout: "visual-first",
           title: "Da oportunidade ao resultado existe uma sequência.",
           body: [
             "Tráfego pago ajuda a criar movimento entre uma pessoa e um destino. Depois que ela chega, outras partes do sistema precisam funcionar.",
             "O clique é apenas uma passagem. O destino precisa fazer sentido, a ação precisa ser possível e o resultado precisa ter valor para o negócio.",
           ],
           media: {
-            src: "/lessons/aula-01/Titanium_Trafego_Caminho.svg",
+            src: "/images/modulo01/aula01/modulo01aula01imagem05.png",
             alt: "Fluxo básico do tráfego pago: pessoa, mensagem, clique, destino, ação e resultado.",
             kind: "diagram",
             caption:
@@ -494,9 +525,10 @@ export const lessonOneDemo: Lesson = {
       id: "a01v2-mindmap",
       type: "mindmap",
       eyebrow: "Capítulo 08 · Mapa Mental",
+      canvasLayout: "visual-first",
       title: "Reconstrua a base em uma única visão",
       media: {
-        src: "/materials/aula-01/Titanium_Mind_Map_Aula_01.svg",
+        src: "/images/modulo01/aula01/modulo01aula01imagem06.png",
         alt: "Mapa mental da Aula 01 sobre tráfego pago.",
         kind: "mindmap",
         caption:
@@ -1000,7 +1032,7 @@ export const lessonOneDemo: Lesson = {
         "Imagem para reconstruir a diferença entre movimento, origem, caminho e resultado.",
       status: "available",
       reviewStageId: "a01v2-mindmap",
-      asset: "/materials/aula-01/Titanium_Mind_Map_Aula_01.svg",
+      asset: "/images/modulo01/aula01/modulo01aula01imagem06.png",
     },
   ],
 }

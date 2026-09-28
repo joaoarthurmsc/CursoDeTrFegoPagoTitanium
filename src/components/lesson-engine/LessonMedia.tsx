@@ -2,27 +2,43 @@ import { useState } from "react"
 import type { LessonMedia as LessonMediaType } from "../../types/learning"
 import { ActionButton } from "../titanium/HomePrimitives"
 
-export default function LessonMedia({ media }: { media: LessonMediaType }) {
+type LessonMediaVariant = "default" | "canvas" | "hero"
+
+export default function LessonMedia({
+  media,
+  variant = "default",
+}: {
+  media: LessonMediaType
+  variant?: LessonMediaVariant
+}) {
   const [expanded, setExpanded] = useState(false)
   const zoomable = media.zoomable !== false
+  const figureClass =
+    variant === "hero"
+      ? "teaching-media teaching-media-hero"
+      : variant === "canvas"
+        ? "teaching-media teaching-media-canvas"
+        : "mt-8 overflow-hidden border border-line bg-graphite"
+  const imageClass =
+    variant === "hero"
+      ? "w-full object-contain"
+      : variant === "canvas"
+        ? "w-full object-contain"
+        : "max-h-[58vh] w-full object-contain"
 
   return (
     <>
-      <figure className="mt-8 overflow-hidden border border-line bg-graphite">
+      <figure className={figureClass}>
         <button
           type="button"
           className={`block w-full bg-black/20 text-left ${zoomable ? "cursor-zoom-in" : "cursor-default"}`}
           onClick={() => zoomable && setExpanded(true)}
           aria-label={zoomable ? `Ampliar imagem: ${media.alt}` : undefined}
         >
-          <img
-            src={media.src}
-            alt={media.alt}
-            className="max-h-[58vh] w-full object-contain"
-          />
+          <img src={media.src} alt={media.alt} className={imageClass} />
         </button>
         {(media.caption || media.sourceLabel || media.capturedAt) && (
-          <figcaption className="flex flex-wrap items-start justify-between gap-3 border-t border-line px-4 py-3 text-xs leading-5 text-muted">
+          <figcaption className="teaching-media-caption">
             <span>{media.caption}</span>
             <span className="flex flex-wrap items-center gap-2 font-mono uppercase tracking-label text-silver">
               {media.kind === "interface-screenshot" && (
@@ -41,6 +57,7 @@ export default function LessonMedia({ media }: { media: LessonMediaType }) {
           role="dialog"
           aria-modal="true"
           aria-label={`Imagem ampliada: ${media.alt}`}
+          onClick={() => setExpanded(false)}
         >
           <ActionButton
             variant="secondary"
@@ -52,7 +69,8 @@ export default function LessonMedia({ media }: { media: LessonMediaType }) {
           <img
             src={media.src}
             alt={media.alt}
-            className="max-h-[calc(100vh-3rem)] max-w-full border border-line object-contain"
+            className="max-h-[calc(100vh-3rem)] max-w-[calc(100vw-3rem)] border border-line object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
           />
         </div>
       )}

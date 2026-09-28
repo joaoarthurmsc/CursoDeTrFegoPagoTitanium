@@ -32,7 +32,7 @@
   --spacing-control: 2.75rem;
   --spacing-module-hero: 34rem;
   --spacing-module-copy: 52rem;
-  --spacing-lesson: 58rem;
+  --spacing-lesson: 88rem;
   --spacing-stage: 30rem;
   --spacing-mindmap: 22rem;
   --spacing-screen-safe: calc(100vw - 2.5rem);
@@ -338,5 +338,197 @@ button {
 @media (min-width: 48rem) and (max-height: 54rem) {
   .lesson-frame[data-learning-mode="focus"] {
     padding: 1.25rem 1.5rem;
+  }
+}
+
+/* Checkpoint 13 — Titanium Teaching Canvas V1
+   Teaching screens use editorial composition; assessment screens keep the
+   focused reading width and interaction geometry. */
+.teaching-canvas {
+  width: 100%;
+  padding-block: clamp(0.25rem, 1vh, 0.75rem);
+}
+
+.teaching-canvas-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.teaching-canvas-title {
+  margin-top: 0.75rem;
+  max-width: 60rem;
+  color: var(--color-paper);
+  font-size: clamp(2rem, 3.6vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.teaching-canvas-header {
+  max-width: 67rem;
+}
+
+.teaching-canvas-body {
+  margin-top: clamp(1rem, 2.2vh, 1.6rem);
+  max-width: 58rem;
+  color: var(--color-silver);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.72;
+}
+
+.teaching-canvas-keypoint {
+  margin-top: clamp(1.25rem, 2.5vh, 2rem);
+  max-width: 43rem;
+  border-left: 2px solid var(--color-gold);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-gold) 10%, var(--color-graphite)),
+      var(--color-graphite)
+    );
+  padding: 1rem 1.15rem 1.1rem;
+}
+
+.teaching-canvas-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(32rem, 1.12fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4.75rem);
+  margin-top: clamp(1.4rem, 3vh, 2.5rem);
+}
+
+.teaching-canvas-split .teaching-canvas-title {
+  margin-top: 0;
+  font-size: clamp(2rem, 3.2vw, 3.7rem);
+}
+
+.teaching-canvas-split .teaching-canvas-body {
+  max-width: 39rem;
+}
+
+.teaching-canvas-media {
+  min-width: 0;
+}
+
+.teaching-canvas-media-wide {
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.teaching-media {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 22%, var(--color-line));
+  background: var(--color-black);
+  box-shadow:
+    0 1.5rem 4rem color-mix(in srgb, black 52%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--color-paper) 2%, transparent) inset;
+}
+
+.teaching-media-canvas img,
+.teaching-media-hero img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  object-fit: contain;
+}
+
+.teaching-media-hero {
+  width: 100%;
+}
+
+.teaching-media-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  border-top: 1px solid var(--color-line);
+  padding: 0.7rem 0.9rem;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.teaching-canvas-extras {
+  margin-top: clamp(1.25rem, 2.5vh, 2rem);
+}
+
+.teaching-canvas-extras > :first-child {
+  margin-top: 0;
+}
+
+.teaching-canvas[data-canvas-layout="compare"] .teaching-media {
+  border-color: color-mix(in srgb, var(--color-gold) 35%, var(--color-line));
+}
+
+@media (min-width: 64rem) {
+  .teaching-canvas-extras .grid.sm\:grid-cols-2:has(> :nth-child(3):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 63.999rem) {
+  .teaching-canvas-split {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .teaching-canvas-split .teaching-canvas-copy,
+  .teaching-canvas-split .teaching-canvas-body,
+  .teaching-canvas-split .teaching-canvas-keypoint {
+    max-width: none;
+  }
+
+  .teaching-canvas-split .teaching-canvas-media {
+    order: 2;
+  }
+
+  .teaching-canvas-title {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .teaching-canvas-title {
+    line-height: 1.08;
+  }
+
+  .teaching-canvas-body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .teaching-media-caption {
+    display: block;
+  }
+
+  .teaching-media-caption > :last-child {
+    margin-top: 0.4rem;
+  }
+}
+
+@media (min-width: 48rem) and (max-height: 54rem) {
+  .teaching-canvas-title {
+    font-size: clamp(1.9rem, 4.5vh, 3rem);
+  }
+
+  .teaching-canvas-body {
+    margin-top: 0.85rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .teaching-canvas-split {
+    margin-top: 1rem;
+  }
+
+  .teaching-canvas-media-wide {
+    margin-top: 1rem;
+  }
+
+  .teaching-media-caption {
+    padding-block: 0.5rem;
   }
 }

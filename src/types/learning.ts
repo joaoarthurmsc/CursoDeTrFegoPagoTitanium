@@ -2,6 +2,8 @@ export type LessonStageType = "discovery" | "context" | "learn" | "concept" | "e
 
 export type LessonStageMode = "explain" | "focus" | "apply"
 
+export type LessonCanvasLayout = "standard" | "split" | "visual-first" | "compare"
+
 export type LessonMediaKind =
   | "interface-screenshot"
   | "explanatory-image"
@@ -44,6 +46,7 @@ export type LessonStage = {
   eyebrow: string
   mode?: LessonStageMode
   frameLabel?: string
+  canvasLayout?: LessonCanvasLayout
   frames?: LessonStage[]
   media?: LessonMedia
   body?: string[]

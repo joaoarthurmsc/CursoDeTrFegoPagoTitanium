@@ -10,7 +10,13 @@ import GlossaryText from "./GlossaryText"
 import PracticeStage from "./PracticeStage"
 import LessonMedia from "./LessonMedia"
 
-function StandardContent({ stage }: { stage: LessonStageType }) {
+function StandardContent({
+  stage,
+  includeMedia = true,
+}: {
+  stage: LessonStageType
+  includeMedia?: boolean
+}) {
   return (
     <>
       <div className="space-y-5">
@@ -23,7 +29,7 @@ function StandardContent({ stage }: { stage: LessonStageType }) {
           </p>
         ))}
       </div>
-      {stage.media && <LessonMedia media={stage.media} />}
+      {includeMedia && stage.media && <LessonMedia media={stage.media} />}
       {stage.glossary && (
         <div className="mt-8 border-t border-line pt-6">
           <p className="mb-4 font-mono text-xs uppercase tracking-label text-muted">
@@ -330,6 +336,135 @@ function MindMapStage({ stage }: { stage: LessonStageType }) {
   )
 }
 
+
+function LearningModeLabel({
+  modeLabel,
+  eyebrow,
+}: {
+  modeLabel: string
+  eyebrow: string
+}) {
+  return (
+    <p className="teaching-canvas-kicker font-mono text-xs font-semibold uppercase tracking-label">
+      <span className="text-gold">{modeLabel}</span>
+      <span className="text-muted"> · {eyebrow}</span>
+    </p>
+  )
+}
+
+function TeachingBody({ stage }: { stage: LessonStageType }) {
+  return (
+    <>
+      {stage.body?.length ? (
+        <div className="teaching-canvas-body space-y-4">
+          {stage.body.map((paragraph) => (
+            <p key={paragraph}>
+              <GlossaryText text={paragraph} />
+            </p>
+          ))}
+        </div>
+      ) : null}
+      {stage.highlight && (
+        <div className="teaching-canvas-keypoint">
+          <span className="font-mono text-[10px] font-semibold uppercase tracking-label text-gold">
+            Ponto-chave
+          </span>
+          <p className="mt-3 text-lg font-semibold leading-7 text-paper md:text-xl">
+            <GlossaryText text={stage.highlight} />
+          </p>
+        </div>
+      )}
+    </>
+  )
+}
+
+function TeachingCanvas({
+  stage,
+  modeLabel,
+}: {
+  stage: LessonStageType
+  modeLabel: string
+}) {
+  if (!stage.media) return null
+
+  const extrasStage: LessonStageType = {
+    ...stage,
+    body: undefined,
+    media: undefined,
+    highlight: stage.canvasLayout === "split" ? undefined : stage.highlight,
+  }
+
+  if (stage.canvasLayout === "split") {
+    return (
+      <article
+        data-frame-root
+        data-learning-mode={stage.mode ?? "explain"}
+        data-canvas-layout="split"
+        tabIndex={-1}
+        className="lesson-frame teaching-canvas outline-none"
+      >
+        <LearningModeLabel modeLabel={modeLabel} eyebrow={stage.eyebrow} />
+        <div className="teaching-canvas-split">
+          <div className="teaching-canvas-copy">
+            <HomeHeading
+              level={2}
+              className="teaching-canvas-title font-display font-semibold tracking-tight"
+            >
+              <GlossaryText text={stage.title} />
+            </HomeHeading>
+            <TeachingBody stage={stage} />
+          </div>
+          <div className="teaching-canvas-media">
+            <LessonMedia media={stage.media} variant="canvas" />
+          </div>
+        </div>
+        <div className="teaching-canvas-extras">
+          <EditorialExtras stage={extrasStage} />
+        </div>
+      </article>
+    )
+  }
+
+  return (
+    <article
+      data-frame-root
+      data-learning-mode={stage.mode ?? "explain"}
+      data-canvas-layout={stage.canvasLayout ?? "visual-first"}
+      tabIndex={-1}
+      className="lesson-frame teaching-canvas outline-none"
+    >
+      <div className="teaching-canvas-header">
+        <LearningModeLabel modeLabel={modeLabel} eyebrow={stage.eyebrow} />
+        <HomeHeading
+          level={2}
+          className="teaching-canvas-title font-display font-semibold tracking-tight"
+        >
+          <GlossaryText text={stage.title} />
+        </HomeHeading>
+        <TeachingBody
+          stage={
+            stage.canvasLayout === "visual-first"
+              ? { ...stage, highlight: undefined }
+              : stage
+          }
+        />
+      </div>
+      <div className="teaching-canvas-media teaching-canvas-media-wide">
+        <LessonMedia media={stage.media} variant="hero" />
+      </div>
+      <div className="teaching-canvas-extras">
+        <EditorialExtras
+          stage={{
+            ...extrasStage,
+            highlight:
+              stage.canvasLayout === "visual-first" ? stage.highlight : undefined,
+          }}
+        />
+      </div>
+    </article>
+  )
+}
+
 export default function LessonStage({
   lessonId,
   stage,
@@ -376,6 +511,15 @@ export default function LessonStage({
         ? "AGORA É COM VOCÊ"
         : "APRENDA"
 
+  if (
+    stage.media &&
+    stage.canvasLayout &&
+    stage.canvasLayout !== "standard" &&
+    mode !== "apply"
+  ) {
+    return <TeachingCanvas stage={stage} modeLabel={modeLabel} />
+  }
+
   return (
     <article
       data-frame-root
@@ -383,10 +527,7 @@ export default function LessonStage({
       tabIndex={-1}
       className="lesson-frame outline-none"
     >
-      <p className="font-mono text-xs font-semibold uppercase tracking-label">
-        <span className="text-gold">{modeLabel}</span>
-        <span className="text-muted"> · {stage.eyebrow}</span>
-      </p>
+      <LearningModeLabel modeLabel={modeLabel} eyebrow={stage.eyebrow} />
       <HomeHeading
         level={2}
         className="lesson-stage-title mt-3 font-display text-3xl font-semibold leading-tight tracking-tight md:text-5xl"
@@ -423,7 +564,7 @@ export default function LessonStage({
               onSave={onChecklist}
             />
           </>
-) : stage.type === "audit" ? (
+        ) : stage.type === "audit" ? (
           <StandardContent stage={stage} />
         ) : stage.type === "visual" ? (
           <VisualStage stage={stage} />
@@ -431,7 +572,7 @@ export default function LessonStage({
           <GuidedStage stage={stage} />
         ) : stage.type === "mindmap" ? (
           <MindMapStage stage={stage} />
-) : stage.type === "review" ? (
+        ) : stage.type === "review" ? (
           <StandardContent stage={stage} />
         ) : (
           <StandardContent stage={stage} />
