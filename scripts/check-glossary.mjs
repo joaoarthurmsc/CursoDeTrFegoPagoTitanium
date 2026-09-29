@@ -6,6 +6,7 @@ const glossaryPath = path.join(root, "src", "data", "glossary.ts")
 const lessonFiles = [
   path.join(root, "src", "data", "immersionLesson.ts"),
   path.join(root, "src", "data", "lessonDemo.ts"),
+  path.join(root, "src", "data", "module01", "index.ts"),
 ]
 
 const glossarySource = fs.readFileSync(glossaryPath, "utf8")

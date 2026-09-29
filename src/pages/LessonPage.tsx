@@ -1,10 +1,10 @@
 import { useState } from "react"
 import LessonIntro from "../components/lesson/LessonIntro"
 import LessonJourney from "../components/lesson/LessonJourney"
-import { lessonOneDemo } from "../data/lessonDemo"
+import { getModuleOneLessonById } from "../data/module01"
 import { learningRepository } from "../storage/learningRepository"
 import { useLessonActiveTime } from "../hooks/useLessonActiveTime"
-import type { LessonJourneyState } from "../types/learning"
+import type { Lesson, LessonJourneyState } from "../types/learning"
 import { HomeHeading } from "../components/titanium/HomePrimitives"
 import ImmersionPage from "./ImmersionPage"
 
@@ -19,7 +19,9 @@ export default function LessonPage({
     return <ImmersionPage onNavigate={onNavigate} />
   }
 
-  if (lessonId !== lessonOneDemo.id) {
+  const lesson = getModuleOneLessonById(lessonId)
+
+  if (!lesson) {
     return (
       <main className="mx-auto flex min-h-placeholder max-w-reading items-center px-5">
         <div>
@@ -41,19 +43,16 @@ export default function LessonPage({
     )
   }
 
-  return (
-    <StandardLessonPage
-      onNavigate={onNavigate}
-    />
-  )
+  return <StandardLessonPage lesson={lesson} onNavigate={onNavigate} />
 }
 
 function StandardLessonPage({
+  lesson,
   onNavigate,
 }: {
+  lesson: Lesson
   onNavigate: (path: string) => void
 }) {
-  const lesson = lessonOneDemo
   useLessonActiveTime(lesson.id)
 
   const [journey, setJourney] = useState<LessonJourneyState>(() => {

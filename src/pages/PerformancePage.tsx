@@ -4,7 +4,7 @@ import {
 } from "../components/titanium/PageUI"
 import { competencies } from "../data/course"
 import { immersionLesson } from "../data/immersionLesson"
-import { lessonOneDemo } from "../data/lessonDemo"
+import { moduleOneLessonDefinitions } from "../data/module01"
 import { learningRepository } from "../storage/learningRepository"
 import { studentRepository } from "../storage/studentRepository"
 import type {
@@ -15,7 +15,7 @@ import type {
 
 const lessonDefinitions: Lesson[] = [
   immersionLesson,
-  lessonOneDemo,
+  ...moduleOneLessonDefinitions,
 ]
 
 function formatDate(value?: string) {

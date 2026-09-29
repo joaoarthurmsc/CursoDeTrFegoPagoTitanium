@@ -5,8 +5,9 @@ import {
   PageHeader,
   Status,
 } from "../components/titanium/PageUI"
-import { moduleOneLessons } from "../data/course"
-import { isImmersionCompleted } from "../storage/progressSelectors"
+import { moduleOneLessonDefinitions } from "../data/module01"
+import { learningRepository } from "../storage/learningRepository"
+import { getModuleLearningSummary, isImmersionCompleted } from "../storage/progressSelectors"
 
 interface ActivitiesPageProps {
   type: "aulas" | "labs" | "provas"
@@ -24,29 +25,36 @@ export default function ActivitiesPage({ type }: ActivitiesPageProps) {
           description="Acesse as lições liberadas e retome sua formação."
         />
         <div className="border-t border-line">
-          {moduleOneLessons.slice(0, 5).map((lesson, index) => {
-            const available = immersionCompleted && index === 0
+          {moduleOneLessonDefinitions.slice(0, 5).map((lesson, index) => {
+            const state = learningRepository.load()
+            const summary = getModuleLearningSummary("01", state)
+            const current = summary.lessons[index]
+            const previousCompleted =
+              index === 0 || summary.lessons[index - 1]?.status === "completed"
+            const available = immersionCompleted && previousCompleted
 
             return (
               <AppLink
-                key={lesson}
-                to={available ? `/aulas/0${index + 1}` : "/aulas"}
+                key={lesson.id}
+                to={available ? `/aulas/${lesson.id}` : "/aulas"}
                 className={`flex w-full items-center gap-4 border-b border-line py-5 md:px-4 ${
                   available ? "hover:bg-graphite" : "text-muted"
                 }`}
               >
                 <span className="font-mono text-xs text-gold">
-                  0{index + 1}
+                  {lesson.number}
                 </span>
-                <span className="flex-1">{lesson}</span>
+                <span className="flex-1">{lesson.title}</span>
                 <Status
                   locked={!available}
                   text={
                     !immersionCompleted
                       ? "bloqueado"
-                      : index === 0
-                        ? "disponível"
-                        : "futura"
+                      : current?.status === "completed"
+                        ? "concluída"
+                        : available
+                          ? "disponível"
+                          : "bloqueada"
                   }
                 />
                 <AppIcon name="arrow" size="sm" />
@@ -70,7 +78,7 @@ export default function ActivitiesPage({ type }: ActivitiesPageProps) {
           {Array.from({ length: 10 }, (_, index) => (
             <AppLink
               key={index}
-              to={index === 0 ? "/labs/01" : "/labs"}
+              to={index === 0 ? "/aulas/06" : "/labs"}
               className={`flex min-h-36 flex-col justify-between border p-5 ${
                 index === 0
                   ? "border-line bg-graphite hover:border-gold"
@@ -83,12 +91,12 @@ export default function ActivitiesPage({ type }: ActivitiesPageProps) {
                 </span>
                 <Status
                   locked={index > 0}
-                  text={index === 0 ? "futuro" : "bloqueado"}
+                  text={index === 0 ? "disponível" : "bloqueado"}
                 />
               </div>
               <Heading level={3} className="text-lg font-semibold">
                 {index === 0
-                  ? "Ecossistema da aquisição"
+                  ? "Titanium Lab 01"
                   : `Titanium Lab ${String(index + 1).padStart(2, "0")}`}
               </Heading>
             </AppLink>

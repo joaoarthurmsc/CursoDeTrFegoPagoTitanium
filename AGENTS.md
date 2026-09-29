@@ -240,3 +240,11 @@ Aula 00 V3 plus Titanium Lesson Model V4 is the current reference for future Tit
 - Desktop/tablet teaching image components are centered at 65% of available width.
 - Preserve original ratio, `object-fit: contain`, caption and click-to-zoom behavior.
 - Mobile may use 100% width for legibility.
+
+## Module 01 completion
+
+- Módulo 01 is fully authored: lessons 01–06 plus the final module exam.
+- Lessons 02–06 live in `src/data/module01/index.ts`; lesson 01 remains in `src/data/lessonDemo.ts` for compatibility and is re-exported through the module index.
+- Every Module 01 lesson has a 10-question A-D exam, Guide + Notes PDF, teaching visual and mind map.
+- The final Module 01 exam contains 20 A-D questions and requires 9.0 mastery.
+- Keep the concept order defined in `docs/Titanium_Concept_Dependency_Map_V1.md` and validate it with `scripts/check-concept-order.mjs`.

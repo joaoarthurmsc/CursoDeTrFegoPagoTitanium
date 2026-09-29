@@ -1,5 +1,5 @@
-import { moduleOneLessons, modules } from "../data/course"
-import { lessonOneDemo } from "../data/lessonDemo"
+import { modules } from "../data/course"
+import { moduleOneLessonDefinitions } from "../data/module01"
 import { immersionLesson } from "../data/immersionLesson"
 import { TITANIUM_MASTERY_SCORE } from "../data/pedagogy"
 import type { LearningState } from "../types/progress"
@@ -110,7 +110,7 @@ export function isImmersionCompleted(
 function getJourneyProgress(
   state: LearningState,
   lessonId: string,
-  totalStages = lessonOneDemo.stages.length,
+  totalStages: number,
 ) {
   const journey = state.lessonJourneys[lessonId]
   if (!journey) return 0
@@ -131,9 +131,8 @@ export function getModuleLearningSummary(
 ): ModuleLearningSummary {
   const lessons =
     moduleId === "01"
-      ? moduleOneLessons.map((title, index) => {
-          const id = String(index + 1).padStart(2, "0")
-          const journey = state.lessonJourneys[id]
+      ? moduleOneLessonDefinitions.map((lesson) => {
+          const journey = state.lessonJourneys[lesson.id]
           const bestScore = journey?.bestScore
           let status: LessonStatus = "not-started"
 
@@ -149,27 +148,19 @@ export function getModuleLearningSummary(
           }
 
           return {
-            id,
-            number: id,
+            id: lesson.id,
+            number: lesson.number,
             title:
-              index === moduleOneLessons.length - 1
-                ? `Aula prática — ${title}`
-                : title,
-            masteryTime:
-              index === 0
-                ? lessonOneDemo.masteryTime
-                : "Em preparação",
+              lesson.number === "06"
+                ? `Aula prática — ${lesson.title}`
+                : lesson.title,
+            masteryTime: lesson.masteryTime,
             status,
-            progress:
-              index === 0
-                ? getJourneyProgress(
-                    state,
-                    id,
-                    lessonOneDemo.stages.length,
-                  )
-                : journey?.completedAt
-                  ? 100
-                  : 0,
+            progress: getJourneyProgress(
+              state,
+              lesson.id,
+              lesson.stages.length,
+            ),
             bestScore,
           }
         })

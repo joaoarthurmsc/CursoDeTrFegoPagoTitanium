@@ -67,6 +67,78 @@ export const glossaryEntries: GlobalGlossaryEntry[] = [
     aliases: ["aquisição"],
   },
   {
+    term: "Anunciante",
+    translation: "Anunciante",
+    explanation:
+      "Pessoa ou empresa que investe para distribuir uma mensagem publicitária por uma plataforma.",
+    aliases: ["anunciante", "anunciantes"],
+  },
+  {
+    term: "Plataforma de publicidade",
+    translation: "Plataforma de publicidade",
+    explanation:
+      "Sistema que organiza regras, inventário, elegibilidade e distribuição de anúncios entre anunciantes e pessoas.",
+    aliases: ["plataforma", "plataforma de publicidade"],
+  },
+  {
+    term: "Inventário",
+    translation: "Inventário publicitário",
+    explanation:
+      "Conjunto de espaços, formatos e oportunidades em que publicidade pode ser exibida dentro de um ambiente digital.",
+    aliases: ["inventário", "inventário publicitário"],
+  },
+  {
+    term: "Campanha",
+    translation: "Campanha publicitária",
+    explanation:
+      "Estrutura usada para organizar decisões de mídia, como objetivo, orçamento e regras de distribuição.",
+    aliases: ["campanha", "campanhas"],
+  },
+  {
+    term: "Orçamento",
+    translation: "Orçamento",
+    explanation:
+      "Limite ou quantidade de recurso financeiro disponibilizada para a distribuição de mídia dentro de uma regra ou período.",
+    aliases: ["orçamento", "orçamentos"],
+    caution: "Mais orçamento amplia capacidade de gasto, mas não garante resultado proporcional.",
+  },
+  {
+    term: "Leilão",
+    translation: "Leilão de anúncios",
+    explanation:
+      "Processo de seleção entre anúncios elegíveis para decidir quais podem aparecer e em que ordem ou posição, considerando mais fatores do que apenas o lance.",
+    aliases: ["leilão", "leilões", "leilão de anúncios"],
+  },
+  {
+    term: "Lance",
+    translation: "Lance",
+    explanation:
+      "Valor ou sinal econômico usado em um sistema de leilão para representar disposição de pagar dentro das regras da plataforma.",
+    aliases: ["lance", "lances"],
+    caution: "Maior lance isolado não garante, por si só, a melhor exibição.",
+  },
+  {
+    term: "Visita",
+    translation: "Visita",
+    explanation:
+      "Chegada registrada de uma pessoa ao destino depois de uma interação. Clique e visita são eventos próximos, mas não necessariamente idênticos.",
+    aliases: ["visita", "visitas"],
+  },
+  {
+    term: "Receita",
+    translation: "Receita",
+    explanation:
+      "Valor monetário gerado por vendas, atendimentos ou outras transações do negócio. Receita não é sinônimo de lucro.",
+    aliases: ["receita", "receitas"],
+  },
+  {
+    term: "Valor da conversão",
+    translation: "Valor da conversão",
+    explanation:
+      "Valor atribuído a uma ação de conversão para representar sua contribuição econômica ou importância para o negócio.",
+    aliases: ["valor da conversão", "valor de conversão"],
+  },
+  {
     term: "CTR",
     original: "Click-through rate",
     translation: "Taxa de cliques",

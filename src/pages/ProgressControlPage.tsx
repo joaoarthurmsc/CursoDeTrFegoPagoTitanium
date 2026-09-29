@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import { useMemo, useState } from "react"
-import { modules, moduleOneLessons } from "../data/course"
+import { modules } from "../data/course"
 import { immersionLesson } from "../data/immersionLesson"
-import { lessonOneDemo } from "../data/lessonDemo"
+import { moduleOneLessonDefinitions } from "../data/module01"
 import { learningRepository } from "../storage/learningRepository"
 import {
   getModuleLearningSummary,
@@ -38,9 +38,7 @@ function hasJourneyData(state: LearningState, lessonId: string) {
   return Boolean(journey?.startedAt || journey?.completedAt)
 }
 
-const moduleOneLessonIds = moduleOneLessons.map((_, index) =>
-  String(index + 1).padStart(2, "0"),
-)
+const moduleOneLessonIds = moduleOneLessonDefinitions.map((lesson) => lesson.id)
 
 export default function ProgressControlPage({
   onNavigate,
@@ -57,9 +55,6 @@ export default function ProgressControlPage({
   const diagnosticAndAfter = immersionLesson.stages
     .slice(Math.max(0, diagnosticStageIndex))
     .map((stage) => stage.id)
-  const lessonExamIndex = lessonOneDemo.stages.findIndex(
-    (stage) => stage.type === "exam",
-  )
   const moduleOne = useMemo(() => getModuleLearningSummary("01", state), [state])
 
   const refresh = () => setState(learningRepository.load())
@@ -209,7 +204,6 @@ export default function ProgressControlPage({
                   resetModule={() =>
                     resetModule(module.id, module.title, moduleOneLessonIds)
                   }
-                  lessonExamIndex={lessonExamIndex}
                 />
               )
             }
@@ -301,14 +295,12 @@ function ModuleOneControl({
   onRefresh,
   resetLesson,
   resetModule,
-  lessonExamIndex,
 }: {
   state: LearningState
   onNavigate: (path: string) => void
   onRefresh: () => void
   resetLesson: (lessonId: string, label: string) => void
   resetModule: () => void
-  lessonExamIndex: number
 }) {
   const summary = getModuleLearningSummary("01", state)
   const module = modules[0]
@@ -336,7 +328,12 @@ function ModuleOneControl({
           const journey = state.lessonJourneys[lesson.id]
           const hasProgress = hasJourneyData(state, lesson.id)
           const hasExam = Boolean(journey?.examAttempts?.length)
-          const published = lesson.id === lessonOneDemo.id
+          const published = true
+          const definition = moduleOneLessonDefinitions.find(
+            (item) => item.id === lesson.id,
+          )
+          const lessonExamIndex =
+            definition?.stages.findIndex((stage) => stage.type === "exam") ?? -1
           const label = `Aula ${lesson.number} · ${lesson.title}`
 
           return (
@@ -348,7 +345,7 @@ function ModuleOneControl({
               <div>
                 <p className="font-medium text-paper">{lesson.title}</p>
                 <p className="mt-1 text-xs text-muted">
-                  {published ? statusLabel(lesson.status) : "Conteúdo em preparação"} · {lesson.progress}% · {formatDuration(journey?.activeTimeSeconds)}
+                  {statusLabel(lesson.status)} · {lesson.progress}% · {formatDuration(journey?.activeTimeSeconds)}
                 </p>
               </div>
               <div className="text-sm">
@@ -358,32 +355,29 @@ function ModuleOneControl({
               <div className="flex flex-wrap gap-2 xl:justify-end">
                 <ActionButton
                   variant="secondary"
-                  disabled={!published}
                   onClick={() => {
                     learningRepository.openLessonFromStart(lesson.id)
                     onNavigate(`/aulas/${lesson.id}`)
                   }}
                 >
-                  {published ? "Abrir do início" : "Ainda não publicada"}
+                  Abrir do início
                 </ActionButton>
-                {lesson.id === lessonOneDemo.id && (
-                  <ActionButton
-                    variant="secondary"
-                    disabled={!hasExam}
-                    onClick={() => {
-                      if (!window.confirm(`Zerar somente a prova de ${label}?`)) return
-                      learningRepository.resetLessonExam(
-                        lesson.id,
-                        Math.max(0, lessonExamIndex),
-                        `${label} · prova`,
-                        "01",
-                      )
-                      onRefresh()
-                    }}
-                  >
-                    Zerar prova
-                  </ActionButton>
-                )}
+                <ActionButton
+                  variant="secondary"
+                  disabled={!hasExam || lessonExamIndex < 0}
+                  onClick={() => {
+                    if (!window.confirm(`Zerar somente a prova de ${label}?`)) return
+                    learningRepository.resetLessonExam(
+                      lesson.id,
+                      Math.max(0, lessonExamIndex),
+                      `${label} · prova`,
+                      "01",
+                    )
+                    onRefresh()
+                  }}
+                >
+                  Zerar prova
+                </ActionButton>
                 <DangerButton
                   disabled={!hasProgress}
                   onClick={() => resetLesson(lesson.id, label)}

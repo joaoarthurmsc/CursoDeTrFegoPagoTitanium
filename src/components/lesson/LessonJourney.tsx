@@ -207,7 +207,10 @@ export default function LessonJourney({
               attempts={journey.examAttempts}
               onComplete={onExamComplete}
               onReviewStage={reviewStage}
-              onNext={() => onNavigate("/aulas/02")}
+              onNext={() => {
+                const nextLessonNumber = String(Number(lesson.number) + 1).padStart(2, "0")
+                onNavigate(lesson.number === "06" ? "/modulos/01" : `/aulas/${nextLessonNumber}`)
+              }}
             />
           ) : (
             <LessonStageContent
